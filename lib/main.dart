@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:meal_maven/config/routes/routes.dart';
+import 'package:meal_maven/config/theme/app_theme.dart';
 
 void main() {
   runApp(const MainApp());
@@ -9,12 +11,11 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Scaffold(
-        body: Center(
-          child: Text('Hello World!'),
-        ),
-      ),
+    return MaterialApp.router(
+      debugShowCheckedModeBanner: false,
+      title: 'Flutter Demo',
+      theme: appTheme,
+      routerConfig: Routes.router,
     );
   }
 }
