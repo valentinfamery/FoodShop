@@ -5,7 +5,6 @@ class OpenFoodFactProduct {
     ProductSearchQueryConfiguration configuration =
         ProductSearchQueryConfiguration(
       language: OpenFoodFactsLanguage.FRENCH,
-      fields: [ProductField.ALL],
       version: ProductQueryVersion.v3,
       parametersList: <Parameter>[
         SearchTerms(terms: [name]),

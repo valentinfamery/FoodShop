@@ -1,29 +1,57 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:meal_maven/features/shopping_list/data/repository/ProductRepositoryImpl.dart';
+import 'package:meal_maven/features/shopping_list/domain/entities/ProductEntity.dart';
+import 'package:meal_maven/features/shopping_list/domain/repository/ProductRepository.dart';
 
-/// The second screen in the bottom navigation bar.
-class SearchScreen extends StatelessWidget {
-  /// Constructs a [SearchScreen] widget.
+class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});
+
+  @override
+  State<SearchScreen> createState() => _SearchScreen();
+}
+
+class _SearchScreen extends State<SearchScreen> {
+  final myController = TextEditingController();
+
+  ProductRepository productRepository = ProductRepositoryImpl();
+
+  List<ProductEntity> listSearchProduct = [];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
-      body: Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            const Text('Search Screen'),
-            TextButton(
-              onPressed: () {
-                GoRouter.of(context).go('/search/details');
+      body: Column(
+        children: <Widget>[
+          TextField(controller: myController),
+          ElevatedButton(
+            onPressed: () {
+              searchProductByName(myController.text);
+            },
+            child: const Text('Search'),
+          ),
+          Expanded(
+            child: ListView.builder(
+              itemCount: listSearchProduct.length,
+              itemBuilder: (context, index) {
+                return ListTile(
+                  title: Text(listSearchProduct[index].name ?? ''),
+                );
               },
-              child: const Text('View Search details'),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
+  }
+
+  void searchProductByName(String name) async {
+    final listAPI = await productRepository.searchProductByName(name);
+    for (var element in listAPI) {
+      print(element.name);
+    }
+    setState(() {
+      listSearchProduct = listAPI;
+    });
   }
 }

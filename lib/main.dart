@@ -12,15 +12,6 @@ void main() async {
   OpenFoodAPIConfiguration.userAgent = UserAgent(
     name: 'meal_maven',
   );
-
-  ProductRepository productRepository = ProductRepositoryImpl();
-
-  final List<ProductEntity?>? list =
-      await productRepository.searchProductByName('Nutella');
-
-  for (var element in list!) {
-    print(element!.name.toString());
-  }
 }
 
 class MainApp extends StatelessWidget {

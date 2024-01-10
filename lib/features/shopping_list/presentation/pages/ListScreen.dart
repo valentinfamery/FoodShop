@@ -19,26 +19,24 @@ class ListScreen extends StatelessWidget {
             ),
             elevation: 10,
             child: InkWell(
-  onTap: () {
-    GoRouter.of(context).go('/list/details',extra: 'Card ${index + 1}');
-    // Action à effectuer lors du clic
-  },
-  child: 
-    
-    // Votre contenu de boîte ici
-    Center(
-              child: Text(
-                'Card ${index + 1}',
-                style: TextStyle(fontSize: 20),
+              onTap: () {
+                GoRouter.of(context)
+                    .go('/list/details', extra: 'Card ${index + 1}');
+                // Action à effectuer lors du clic
+              },
+              child:
+
+                  // Votre contenu de boîte ici
+                  Center(
+                child: Text(
+                  'Card ${index + 1}',
+                  style: TextStyle(fontSize: 20),
+                ),
               ),
             ),
-  
-),
           );
         }),
       ),
     );
   }
 }
-
-
