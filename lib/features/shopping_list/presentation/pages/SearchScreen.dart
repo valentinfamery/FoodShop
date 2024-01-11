@@ -44,23 +44,21 @@ class _SearchScreen extends State<SearchScreen> {
                   child: InkWell(
                       onTap: () {
                         GoRouter.of(context)
-                            .go('/list/details', extra: 'Card ${index + 1}');
+                            .go('/search/details', extra: 'Card ${index + 1}');
                         // Action à effectuer lors du clic
                       },
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          
-                      
-                          Image.network(listSearchProduct[index].imageFrontUrl ?? '', fit: BoxFit.cover),
-        SizedBox(height: 10),
-        Text(listSearchProduct[index].name ?? '', style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500)),
-
-
+                          Image.network(
+                              listSearchProduct[index].imageFrontUrl ?? '',
+                              fit: BoxFit.cover),
+                          SizedBox(height: 10),
+                          Text(listSearchProduct[index].name ?? '',
+                              style: TextStyle(
+                                  fontSize: 20, fontWeight: FontWeight.w500)),
                         ],
-                      )
-                      
-                      ),
+                      )),
                 );
               }),
             ),
