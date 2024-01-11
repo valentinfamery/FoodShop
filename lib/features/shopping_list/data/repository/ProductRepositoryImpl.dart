@@ -1,5 +1,5 @@
-import 'package:meal_maven/features/shopping_list/data/data_sources/remote/OpenFoodFactProduct.dart';
-import 'package:meal_maven/features/shopping_list/domain/entities/ProductEntity.dart';
+import 'package:meal_maven/features/shopping_list/data/data_sources/remote/open_food_fact_product.dart';
+import 'package:meal_maven/features/shopping_list/domain/entities/product_entity.dart';
 import 'package:meal_maven/features/shopping_list/domain/repository/ProductRepository.dart';
 
 class ProductRepositoryImpl implements ProductRepository {
@@ -12,7 +12,9 @@ class ProductRepositoryImpl implements ProductRepository {
 
     for (var element in listSearchApiProduct!) {
       final name = element!.productName;
-      listSearchProductFinal.add(ProductEntity(name: name));
+      final imageFrontUrl = element.imageFrontUrl;
+
+      listSearchProductFinal.add(ProductEntity(name: name,imageFrontUrl: imageFrontUrl));
     }
 
     return listSearchProductFinal;

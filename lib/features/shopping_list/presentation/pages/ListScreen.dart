@@ -30,7 +30,7 @@ class ListScreen extends StatelessWidget {
                   Center(
                 child: Text(
                   'Card ${index + 1}',
-                  style: TextStyle(fontSize: 20),
+                  style: const TextStyle(fontSize: 20),
                 ),
               ),
             ),

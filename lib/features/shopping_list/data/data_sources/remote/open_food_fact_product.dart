@@ -12,7 +12,7 @@ class OpenFoodFactProduct {
     );
 
     SearchResult result = await OpenFoodAPIClient.searchProducts(
-      User(userId: '', password: ''),
+      const User(userId: '', password: ''),
       configuration,
     );
 
