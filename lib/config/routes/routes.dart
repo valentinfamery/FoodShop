@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:meal_maven/features/shopping_list/domain/entities/product_entity.dart';
 import 'package:meal_maven/features/shopping_list/presentation/pages/DetailsScreen.dart';
 import 'package:meal_maven/features/shopping_list/presentation/pages/ListScreen.dart';
 import 'package:meal_maven/features/shopping_list/presentation/pages/SearchScreen.dart';
@@ -38,7 +39,7 @@ class Routes {
 
                   final String extraString = GoRouterState.of(context).extra! as String;
                   
-                  return DetailsScreen(label: extraString);
+                  return DetailsScreen();
                 },
               ),
             ],
@@ -59,7 +60,10 @@ class Routes {
                 path: 'details',
                 parentNavigatorKey: _rootNavigatorKey,
                 builder: (BuildContext context, GoRouterState state) {
-                  return const DetailsScreen(label: 'Search');
+
+                  final ProductEntity extraProductEntity = GoRouterState.of(context).extra! as ProductEntity;
+
+                  return DetailsScreen(productEntity: extraProductEntity,);
                 },
               ),
             ],

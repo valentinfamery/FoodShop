@@ -20,8 +20,7 @@ class ListScreen extends StatelessWidget {
             elevation: 10,
             child: InkWell(
               onTap: () {
-                GoRouter.of(context)
-                    .go('/list/details', extra: 'Card ${index + 1}');
+                //GoRouter.of(context).go('/list/details', extra: 'Card ${index + 1}');
                 // Action à effectuer lors du clic
               },
               child:

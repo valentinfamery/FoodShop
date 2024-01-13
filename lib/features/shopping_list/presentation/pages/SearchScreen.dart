@@ -45,7 +45,7 @@ class _SearchScreen extends State<SearchScreen> {
                   child: InkWell(
                       onTap: () {
                         GoRouter.of(context)
-                            .go('/search/details', extra: 'Card ${index + 1}');
+                            .go('/search/details', extra: listSearchProduct[index]);
                         // Action à effectuer lors du clic
                       },
                       child: Column(
