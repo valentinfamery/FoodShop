@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:meal_maven/features/shopping_list/data/repository/ProductRepositoryImpl.dart';
 import 'package:meal_maven/features/shopping_list/domain/entities/product_entity.dart';
 import 'package:meal_maven/features/shopping_list/domain/repository/ProductRepository.dart';
+import 'package:meal_maven/injection_container.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});
@@ -16,7 +17,7 @@ class SearchScreen extends StatefulWidget {
 class _SearchScreen extends State<SearchScreen> {
   final myController = TextEditingController();
 
-  ProductRepository productRepository = ProductRepositoryImpl();
+  var productRepository = sl<ProductRepository>();
 
   List<ProductEntity> listSearchProduct = [];
 

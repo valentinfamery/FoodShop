@@ -3,6 +3,7 @@ import 'package:meal_maven/features/shopping_list/domain/entities/product_entity
 import 'package:meal_maven/features/shopping_list/domain/repository/ProductRepository.dart';
 
 class ProductRepositoryImpl implements ProductRepository {
+  
   final apiOpenFoodFact = OpenFoodFactProduct();
   @override
   Future<List<ProductEntity>> searchProductByName(String name) async {
@@ -14,7 +15,8 @@ class ProductRepositoryImpl implements ProductRepository {
       final name = element!.productName;
       final imageFrontUrl = element.imageFrontUrl;
 
-      listSearchProductFinal.add(ProductEntity(name: name,imageFrontUrl: imageFrontUrl));
+      listSearchProductFinal
+          .add(ProductEntity(name: name, imageFrontUrl: imageFrontUrl));
     }
 
     return listSearchProductFinal;
