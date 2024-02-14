@@ -1,11 +1,16 @@
 import 'package:floor/floor.dart';
 
 @entity
-class ProductFloor {
+class Product {
   @primaryKey
-  final int id;
+  final int? barcodeId;
 
-  final String name;
+  final String? name;
+  final String? imageFrontUrl;
 
-  ProductFloor(this.id, this.name);
+  Product(
+    this.barcodeId,
+    this.name,
+    this.imageFrontUrl,
+  );
 }

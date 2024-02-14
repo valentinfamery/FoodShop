@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:meal_maven/features/shopping_list/domain/entities/product_entity.dart';
+import 'package:meal_maven/features/shopping_list/data/models/product_floor.dart';
+
 import 'package:meal_maven/features/shopping_list/presentation/pages/DetailsScreen.dart';
 import 'package:meal_maven/features/shopping_list/presentation/pages/ListScreen.dart';
 import 'package:meal_maven/features/shopping_list/presentation/pages/SearchScreen.dart';
@@ -8,7 +9,7 @@ import 'package:meal_maven/features/shopping_list/presentation/widgets/ScaffoldW
 
 final GlobalKey<NavigatorState> _rootNavigatorKey =
     GlobalKey<NavigatorState>(debugLabel: 'root');
-  final GlobalKey<NavigatorState> _shellNavigatorKey =
+final GlobalKey<NavigatorState> _shellNavigatorKey =
     GlobalKey<NavigatorState>(debugLabel: 'shell');
 
 class Routes {
@@ -36,9 +37,9 @@ class Routes {
               GoRoute(
                 path: 'details',
                 builder: (BuildContext context, GoRouterState state) {
+                  final String extraString =
+                      GoRouterState.of(context).extra! as String;
 
-                  final String extraString = GoRouterState.of(context).extra! as String;
-                  
                   return DetailsScreen();
                 },
               ),
@@ -60,18 +61,18 @@ class Routes {
                 path: 'details',
                 parentNavigatorKey: _rootNavigatorKey,
                 builder: (BuildContext context, GoRouterState state) {
+                  final Product extraProductEntity =
+                      GoRouterState.of(context).extra! as Product;
 
-                  final ProductEntity extraProductEntity = GoRouterState.of(context).extra! as ProductEntity;
-
-                  return DetailsScreen(productEntity: extraProductEntity,);
+                  return DetailsScreen(
+                    productEntity: extraProductEntity,
+                  );
                 },
               ),
             ],
           ),
-
         ],
       ),
     ],
   );
-
 }

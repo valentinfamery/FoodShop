@@ -85,7 +85,7 @@ class _$AppDatabase extends AppDatabase {
       },
       onCreate: (database, version) async {
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `ProductFloor` (`id` INTEGER NOT NULL, `name` TEXT NOT NULL, PRIMARY KEY (`id`))');
+            'CREATE TABLE IF NOT EXISTS `Product` (`barcodeId` INTEGER, `name` TEXT, `imageFrontUrl` TEXT, PRIMARY KEY (`barcodeId`))');
 
         await callback?.onCreate?.call(database, version);
       },
@@ -105,11 +105,14 @@ class _$ProductFloorDao extends ProductFloorDao {
     this.database,
     this.changeListener,
   )   : _queryAdapter = QueryAdapter(database),
-        _productFloorInsertionAdapter = InsertionAdapter(
+        _productInsertionAdapter = InsertionAdapter(
             database,
-            'ProductFloor',
-            (ProductFloor item) =>
-                <String, Object?>{'id': item.id, 'name': item.name});
+            'Product',
+            (Product item) => <String, Object?>{
+                  'barcodeId': item.barcodeId,
+                  'name': item.name,
+                  'imageFrontUrl': item.imageFrontUrl
+                });
 
   final sqflite.DatabaseExecutor database;
 
@@ -117,26 +120,26 @@ class _$ProductFloorDao extends ProductFloorDao {
 
   final QueryAdapter _queryAdapter;
 
-  final InsertionAdapter<ProductFloor> _productFloorInsertionAdapter;
+  final InsertionAdapter<Product> _productInsertionAdapter;
 
   @override
-  Future<List<ProductFloor>> getAllProductFloor() async {
+  Future<List<Product>> getAllProductFloor() async {
     return _queryAdapter.queryList('SELECT * FROM ProductFloor',
-        mapper: (Map<String, Object?> row) =>
-            ProductFloor(row['id'] as int, row['name'] as String));
+        mapper: (Map<String, Object?> row) => Product(row['barcodeId'] as int?,
+            row['name'] as String?, row['imageFrontUrl'] as String?));
   }
 
   @override
-  Future<ProductFloor?> getProductFloorById(int id) async {
+  Future<Product?> getProductFloorById(int id) async {
     return _queryAdapter.query('SELECT * FROM ProductFloor WHERE id = ?1',
-        mapper: (Map<String, Object?> row) =>
-            ProductFloor(row['id'] as int, row['name'] as String),
+        mapper: (Map<String, Object?> row) => Product(row['barcodeId'] as int?,
+            row['name'] as String?, row['imageFrontUrl'] as String?),
         arguments: [id]);
   }
 
   @override
-  Future<void> insertProductFloor(ProductFloor productFloor) async {
-    await _productFloorInsertionAdapter.insert(
+  Future<void> insertProductFloor(Product productFloor) async {
+    await _productInsertionAdapter.insert(
         productFloor, OnConflictStrategy.abort);
   }
 }

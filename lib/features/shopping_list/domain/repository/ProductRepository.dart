@@ -1,12 +1,12 @@
 import 'package:meal_maven/features/shopping_list/data/models/product_floor.dart';
-import 'package:meal_maven/features/shopping_list/domain/entities/product_entity.dart';
+
 
 abstract class ProductRepository {
-  Future<List<ProductEntity>> searchProductByName(String name);
+  Future<List<Product>> searchProductByName(String name);
 
-  void insertProductInFloor();
+  void insertProductInFloor(Product product);
 
-  Future<List<ProductFloor>> getAllProductFloor();
+  Stream<List<Product>> getProductsSaved();
 
-  Stream<List<ProductFloor>> getAllStreamProductFloor();
+  void fetchProducts();
 }

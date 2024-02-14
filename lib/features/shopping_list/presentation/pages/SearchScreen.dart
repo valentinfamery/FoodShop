@@ -2,8 +2,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:meal_maven/features/shopping_list/data/models/product_floor.dart';
 import 'package:meal_maven/features/shopping_list/data/repository/ProductRepositoryImpl.dart';
-import 'package:meal_maven/features/shopping_list/domain/entities/product_entity.dart';
 import 'package:meal_maven/features/shopping_list/domain/repository/ProductRepository.dart';
 import 'package:meal_maven/injection_container.dart';
 
@@ -19,7 +19,7 @@ class _SearchScreen extends State<SearchScreen> {
 
   var productRepository = sl<ProductRepository>();
 
-  List<ProductEntity> listSearchProduct = [];
+  List<Product> listSearchProduct = [];
 
   @override
   Widget build(BuildContext context) {
