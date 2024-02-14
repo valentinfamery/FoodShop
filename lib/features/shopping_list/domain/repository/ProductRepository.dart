@@ -7,4 +7,6 @@ abstract class ProductRepository {
   void insertProductInFloor();
 
   Future<List<ProductFloor>> getAllProductFloor();
+
+  Stream<List<ProductFloor>> getAllStreamProductFloor();
 }

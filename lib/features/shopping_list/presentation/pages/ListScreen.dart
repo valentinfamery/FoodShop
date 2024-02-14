@@ -26,10 +26,9 @@ class _ListScreen extends State<ListScreen> {
 
     return Scaffold(
         appBar: AppBar(),
-        body: FutureBuilder(
-            future: productRepository.getAllProductFloor(),
-            builder: (BuildContext context,
-                AsyncSnapshot<List<ProductFloor>> snapshot) {
+        body: StreamBuilder(
+            stream: productRepository.getAllStreamProductFloor(),
+            builder : (BuildContext context, AsyncSnapshot<List<ProductFloor>> snapshot) {
               List<ProductFloor> list = [];
 
               if (snapshot.data != null) {
@@ -62,6 +61,8 @@ class _ListScreen extends State<ListScreen> {
                   );
                 }),
               );
-            }));
+            }
+            
+            ));
   }
 }

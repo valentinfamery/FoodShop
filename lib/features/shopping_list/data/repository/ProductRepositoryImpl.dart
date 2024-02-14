@@ -71,4 +71,10 @@ class ProductRepositoryImpl implements ProductRepository {
       return result;
     }
   }
+
+  @override
+  Stream<List<ProductFloor>> getAllStreamProductFloor() {
+    // TODO: implement getAllStreamProductFloor
+    throw UnimplementedError();
+  }
 }
