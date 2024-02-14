@@ -3,6 +3,7 @@ import 'package:meal_maven/config/routes/routes.dart';
 import 'package:meal_maven/config/theme/app_theme.dart';
 import 'package:meal_maven/features/shopping_list/data/data_sources/local/database/database.dart';
 import 'package:meal_maven/features/shopping_list/data/models/product_floor.dart';
+import 'package:meal_maven/features/shopping_list/domain/repository/ProductRepository.dart';
 import 'package:meal_maven/injection_container.dart';
 import 'package:openfoodfacts/openfoodfacts.dart';
 
@@ -10,22 +11,13 @@ void main() async {
   await initializeDependencies();
   runApp(const MainApp());
 
-  final database =
-      await $FloorAppDatabase.databaseBuilder('app_database.db').build();
-
-  final productFloorDao = database.productFloorDao;
-  final productFloor = ProductFloor(1, 'test');
-
-  await productFloorDao.insertProductFloor(productFloor);
-  final result = await productFloorDao.getProductFloorById(1);
-
-  
-
-  print(result?.name);
-
   OpenFoodAPIConfiguration.userAgent = UserAgent(
     name: 'meal_maven',
   );
+
+  var productRepository = sl<ProductRepository>();
+
+  //productRepository.insertProductInFloor();
 }
 
 class MainApp extends StatelessWidget {
