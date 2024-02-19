@@ -124,17 +124,17 @@ class _$ProductFloorDao extends ProductFloorDao {
 
   @override
   Future<List<Product>> getAllProductFloor() async {
-    return _queryAdapter.queryList('SELECT * FROM ProductFloor',
+    return _queryAdapter.queryList('SELECT * FROM Product',
         mapper: (Map<String, Object?> row) => Product(row['barcodeId'] as int?,
             row['name'] as String?, row['imageFrontUrl'] as String?));
   }
 
   @override
-  Future<Product?> getProductFloorById(int id) async {
-    return _queryAdapter.query('SELECT * FROM ProductFloor WHERE id = ?1',
+  Future<Product?> getProductFloorById(int barcodeId) async {
+    return _queryAdapter.query('SELECT * FROM Product WHERE barcodeId = ?1',
         mapper: (Map<String, Object?> row) => Product(row['barcodeId'] as int?,
             row['name'] as String?, row['imageFrontUrl'] as String?),
-        arguments: [id]);
+        arguments: [barcodeId]);
   }
 
   @override

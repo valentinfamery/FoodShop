@@ -3,11 +3,11 @@ import 'package:meal_maven/features/shopping_list/data/models/product_floor.dart
 
 @dao
 abstract class ProductFloorDao {
-  @Query('SELECT * FROM ProductFloor')
+  @Query('SELECT * FROM Product')
   Future<List<Product>> getAllProductFloor();
 
-  @Query('SELECT * FROM ProductFloor WHERE id = :id')
-  Future<Product?> getProductFloorById(int id);
+  @Query('SELECT * FROM Product WHERE barcodeId = :barcodeId')
+  Future<Product?> getProductFloorById(int barcodeId);
 
   @insert
   Future<void> insertProductFloor(Product productFloor);

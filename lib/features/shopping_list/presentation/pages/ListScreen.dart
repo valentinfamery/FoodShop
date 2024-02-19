@@ -22,17 +22,18 @@ class _ListScreen extends State<ListScreen> {
   Widget build(BuildContext context) {
     Stream<List<Product>> data = Stream.value([]);
 
-    initState() {
-      productRepository.fetchProducts();
-      data = productRepository.getProductsSaved();
-    }
+    productRepository.fetchProducts();
+
+    //initState() {
+    //data = productRepository.getProductsSaved();
+    //}
 
     return Scaffold(
       appBar: AppBar(),
       body: StreamBuilder(
           stream: productRepository.getProductsSaved(),
-          builder: (BuildContext context,
-              AsyncSnapshot<List<Product>> snapshot) {
+          builder:
+              (BuildContext context, AsyncSnapshot<List<Product>> snapshot) {
             List<Product> list = [];
 
             if (snapshot.data != null) {
