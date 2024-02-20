@@ -7,7 +7,7 @@ class DetailsScreen extends StatelessWidget {
   final Product? productEntity;
 
   /// Constructs a [DetailsScreen].
-  DetailsScreen({
+  const DetailsScreen({
     this.productEntity,
     super.key,
   });

@@ -12,9 +12,6 @@ class ProductRepositoryImpl implements ProductRepository {
 
   final apiOpenFoodFact = OpenFoodFactProduct();
 
-  // Initializing a stream controller
-  final controller = StreamController<List<Product>>();
-
   @override
   Future<List<Product>> searchProductByName(String name) async {
     final listSearchApiProduct = await apiOpenFoodFact.searchByName(name);
@@ -44,13 +41,7 @@ class ProductRepositoryImpl implements ProductRepository {
 
   @override
   Stream<List<Product>> getProductsSaved() {
-    return controller.stream;
+    return productFloorDao.getAllProductFloor();
   }
 
-  @override
-  void fetchProducts() async {
-    final list = await productFloorDao.getAllProductFloor();
-
-    controller.add(list);
-  }
 }

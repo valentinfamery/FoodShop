@@ -104,7 +104,7 @@ class _$ProductFloorDao extends ProductFloorDao {
   _$ProductFloorDao(
     this.database,
     this.changeListener,
-  )   : _queryAdapter = QueryAdapter(database),
+  )   : _queryAdapter = QueryAdapter(database, changeListener),
         _productInsertionAdapter = InsertionAdapter(
             database,
             'Product',
@@ -112,7 +112,8 @@ class _$ProductFloorDao extends ProductFloorDao {
                   'barcodeId': item.barcodeId,
                   'name': item.name,
                   'imageFrontUrl': item.imageFrontUrl
-                });
+                },
+            changeListener);
 
   final sqflite.DatabaseExecutor database;
 
@@ -123,10 +124,12 @@ class _$ProductFloorDao extends ProductFloorDao {
   final InsertionAdapter<Product> _productInsertionAdapter;
 
   @override
-  Future<List<Product>> getAllProductFloor() async {
-    return _queryAdapter.queryList('SELECT * FROM Product',
+  Stream<List<Product>> getAllProductFloor() {
+    return _queryAdapter.queryListStream('SELECT * FROM Product',
         mapper: (Map<String, Object?> row) => Product(row['barcodeId'] as int?,
-            row['name'] as String?, row['imageFrontUrl'] as String?));
+            row['name'] as String?, row['imageFrontUrl'] as String?),
+        queryableName: 'Product',
+        isView: false);
   }
 
   @override

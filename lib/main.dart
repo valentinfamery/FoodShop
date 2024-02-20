@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:meal_maven/config/routes/routes.dart';
 import 'package:meal_maven/config/theme/app_theme.dart';
 import 'package:meal_maven/features/shopping_list/data/data_sources/local/database/database.dart';
@@ -9,7 +10,10 @@ import 'package:openfoodfacts/openfoodfacts.dart';
 
 void main() async {
   await initializeDependencies();
-  runApp(const MainApp());
+
+  runApp(ProviderScope(
+    child: MainApp(),
+  ));
 
   OpenFoodAPIConfiguration.userAgent = UserAgent(
     name: 'meal_maven',
