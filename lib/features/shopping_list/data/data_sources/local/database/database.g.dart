@@ -113,6 +113,16 @@ class _$ProductFloorDao extends ProductFloorDao {
                   'name': item.name,
                   'imageFrontUrl': item.imageFrontUrl
                 },
+            changeListener),
+        _productDeletionAdapter = DeletionAdapter(
+            database,
+            'Product',
+            ['barcodeId'],
+            (Product item) => <String, Object?>{
+                  'barcodeId': item.barcodeId,
+                  'name': item.name,
+                  'imageFrontUrl': item.imageFrontUrl
+                },
             changeListener);
 
   final sqflite.DatabaseExecutor database;
@@ -122,6 +132,8 @@ class _$ProductFloorDao extends ProductFloorDao {
   final QueryAdapter _queryAdapter;
 
   final InsertionAdapter<Product> _productInsertionAdapter;
+
+  final DeletionAdapter<Product> _productDeletionAdapter;
 
   @override
   Stream<List<Product>> getAllProductFloor() {
@@ -144,5 +156,10 @@ class _$ProductFloorDao extends ProductFloorDao {
   Future<void> insertProductFloor(Product productFloor) async {
     await _productInsertionAdapter.insert(
         productFloor, OnConflictStrategy.abort);
+  }
+
+  @override
+  Future<void> deleteProductFloor(Product productFloor) async {
+    await _productDeletionAdapter.delete(productFloor);
   }
 }

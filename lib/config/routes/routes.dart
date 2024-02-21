@@ -29,7 +29,7 @@ class Routes {
           GoRoute(
             path: '/list',
             builder: (BuildContext context, GoRouterState state) {
-              return  ListScreen();
+              return ListScreen();
             },
             routes: <RouteBase>[
               // The details screen to display stacked on the inner Navigator.

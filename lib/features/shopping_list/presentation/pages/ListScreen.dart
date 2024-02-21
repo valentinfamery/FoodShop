@@ -33,17 +33,6 @@ class ListScreen extends ConsumerWidget {
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (err, stack) => Text('Error: $err'),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          var random = Random();
-          var randomNumber = random.nextInt(900000) + 100000;
-          final product = Product(randomNumber, 'test', '');
-          productRepository.insertProductInFloor(product);
-          // Ajoutez votre logique ici
-        },
-        backgroundColor: Colors.green,
-        child: const Icon(Icons.add),
-      ),
     );
   }
 }

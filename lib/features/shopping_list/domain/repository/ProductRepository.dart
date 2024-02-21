@@ -6,4 +6,6 @@ abstract class ProductRepository {
   void insertProductInFloor(Product product);
 
   Stream<List<Product>> getProductsSaved();
+
+  void deleteProductFloor(Product product);
 }

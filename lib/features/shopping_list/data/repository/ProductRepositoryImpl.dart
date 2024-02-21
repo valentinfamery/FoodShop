@@ -44,4 +44,8 @@ class ProductRepositoryImpl implements ProductRepository {
     return productFloorDao.getAllProductFloor();
   }
 
+  @override
+  void deleteProductFloor(Product product) async {
+    await productFloorDao.deleteProductFloor(product);
+  }
 }

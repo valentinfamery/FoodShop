@@ -1,4 +1,5 @@
 import 'package:floor/floor.dart';
+import 'package:flutter/material.dart';
 import 'package:meal_maven/features/shopping_list/data/models/product_floor.dart';
 
 @dao
@@ -11,4 +12,7 @@ abstract class ProductFloorDao {
 
   @insert
   Future<void> insertProductFloor(Product productFloor);
+
+  @delete
+  Future<void> deleteProductFloor(Product productFloor);
 }
