@@ -37,10 +37,12 @@ class Routes {
               GoRoute(
                 path: 'details',
                 builder: (BuildContext context, GoRouterState state) {
-                  final String extraString =
-                      GoRouterState.of(context).extra! as String;
+                  final Product extraProductEntity =
+                      GoRouterState.of(context).extra! as Product;
 
-                  return DetailsScreen();
+                  return DetailsScreen(
+                    productEntity: extraProductEntity,
+                  );
                 },
               ),
             ],

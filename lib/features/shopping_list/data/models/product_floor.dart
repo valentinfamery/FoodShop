@@ -6,11 +6,13 @@ class Product {
   final int? barcodeId;
 
   final String? name;
+  final bool? isSaved;
   final String? imageFrontUrl;
 
   Product(
     this.barcodeId,
     this.name,
+    this.isSaved,
     this.imageFrontUrl,
   );
 }

@@ -85,7 +85,7 @@ class _$AppDatabase extends AppDatabase {
       },
       onCreate: (database, version) async {
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `Product` (`barcodeId` INTEGER, `name` TEXT, `imageFrontUrl` TEXT, PRIMARY KEY (`barcodeId`))');
+            'CREATE TABLE IF NOT EXISTS `Product` (`barcodeId` INTEGER, `name` TEXT, `isSaved` INTEGER, `imageFrontUrl` TEXT, PRIMARY KEY (`barcodeId`))');
 
         await callback?.onCreate?.call(database, version);
       },
@@ -111,6 +111,8 @@ class _$ProductFloorDao extends ProductFloorDao {
             (Product item) => <String, Object?>{
                   'barcodeId': item.barcodeId,
                   'name': item.name,
+                  'isSaved':
+                      item.isSaved == null ? null : (item.isSaved! ? 1 : 0),
                   'imageFrontUrl': item.imageFrontUrl
                 },
             changeListener),
@@ -121,6 +123,8 @@ class _$ProductFloorDao extends ProductFloorDao {
             (Product item) => <String, Object?>{
                   'barcodeId': item.barcodeId,
                   'name': item.name,
+                  'isSaved':
+                      item.isSaved == null ? null : (item.isSaved! ? 1 : 0),
                   'imageFrontUrl': item.imageFrontUrl
                 },
             changeListener);
@@ -138,8 +142,11 @@ class _$ProductFloorDao extends ProductFloorDao {
   @override
   Stream<List<Product>> getAllProductFloor() {
     return _queryAdapter.queryListStream('SELECT * FROM Product',
-        mapper: (Map<String, Object?> row) => Product(row['barcodeId'] as int?,
-            row['name'] as String?, row['imageFrontUrl'] as String?),
+        mapper: (Map<String, Object?> row) => Product(
+            row['barcodeId'] as int?,
+            row['name'] as String?,
+            row['isSaved'] == null ? null : (row['isSaved'] as int) != 0,
+            row['imageFrontUrl'] as String?),
         queryableName: 'Product',
         isView: false);
   }
@@ -147,8 +154,11 @@ class _$ProductFloorDao extends ProductFloorDao {
   @override
   Future<Product?> getProductFloorById(int barcodeId) async {
     return _queryAdapter.query('SELECT * FROM Product WHERE barcodeId = ?1',
-        mapper: (Map<String, Object?> row) => Product(row['barcodeId'] as int?,
-            row['name'] as String?, row['imageFrontUrl'] as String?),
+        mapper: (Map<String, Object?> row) => Product(
+            row['barcodeId'] as int?,
+            row['name'] as String?,
+            row['isSaved'] == null ? null : (row['isSaved'] as int) != 0,
+            row['imageFrontUrl'] as String?),
         arguments: [barcodeId]);
   }
 

@@ -24,7 +24,7 @@ class ProductRepositoryImpl implements ProductRepository {
       final imageFrontUrl = element.imageFrontUrl;
 
       listSearchProductFinal
-          .add(Product(int.parse(barcode!), name, imageFrontUrl));
+          .add(Product(int.parse(barcode!), name, false, imageFrontUrl));
 
       print(element.barcode);
     }
@@ -35,7 +35,7 @@ class ProductRepositoryImpl implements ProductRepository {
   @override
   void insertProductInFloor(Product productEntity) async {
     final productFloor =
-        Product(productEntity.barcodeId!, productEntity.name!, '');
+        Product(productEntity.barcodeId!, productEntity.name!, true, '');
     await productFloorDao.insertProductFloor(productFloor);
   }
 
