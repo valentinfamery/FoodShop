@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:meal_maven/features/shopping_list/data/models/product_floor.dart';
@@ -13,15 +14,6 @@ class ListWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double screenHeight = MediaQuery.of(context).size.height;
-    double screenWidth = MediaQuery.of(context).size.width;
-
-    // Pourcentage de la hauteur d'écran que vous souhaitez occuper
-    double percentageHeight = 0.8;
-
-    // Calcul de la hauteur du widget en fonction du pourcentage
-    double widgetHeight = screenHeight * percentageHeight;
-
     return GridView.count(
       crossAxisCount: 2,
       children: List.generate(products.length, (index) {
@@ -40,6 +32,14 @@ class ListWidget extends StatelessWidget {
                   '${products[index].name}',
                   style: const TextStyle(fontSize: 20),
                 ),
+                FittedBox(
+                  child: CachedNetworkImage(
+                    imageUrl: products[index].imageFrontUrl!,
+                    placeholder: (context, url) => CircularProgressIndicator(),
+                    errorWidget: (context, url, error) => Icon(Icons.error),
+                  ),
+                  fit: BoxFit.fill,
+                )
               ],
             ),
           ),

@@ -34,8 +34,8 @@ class ProductRepositoryImpl implements ProductRepository {
 
   @override
   void insertProductInFloor(Product productEntity) async {
-    final productFloor =
-        Product(productEntity.barcodeId!, productEntity.name!, true, '');
+    final productFloor = Product(productEntity.barcodeId!, productEntity.name!,
+        true, productEntity!.imageFrontUrl);
     await productFloorDao.insertProductFloor(productFloor);
   }
 
