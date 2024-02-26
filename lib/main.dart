@@ -8,20 +8,17 @@ import 'package:meal_maven/features/shopping_list/domain/repository/ProductRepos
 import 'package:meal_maven/injection_container.dart';
 import 'package:openfoodfacts/openfoodfacts.dart';
 
-void main() async {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   await initializeDependencies();
 
-  runApp(ProviderScope(
+  runApp(const ProviderScope(
     child: MainApp(),
   ));
 
   OpenFoodAPIConfiguration.userAgent = UserAgent(
     name: 'meal_maven',
   );
-
-  var productRepository = sl<ProductRepository>();
-
-  //productRepository.insertProductInFloor();
 }
 
 class MainApp extends StatelessWidget {
