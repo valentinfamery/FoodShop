@@ -85,7 +85,7 @@ class _$AppDatabase extends AppDatabase {
       },
       onCreate: (database, version) async {
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `Product` (`barcodeId` INTEGER, `name` TEXT, `isSaved` INTEGER, `imageFrontUrl` TEXT, PRIMARY KEY (`barcodeId`))');
+            'CREATE TABLE IF NOT EXISTS `Product` (`barcodeId` INTEGER, `name` TEXT, `isSaved` INTEGER, `imageFrontUrl` TEXT, `buy` INTEGER, PRIMARY KEY (`barcodeId`))');
 
         await callback?.onCreate?.call(database, version);
       },
@@ -113,7 +113,8 @@ class _$ProductFloorDao extends ProductFloorDao {
                   'name': item.name,
                   'isSaved':
                       item.isSaved == null ? null : (item.isSaved! ? 1 : 0),
-                  'imageFrontUrl': item.imageFrontUrl
+                  'imageFrontUrl': item.imageFrontUrl,
+                  'buy': item.buy == null ? null : (item.buy! ? 1 : 0)
                 },
             changeListener),
         _productDeletionAdapter = DeletionAdapter(
@@ -125,7 +126,8 @@ class _$ProductFloorDao extends ProductFloorDao {
                   'name': item.name,
                   'isSaved':
                       item.isSaved == null ? null : (item.isSaved! ? 1 : 0),
-                  'imageFrontUrl': item.imageFrontUrl
+                  'imageFrontUrl': item.imageFrontUrl,
+                  'buy': item.buy == null ? null : (item.buy! ? 1 : 0)
                 },
             changeListener);
 
@@ -146,7 +148,8 @@ class _$ProductFloorDao extends ProductFloorDao {
             row['barcodeId'] as int?,
             row['name'] as String?,
             row['isSaved'] == null ? null : (row['isSaved'] as int) != 0,
-            row['imageFrontUrl'] as String?),
+            row['imageFrontUrl'] as String?,
+            row['buy'] == null ? null : (row['buy'] as int) != 0),
         queryableName: 'Product',
         isView: false);
   }
@@ -158,7 +161,8 @@ class _$ProductFloorDao extends ProductFloorDao {
             row['barcodeId'] as int?,
             row['name'] as String?,
             row['isSaved'] == null ? null : (row['isSaved'] as int) != 0,
-            row['imageFrontUrl'] as String?),
+            row['imageFrontUrl'] as String?,
+            row['buy'] == null ? null : (row['buy'] as int) != 0),
         arguments: [barcodeId]);
   }
 
