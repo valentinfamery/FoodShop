@@ -22,9 +22,10 @@ class ProductRepositoryImpl implements ProductRepository {
       final barcode = element!.barcode;
       final name = element.productName;
       final imageFrontUrl = element.imageFrontUrl;
+      final quantity = element.quantity;
 
       listSearchProductFinal
-          .add(Product(int.parse(barcode!), name, false, imageFrontUrl,false));
+          .add(Product(int.parse(barcode!), name, false, imageFrontUrl,false,quantity));
 
       print(element.barcode);
     }
@@ -35,7 +36,7 @@ class ProductRepositoryImpl implements ProductRepository {
   @override
   void insertProductInFloor(Product productEntity) async {
     final productFloor = Product(productEntity.barcodeId!, productEntity.name!,
-        true, productEntity.imageFrontUrl,productEntity.buy);
+        true, productEntity.imageFrontUrl,productEntity.buy,productEntity.quantity);
     await productFloorDao.insertProductFloor(productFloor);
   }
 

@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:meal_maven/features/shopping_list/data/models/product_floor.dart';
 import 'package:meal_maven/features/shopping_list/domain/repository/ProductRepository.dart';
@@ -25,26 +26,61 @@ class _DetailsScreen extends State<DetailsScreen> {
 
   var productRepository = sl<ProductRepository>();
 
+  bool? isSaved = false ;
+
+  @override
+  void initState() {
+    super.initState();
+
+    isSaved = widget.productEntity!.isSaved;
+  }
+
   @override
   Widget build(BuildContext context) {
+
+    final width = MediaQuery.of(context).size.width;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Details Screen'),
       ),
-      body: Center(
-        child: Text(
+      body: Column(children: [
+
+              Text(
           widget.productEntity!.name ?? '',
           style: Theme.of(context).textTheme.headlineMedium,
         ),
-      ),
+
+        Text(widget.productEntity!.quantity ?? ''),
+
+        SizedBox(
+                  height: width * 0.80,
+                  width: width * 0.80,
+                  child: CachedNetworkImage(
+                    fit: BoxFit.fill,
+                    imageUrl: widget.productEntity!.imageFrontUrl!,
+                    placeholder: (context, url) => CircularProgressIndicator(),
+                    errorWidget: (context, url, error) => Icon(Icons.error),
+                  ),
+                ),
+
+      ],),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           if (widget.productEntity?.isSaved == false) {
             var random = Random();
             var randomNumber = random.nextInt(900000) + 100000;
             productRepository.insertProductInFloor(widget.productEntity!);
+
+            setState(() {
+              isSaved = true;
+            });
+
           } else {
             productRepository.deleteProductFloor(widget.productEntity!);
+            setState(() {
+              isSaved = false;
+            });
           }
         },
         backgroundColor: Colors.green,
@@ -55,3 +91,4 @@ class _DetailsScreen extends State<DetailsScreen> {
     );
   }
 }
+

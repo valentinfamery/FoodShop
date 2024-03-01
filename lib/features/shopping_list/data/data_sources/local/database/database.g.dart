@@ -149,7 +149,7 @@ class _$ProductFloorDao extends ProductFloorDao {
             row['name'] as String?,
             row['isSaved'] == null ? null : (row['isSaved'] as int) != 0,
             row['imageFrontUrl'] as String?,
-            row['buy'] == null ? null : (row['buy'] as int) != 0),
+            row['buy'] == null ? null : (row['buy'] as int) != 0,row['quantity'] as String?,),
         queryableName: 'Product',
         isView: false);
   }
@@ -162,7 +162,7 @@ class _$ProductFloorDao extends ProductFloorDao {
             row['name'] as String?,
             row['isSaved'] == null ? null : (row['isSaved'] as int) != 0,
             row['imageFrontUrl'] as String?,
-            row['buy'] == null ? null : (row['buy'] as int) != 0),
+            row['buy'] == null ? null : (row['buy'] as int) != 0,row['quantity'] as String?,),
         arguments: [barcodeId]);
   }
 
