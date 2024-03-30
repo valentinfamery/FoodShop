@@ -1,4 +1,4 @@
-import 'package:meal_maven/features/shopping_list/data/models/product_floor.dart';
+import 'package:food_shop/features/shopping_list/data/models/product_floor.dart';
 
 abstract class ProductRepository {
   Future<List<Product>> searchProductByName(String name);
@@ -8,4 +8,6 @@ abstract class ProductRepository {
   Stream<List<Product>> getProductsSaved();
 
   void deleteProductFloor(Product product);
+
+  Future<bool> isProductSaved(int barcodeId);
 }

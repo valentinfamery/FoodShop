@@ -85,7 +85,7 @@ class _$AppDatabase extends AppDatabase {
       },
       onCreate: (database, version) async {
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `Product` (`barcodeId` INTEGER, `name` TEXT, `isSaved` INTEGER, `imageFrontUrl` TEXT, `buy` INTEGER, PRIMARY KEY (`barcodeId`))');
+            'CREATE TABLE IF NOT EXISTS `Product` (`barcodeId` INTEGER, `name` TEXT, `isSaved` INTEGER, `imageFrontUrl` TEXT, `buy` INTEGER, `quantity` TEXT, PRIMARY KEY (`barcodeId`))');
 
         await callback?.onCreate?.call(database, version);
       },
@@ -114,7 +114,8 @@ class _$ProductFloorDao extends ProductFloorDao {
                   'isSaved':
                       item.isSaved == null ? null : (item.isSaved! ? 1 : 0),
                   'imageFrontUrl': item.imageFrontUrl,
-                  'buy': item.buy == null ? null : (item.buy! ? 1 : 0)
+                  'buy': item.buy == null ? null : (item.buy! ? 1 : 0),
+                  'quantity': item.quantity
                 },
             changeListener),
         _productDeletionAdapter = DeletionAdapter(
@@ -127,7 +128,8 @@ class _$ProductFloorDao extends ProductFloorDao {
                   'isSaved':
                       item.isSaved == null ? null : (item.isSaved! ? 1 : 0),
                   'imageFrontUrl': item.imageFrontUrl,
-                  'buy': item.buy == null ? null : (item.buy! ? 1 : 0)
+                  'buy': item.buy == null ? null : (item.buy! ? 1 : 0),
+                  'quantity': item.quantity
                 },
             changeListener);
 
@@ -149,7 +151,8 @@ class _$ProductFloorDao extends ProductFloorDao {
             row['name'] as String?,
             row['isSaved'] == null ? null : (row['isSaved'] as int) != 0,
             row['imageFrontUrl'] as String?,
-            row['buy'] == null ? null : (row['buy'] as int) != 0,row['quantity'] as String?,),
+            row['buy'] == null ? null : (row['buy'] as int) != 0,
+            row['quantity'] as String?),
         queryableName: 'Product',
         isView: false);
   }
@@ -162,7 +165,8 @@ class _$ProductFloorDao extends ProductFloorDao {
             row['name'] as String?,
             row['isSaved'] == null ? null : (row['isSaved'] as int) != 0,
             row['imageFrontUrl'] as String?,
-            row['buy'] == null ? null : (row['buy'] as int) != 0,row['quantity'] as String?,),
+            row['buy'] == null ? null : (row['buy'] as int) != 0,
+            row['quantity'] as String?),
         arguments: [barcodeId]);
   }
 

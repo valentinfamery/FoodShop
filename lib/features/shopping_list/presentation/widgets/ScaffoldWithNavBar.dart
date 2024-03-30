@@ -40,6 +40,10 @@ class _ScaffoldWithNavBarState extends State<ScaffoldWithNavBar> {
             icon: Icon(Icons.search),
             label: 'Search',
           ),
+          NavigationDestination(
+            icon: Icon(Icons.settings_applications_rounded),
+            label: 'Settings',
+          ),
         ],
         selectedIndex: _calculateSelectedIndex(context),
       ),
@@ -54,6 +58,10 @@ class _ScaffoldWithNavBarState extends State<ScaffoldWithNavBar> {
     if (location.startsWith('/search')) {
       return 1;
     }
+    if (location.startsWith('/settings')) {
+      return 2;
+    }
+
     return 0;
   }
 
@@ -64,6 +72,9 @@ class _ScaffoldWithNavBarState extends State<ScaffoldWithNavBar> {
         break;
       case 1:
         GoRouter.of(context).go('/search');
+        break;
+      case 2:
+        GoRouter.of(context).go('/settings');
         break;
     }
   }

@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:food_shop/features/shopping_list/domain/repository/ProductRepository.dart';
+import 'package:food_shop/injection_container.dart';
 import 'package:go_router/go_router.dart';
-import 'package:meal_maven/features/shopping_list/data/models/product_floor.dart';
+import 'package:food_shop/features/shopping_list/data/models/product_floor.dart';
 
-import 'package:meal_maven/features/shopping_list/presentation/pages/DetailsScreen.dart';
-import 'package:meal_maven/features/shopping_list/presentation/pages/ListScreen.dart';
-import 'package:meal_maven/features/shopping_list/presentation/pages/SearchScreen.dart';
-import 'package:meal_maven/features/shopping_list/presentation/widgets/ScaffoldWithNavBar.dart';
+import 'package:food_shop/features/shopping_list/presentation/pages/DetailsScreen.dart';
+import 'package:food_shop/features/shopping_list/presentation/pages/ListScreen.dart';
+import 'package:food_shop/features/shopping_list/presentation/pages/SearchScreen.dart';
+import 'package:food_shop/features/shopping_list/presentation/pages/SettingsScren.dart';
+import 'package:food_shop/features/shopping_list/presentation/widgets/ScaffoldWithNavBar.dart';
 
 final GlobalKey<NavigatorState> _rootNavigatorKey =
     GlobalKey<NavigatorState>(debugLabel: 'root');
@@ -63,15 +66,24 @@ class Routes {
                 path: 'details',
                 parentNavigatorKey: _rootNavigatorKey,
                 builder: (BuildContext context, GoRouterState state) {
+                  var productRepository = sl<ProductRepository>();
+
                   final Product extraProductEntity =
                       GoRouterState.of(context).extra! as Product;
-
+                      
                   return DetailsScreen(
                     productEntity: extraProductEntity,
                   );
                 },
               ),
             ],
+          ),
+
+          GoRoute(
+            path: '/settings',
+            builder: (BuildContext context, GoRouterState state) {
+              return const SettingsScreen();
+            },
           ),
         ],
       ),

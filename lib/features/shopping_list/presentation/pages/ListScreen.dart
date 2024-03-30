@@ -3,10 +3,10 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:meal_maven/features/shopping_list/data/models/product_floor.dart';
-import 'package:meal_maven/features/shopping_list/domain/repository/ProductRepository.dart';
-import 'package:meal_maven/features/shopping_list/presentation/widgets/ListWidget.dart';
-import 'package:meal_maven/injection_container.dart';
+import 'package:food_shop/features/shopping_list/data/models/product_floor.dart';
+import 'package:food_shop/features/shopping_list/domain/repository/ProductRepository.dart';
+import 'package:food_shop/features/shopping_list/presentation/widgets/ListWidget.dart';
+import 'package:food_shop/injection_container.dart';
 
 /// The third screen in the bottom navigation bar.
 
