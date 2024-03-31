@@ -84,14 +84,19 @@ class _DetailsScreen extends State<DetailsScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          setState(() {
-            isSaved = !isSaved!;
-          });
           if (isSaved == false) {
             var random = Random();
             var randomNumber = random.nextInt(900000) + 100000;
             productRepository.insertProductInFloor(widget.productEntity!);
+
+            setState(() {
+              isSaved = true;
+            });
           } else {
+            setState(() {
+              isSaved = false;
+            });
+
             productRepository.deleteProductFloor(widget.productEntity!);
           }
         },
