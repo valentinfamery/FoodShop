@@ -7,6 +7,7 @@ import 'package:food_shop/features/shopping_list/data/models/product_floor.dart'
 import 'package:food_shop/features/shopping_list/domain/repository/ProductRepository.dart';
 import 'package:food_shop/injection_container.dart';
 import 'package:openfoodfacts/openfoodfacts.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -19,6 +20,7 @@ Future<void> main() async {
   OpenFoodAPIConfiguration.userAgent = UserAgent(
     name: 'meal_maven',
   );
+
 }
 
 class MainApp extends ConsumerWidget {
@@ -26,6 +28,11 @@ class MainApp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+
+    
+
+    
+
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',

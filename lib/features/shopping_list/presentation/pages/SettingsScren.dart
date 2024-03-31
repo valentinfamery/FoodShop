@@ -16,17 +16,7 @@ class SettingsScreen extends StatefulWidget {
 enum ColorPossibility { Rouge, Jaune, Vert, Bleu }
 
 class _SettingsScreen extends State<SettingsScreen> {
-  final sharedPreferences = sl<SharedPreferences>();
-
-  Color _selectedColor = Color(00);
-
-  // Key for SharedPreferences
-  final String _prefKey = 'selected_color';
-
-  _saveColor(Color color) async {
-    await sharedPreferences.setInt(_prefKey, color.value);
-  }
-
+  
   @override
   Widget build(BuildContext context) {
     ColorPossibility colorPossibility = ColorPossibility.Bleu;

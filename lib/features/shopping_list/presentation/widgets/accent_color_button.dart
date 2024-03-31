@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:food_shop/config/theme/app_theme.dart';
+import 'package:food_shop/injection_container.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AccentColorButton extends ConsumerWidget {
   final Color color;
@@ -15,9 +17,22 @@ class AccentColorButton extends ConsumerWidget {
     final acProvider = ref.watch(accentColorProvider);
     double size = 32;
 
+    final sharedPreferences = sl<SharedPreferences>();
+
+    Color _selectedColor = Color(00);
+
+    // Key for SharedPreferences
+    const String prefKey = 'selected_color';
+
+    _saveColor(Color color) async {
+      await sharedPreferences.setInt(prefKey, color.value);
+    }
+
     return InkWell(
-      onTap: () =>
-          ref.read(accentColorProvider.notifier).update((state) => color),
+      onTap: () {
+        _saveColor(color);
+        ref.read(accentColorProvider.notifier).update((state) => color);
+      },
       child: Container(
         decoration: BoxDecoration(
           border: Border.all(
