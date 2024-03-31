@@ -21,15 +21,19 @@ Future<void> main() async {
   );
 }
 
-class MainApp extends StatelessWidget {
+class MainApp extends ConsumerWidget {
   const MainApp({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
-      theme: appTheme,
+      theme: ThemeData.from(
+        useMaterial3: true,
+        colorScheme:
+            ColorScheme.fromSeed(seedColor: ref.watch(accentColorProvider)),
+      ),
       routerConfig: Routes.router,
     );
   }

@@ -1,56 +1,51 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_material_color_picker/flutter_material_color_picker.dart';
+import 'package:food_shop/features/shopping_list/presentation/widgets/accent_color_button.dart';
+import 'package:food_shop/injection_container.dart';
+import 'package:go_router/go_router.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SettingsScreen extends StatefulWidget {
-  const SettingsScreen({super.key});
+  SettingsScreen({super.key});
 
   @override
   State<SettingsScreen> createState() => _SettingsScreen();
 }
 
+enum ColorPossibility { Rouge, Jaune, Vert, Bleu }
+
 class _SettingsScreen extends State<SettingsScreen> {
+  final sharedPreferences = sl<SharedPreferences>();
+
   Color _selectedColor = Color(00);
 
-  final red = Color(0xFFE54C41);
+  // Key for SharedPreferences
+  final String _prefKey = 'selected_color';
+
+  _saveColor(Color color) async {
+    await sharedPreferences.setInt(_prefKey, color.value);
+  }
 
   @override
   Widget build(BuildContext context) {
+    ColorPossibility colorPossibility = ColorPossibility.Bleu;
+
     // TODO: implement build
     return Scaffold(
       appBar: AppBar(),
-      body: Column(
+      body: const Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Row(children: [
-            Container(
-              width: 50,
-              height: 50,
-              color: _selectedColor,
-            ),
-            TextButton(
-              onPressed: () => showDialog<String>(
-                context: context,
-                builder: (BuildContext context) => AlertDialog(
-                  title: const Text('AlertDialog Title'),
-                  content: Row(
-                    children: [],
-                  ),
-                  actions: <Widget>[
-                    TextButton(
-                      onPressed: () => Navigator.pop(context, 'Cancel'),
-                      child: const Text('Cancel'),
-                    ),
-                    TextButton(
-                      onPressed: () => Navigator.pop(context, 'OK'),
-                      child: const Text('OK'),
-                    ),
-                  ],
-                ),
-              ),
-              child: const Text('Pick a Color'),
-            ),
-          ]),
+          Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                AccentColorButton(color: Color(0xFFE54C41)),
+                AccentColorButton(color: Color(0xFFFFCD29)),
+                AccentColorButton(color: Color(0xFF14AE5C)),
+                AccentColorButton(color: Color(0xFF4C88EF)),
+              ],
+            )
         ],
       ),
     );

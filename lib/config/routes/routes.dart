@@ -82,7 +82,7 @@ class Routes {
           GoRoute(
             path: '/settings',
             builder: (BuildContext context, GoRouterState state) {
-              return const SettingsScreen();
+              return SettingsScreen();
             },
           ),
         ],

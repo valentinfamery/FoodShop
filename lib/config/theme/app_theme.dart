@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-ThemeData appTheme = ThemeData.from(
-  useMaterial3: true,
-  colorScheme: ColorScheme.fromSeed(seedColor: const Color(0x00e9dbcb)),
-);
+final accentColorProvider = StateProvider<Color>((ref) => Colors.blue);
