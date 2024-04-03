@@ -5,14 +5,14 @@ import 'package:food_shop/features/shopping_list/data/models/product_floor.dart'
 @dao
 abstract class ProductFloorDao {
   @Query('SELECT * FROM Product')
-  Stream<List<Product>> getAllProductFloor();
+  Stream<List<ProductFoodShop>> getAllProductFloor();
 
   @Query('SELECT * FROM Product WHERE barcodeId = :barcodeId')
-  Future<Product?> getProductFloorById(int barcodeId);
+  Future<ProductFoodShop?> getProductFloorById(int barcodeId);
 
   @insert
-  Future<void> insertProductFloor(Product productFloor);
+  Future<void> insertProductFloor(ProductFoodShop productFloor);
 
   @delete
-  Future<void> deleteProductFloor(Product productFloor);
+  Future<void> deleteProductFloor(ProductFoodShop productFloor);
 }

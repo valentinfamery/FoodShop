@@ -1,13 +1,14 @@
 import 'package:food_shop/features/shopping_list/data/models/product_floor.dart';
+import 'package:openfoodfacts/openfoodfacts.dart';
 
 abstract class ProductRepository {
-  Future<List<Product>> searchProductByName(String name);
+  Future<List<ProductFoodShop>> searchProductByName(String name,PnnsGroup2? pnnsGroup2);
 
-  void insertProductInFloor(Product product);
+  void insertProductInFloor(ProductFoodShop product);
 
-  Stream<List<Product>> getProductsSaved();
+  Stream<List<ProductFoodShop>> getProductsSaved();
 
-  void deleteProductFloor(Product product);
+  void deleteProductFloor(ProductFoodShop product);
 
   Future<bool> isProductSaved(int barcodeId);
 }

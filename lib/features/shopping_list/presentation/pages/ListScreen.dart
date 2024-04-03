@@ -10,7 +10,8 @@ import 'package:food_shop/injection_container.dart';
 
 /// The third screen in the bottom navigation bar.
 
-final getProductsSaved = StreamProvider.autoDispose<List<Product>?>((ref) {
+final getProductsSaved =
+    StreamProvider.autoDispose<List<ProductFoodShop>?>((ref) {
   var productRepository = sl<ProductRepository>();
 
   return productRepository.getProductsSaved();

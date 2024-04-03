@@ -4,6 +4,7 @@ import 'package:food_shop/features/shopping_list/data/data_sources/local/dao/pro
 import 'package:food_shop/features/shopping_list/data/data_sources/remote/open_food_fact_product.dart';
 import 'package:food_shop/features/shopping_list/data/models/product_floor.dart';
 import 'package:food_shop/features/shopping_list/domain/repository/ProductRepository.dart';
+import 'package:openfoodfacts/openfoodfacts.dart';
 
 class ProductRepositoryImpl implements ProductRepository {
   final ProductFloorDao productFloorDao;
@@ -13,10 +14,12 @@ class ProductRepositoryImpl implements ProductRepository {
   final apiOpenFoodFact = OpenFoodFactProduct();
 
   @override
-  Future<List<Product>> searchProductByName(String name) async {
-    final listSearchApiProduct = await apiOpenFoodFact.searchByName(name);
+  Future<List<ProductFoodShop>> searchProductByName(
+      String name, PnnsGroup2? pnnsGroup2) async {
+    final listSearchApiProduct =
+        await apiOpenFoodFact.searchByName(name, pnnsGroup2);
 
-    List<Product> listSearchProductFinal = <Product>[];
+    List<ProductFoodShop> listSearchProductFinal = <ProductFoodShop>[];
 
     for (var element in listSearchApiProduct!) {
       final barcode = element!.barcode;
@@ -24,7 +27,7 @@ class ProductRepositoryImpl implements ProductRepository {
       final imageFrontUrl = element.imageFrontUrl;
       final quantity = element.quantity;
 
-      listSearchProductFinal.add(Product(
+      listSearchProductFinal.add(ProductFoodShop(
           int.parse(barcode!), name, false, imageFrontUrl, false, quantity));
 
       print(element.barcode);
@@ -34,8 +37,8 @@ class ProductRepositoryImpl implements ProductRepository {
   }
 
   @override
-  void insertProductInFloor(Product productEntity) async {
-    final productFloor = Product(
+  void insertProductInFloor(ProductFoodShop productEntity) async {
+    final productFloor = ProductFoodShop(
         productEntity.barcodeId!,
         productEntity.name!,
         true,
@@ -46,12 +49,12 @@ class ProductRepositoryImpl implements ProductRepository {
   }
 
   @override
-  Stream<List<Product>> getProductsSaved() {
+  Stream<List<ProductFoodShop>> getProductsSaved() {
     return productFloorDao.getAllProductFloor();
   }
 
   @override
-  void deleteProductFloor(Product product) async {
+  void deleteProductFloor(ProductFoodShop product) async {
     await productFloorDao.deleteProductFloor(product);
   }
 

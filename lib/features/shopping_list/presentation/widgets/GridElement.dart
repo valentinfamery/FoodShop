@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:food_shop/features/shopping_list/data/models/product_floor.dart';
 
 class GridElement extends StatefulWidget {
-  final Product product;
+  final ProductFoodShop product;
 
   const GridElement({required this.product, super.key});
 

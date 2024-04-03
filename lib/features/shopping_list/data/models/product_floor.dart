@@ -1,7 +1,7 @@
 import 'package:floor/floor.dart';
 
 @entity
-class Product {
+class ProductFoodShop {
   @primaryKey
   final int? barcodeId;
 
@@ -11,12 +11,6 @@ class Product {
   final bool? buy;
   final String? quantity;
 
-  Product(
-    this.barcodeId,
-    this.name,
-    this.isSaved,
-    this.imageFrontUrl,
-    this.buy,
-    this.quantity
-  );
+  ProductFoodShop(this.barcodeId, this.name, this.isSaved, this.imageFrontUrl,
+      this.buy, this.quantity);
 }

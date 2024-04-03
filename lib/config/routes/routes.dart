@@ -40,8 +40,8 @@ class Routes {
               GoRoute(
                 path: 'details',
                 builder: (BuildContext context, GoRouterState state) {
-                  final Product extraProductEntity =
-                      GoRouterState.of(context).extra! as Product;
+                  final ProductFoodShop extraProductEntity =
+                      GoRouterState.of(context).extra! as ProductFoodShop;
 
                   return DetailsScreen(
                     productEntity: extraProductEntity,
@@ -56,7 +56,7 @@ class Routes {
           GoRoute(
             path: '/search',
             builder: (BuildContext context, GoRouterState state) {
-              return const SearchScreen();
+              return SearchScreen();
             },
             routes: <RouteBase>[
               /// Same as "/a/details", but displayed on the root Navigator by
@@ -68,9 +68,9 @@ class Routes {
                 builder: (BuildContext context, GoRouterState state) {
                   var productRepository = sl<ProductRepository>();
 
-                  final Product extraProductEntity =
-                      GoRouterState.of(context).extra! as Product;
-                      
+                  final ProductFoodShop extraProductEntity =
+                      GoRouterState.of(context).extra! as ProductFoodShop;
+
                   return DetailsScreen(
                     productEntity: extraProductEntity,
                   );

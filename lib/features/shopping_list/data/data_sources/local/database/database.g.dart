@@ -108,7 +108,7 @@ class _$ProductFloorDao extends ProductFloorDao {
         _productInsertionAdapter = InsertionAdapter(
             database,
             'Product',
-            (Product item) => <String, Object?>{
+            (ProductFoodShop item) => <String, Object?>{
                   'barcodeId': item.barcodeId,
                   'name': item.name,
                   'isSaved':
@@ -122,7 +122,7 @@ class _$ProductFloorDao extends ProductFloorDao {
             database,
             'Product',
             ['barcodeId'],
-            (Product item) => <String, Object?>{
+            (ProductFoodShop item) => <String, Object?>{
                   'barcodeId': item.barcodeId,
                   'name': item.name,
                   'isSaved':
@@ -139,14 +139,14 @@ class _$ProductFloorDao extends ProductFloorDao {
 
   final QueryAdapter _queryAdapter;
 
-  final InsertionAdapter<Product> _productInsertionAdapter;
+  final InsertionAdapter<ProductFoodShop> _productInsertionAdapter;
 
-  final DeletionAdapter<Product> _productDeletionAdapter;
+  final DeletionAdapter<ProductFoodShop> _productDeletionAdapter;
 
   @override
-  Stream<List<Product>> getAllProductFloor() {
+  Stream<List<ProductFoodShop>> getAllProductFloor() {
     return _queryAdapter.queryListStream('SELECT * FROM Product',
-        mapper: (Map<String, Object?> row) => Product(
+        mapper: (Map<String, Object?> row) => ProductFoodShop(
             row['barcodeId'] as int?,
             row['name'] as String?,
             row['isSaved'] == null ? null : (row['isSaved'] as int) != 0,
@@ -158,9 +158,9 @@ class _$ProductFloorDao extends ProductFloorDao {
   }
 
   @override
-  Future<Product?> getProductFloorById(int barcodeId) async {
+  Future<ProductFoodShop?> getProductFloorById(int barcodeId) async {
     return _queryAdapter.query('SELECT * FROM Product WHERE barcodeId = ?1',
-        mapper: (Map<String, Object?> row) => Product(
+        mapper: (Map<String, Object?> row) => ProductFoodShop(
             row['barcodeId'] as int?,
             row['name'] as String?,
             row['isSaved'] == null ? null : (row['isSaved'] as int) != 0,
@@ -171,13 +171,13 @@ class _$ProductFloorDao extends ProductFloorDao {
   }
 
   @override
-  Future<void> insertProductFloor(Product productFloor) async {
+  Future<void> insertProductFloor(ProductFoodShop productFloor) async {
     await _productInsertionAdapter.insert(
         productFloor, OnConflictStrategy.abort);
   }
 
   @override
-  Future<void> deleteProductFloor(Product productFloor) async {
+  Future<void> deleteProductFloor(ProductFoodShop productFloor) async {
     await _productDeletionAdapter.delete(productFloor);
   }
 }

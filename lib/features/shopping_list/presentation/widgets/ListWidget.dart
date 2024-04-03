@@ -7,7 +7,7 @@ import 'package:food_shop/features/shopping_list/presentation/widgets/GridElemen
 import 'package:food_shop/injection_container.dart';
 
 class ListWidget extends StatelessWidget {
-  final List<Product> products;
+  final List<ProductFoodShop> products;
 
   ListWidget({required this.products, super.key});
 

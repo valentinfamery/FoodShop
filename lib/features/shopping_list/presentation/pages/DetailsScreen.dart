@@ -8,7 +8,7 @@ import 'package:food_shop/injection_container.dart';
 import 'package:go_router/go_router.dart';
 
 class DetailsScreen extends StatefulWidget {
-  final Product? productEntity;
+  final ProductFoodShop? productEntity;
 
   DetailsScreen({
     this.productEntity,
@@ -100,7 +100,6 @@ class _DetailsScreen extends State<DetailsScreen> {
             productRepository.deleteProductFloor(widget.productEntity!);
           }
         },
-        backgroundColor: Colors.green,
         child: isSaved == true ? Icon(Icons.done) : Icon(Icons.add),
       ),
     );
