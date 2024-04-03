@@ -13,9 +13,11 @@ class ListTag extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final valuePnnsGroup2 = ref.watch(selectedPnnsGroup2);
 
+    List<PnnsGroup2> pnnsGroup2list = PnnsGroup2.values;
+
     return AlertDialog(
       title: const Text('Categories'),
-      content: ListView(
+      content: Column(
         children: [
           RadioListTile<PnnsGroup2?>(
               title: const Text('Toutes les categories'),
@@ -27,28 +29,27 @@ class ListTag extends ConsumerWidget {
                     .update((state) => 'Categories');
                 ref.read(selectedPnnsGroup2.notifier).update((state) => value);
               }),
-          RadioListTile<PnnsGroup2?>(
-              title: Text(PnnsGroup2.ALCOHOLIC_BEVERAGES.name),
-              value: PnnsGroup2.ALCOHOLIC_BEVERAGES,
-              groupValue: valuePnnsGroup2,
-              onChanged: (PnnsGroup2? value) {
-                ref
-                    .read(buttonTagProvider.notifier)
-                    .update((state) => PnnsGroup2.ALCOHOLIC_BEVERAGES.name);
+          SizedBox(
+            width: 300,
+            height: 400,
+            child: ListView.builder(
+                itemCount: pnnsGroup2list.length,
+                itemBuilder: (context, index) {
+                  return RadioListTile<PnnsGroup2?>(
+                      title: Text(pnnsGroup2list[index].name),
+                      value: pnnsGroup2list[index],
+                      groupValue: valuePnnsGroup2,
+                      onChanged: (PnnsGroup2? value) {
+                        ref
+                            .read(buttonTagProvider.notifier)
+                            .update((state) => pnnsGroup2list[index].name);
 
-                ref.read(selectedPnnsGroup2.notifier).update((state) => value);
-              }),
-          RadioListTile<PnnsGroup2?>(
-              title: Text(PnnsGroup2.APPETIZERS.name),
-              value: PnnsGroup2.APPETIZERS,
-              groupValue: valuePnnsGroup2,
-              onChanged: (PnnsGroup2? value) {
-                ref
-                    .read(buttonTagProvider.notifier)
-                    .update((state) => PnnsGroup2.APPETIZERS.name);
-
-                ref.read(selectedPnnsGroup2.notifier).update((state) => value);
-              }),
+                        ref
+                            .read(selectedPnnsGroup2.notifier)
+                            .update((state) => value);
+                      });
+                }),
+          ),
         ],
       ),
       actions: <Widget>[
