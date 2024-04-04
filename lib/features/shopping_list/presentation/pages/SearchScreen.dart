@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:food_shop/features/shopping_list/data/data_sources/local/dao/product_floor_dao.dart';
 import 'package:food_shop/features/shopping_list/presentation/widgets/ListTag.dart';
 import 'package:go_router/go_router.dart';
 import 'package:food_shop/features/shopping_list/data/models/product_floor.dart';
@@ -17,6 +18,10 @@ final buttonTagProvider = StateProvider<String>((ref) => 'Categories');
 
 class SearchScreen extends ConsumerWidget {
   final myController = TextEditingController();
+
+  final textFieldBrand = TextEditingController();
+  final textFieldStores = TextEditingController();
+  final textFieldIngredients = TextEditingController();
 
   var productRepository = sl<ProductRepository>();
 
@@ -41,12 +46,39 @@ class SearchScreen extends ConsumerWidget {
             controller: myController,
             decoration: const InputDecoration(
               border: OutlineInputBorder(),
-              hintText: 'Enter a search term',
+              hintText: 'Saisissez le Nom du Produit ',
+            ),
+          ),
+          TextField(
+            controller: textFieldBrand,
+            decoration: const InputDecoration(
+              border: OutlineInputBorder(),
+              hintText: 'Saisissez la Marque du Produit',
+            ),
+          ),
+          TextField(
+            controller: textFieldStores,
+            decoration: const InputDecoration(
+              border: OutlineInputBorder(),
+              hintText: 'Saisissez le Magasin du Produit',
+            ),
+          ),
+          TextField(
+            controller: textFieldIngredients,
+            decoration: const InputDecoration(
+              border: OutlineInputBorder(),
+              hintText: 'Saisissez un des ingredients du Produit',
             ),
           ),
           ElevatedButton(
             onPressed: () {
-              searchProductByName(myController.text, pnnsGroup2, ref);
+              searchProductByName(
+                  myController.text,
+                  pnnsGroup2,
+                  ref,
+                  textFieldBrand.text,
+                  textFieldStores.text,
+                  textFieldIngredients.text);
             },
             child: const Text('Search'),
           ),
@@ -104,10 +136,10 @@ class SearchScreen extends ConsumerWidget {
     );
   }
 
-  void searchProductByName(
-      String name, PnnsGroup2? pnnsGroup2, WidgetRef ref) async {
-    final listAPI =
-        await productRepository.searchProductByName(name, pnnsGroup2);
+  void searchProductByName(String name, PnnsGroup2? pnnsGroup2, WidgetRef ref,
+      String termBrand, String termStore, String termIngredient) async {
+    final listAPI = await productRepository.searchProductByName(
+        name, pnnsGroup2, termBrand, termStore, termIngredient);
     for (var element in listAPI) {
       if (kDebugMode) {
         print(element.name);

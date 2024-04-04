@@ -15,17 +15,24 @@ class ListWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GridView.builder(
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
-      ),
-      itemCount: products.length,
-      itemBuilder: (BuildContext contextItem, int index) {
-        return GridElement(
-          product: products[index],
-        );
-      },
-    );
+    if (products.isNotEmpty) {
+      return GridView.builder(
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+        ),
+        itemCount: products.length,
+        itemBuilder: (BuildContext contextItem, int index) {
+          return GridElement(
+            product: products[index],
+          );
+        },
+      );
+    } else {
+      return const Center(
+        child: Text('La liste de Courses est Vide'),
+      );
+    }
+
     // Votre contenu de boîte ici
   }
 }

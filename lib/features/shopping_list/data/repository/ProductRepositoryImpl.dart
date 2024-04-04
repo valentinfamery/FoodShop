@@ -15,9 +15,9 @@ class ProductRepositoryImpl implements ProductRepository {
 
   @override
   Future<List<ProductFoodShop>> searchProductByName(
-      String name, PnnsGroup2? pnnsGroup2) async {
+      String name, PnnsGroup2? pnnsGroup2,String termBrand , String termStore , String termIngredient) async {
     final listSearchApiProduct =
-        await apiOpenFoodFact.searchByName(name, pnnsGroup2);
+        await apiOpenFoodFact.searchByName(name, pnnsGroup2,termBrand , termStore , termIngredient);
 
     List<ProductFoodShop> listSearchProductFinal = <ProductFoodShop>[];
 
