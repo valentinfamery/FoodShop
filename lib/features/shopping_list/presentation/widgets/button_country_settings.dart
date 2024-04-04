@@ -46,19 +46,13 @@ class ButtonCountrySettings extends ConsumerWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(
-              height: size,
-              width: size,
-              child: Text(country.name),
-            ),
-            const SizedBox(width: 16),
             Column(
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(title),
-                Text(description),
+                Text("$description. Actuellement ${country.name}"),
               ],
             ),
           ],

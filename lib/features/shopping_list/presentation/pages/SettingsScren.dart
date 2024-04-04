@@ -25,8 +25,7 @@ class SettingsScreen extends ConsumerWidget {
                 description: "Change la couleur d'accentuation."),
             ButtonCountrySettings(
               title: "Pays de Recherche",
-              description:
-                  "Change le Pays pour la base de données Open Food Fact",
+              description: "Change le pays",
             ),
           ],
         ),
