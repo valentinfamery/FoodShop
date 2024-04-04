@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:food_shop/features/shopping_list/data/data_sources/local/dao/product_floor_dao.dart';
 import 'package:food_shop/features/shopping_list/presentation/widgets/ListTag.dart';
+import 'package:food_shop/features/shopping_list/presentation/widgets/button_country_settings.dart';
 import 'package:go_router/go_router.dart';
 import 'package:food_shop/features/shopping_list/data/models/product_floor.dart';
 import 'package:food_shop/features/shopping_list/data/repository/ProductRepositoryImpl.dart';
@@ -35,6 +36,8 @@ class SearchScreen extends ConsumerWidget {
     String buttonTag = ref.watch(buttonTagProvider);
 
     PnnsGroup2? pnnsGroup2 = ref.watch(selectedPnnsGroup2);
+
+    final country = ref.watch(countryStateProvider);
 
     final width = MediaQuery.of(context).size.width / 2;
 
@@ -78,7 +81,8 @@ class SearchScreen extends ConsumerWidget {
                   ref,
                   textFieldBrand.text,
                   textFieldStores.text,
-                  textFieldIngredients.text);
+                  textFieldIngredients.text,
+                  country);
             },
             child: const Text('Search'),
           ),
@@ -137,9 +141,9 @@ class SearchScreen extends ConsumerWidget {
   }
 
   void searchProductByName(String name, PnnsGroup2? pnnsGroup2, WidgetRef ref,
-      String termBrand, String termStore, String termIngredient) async {
+      String termBrand, String termStore, String termIngredient, OpenFoodFactsCountry country) async {
     final listAPI = await productRepository.searchProductByName(
-        name, pnnsGroup2, termBrand, termStore, termIngredient);
+        name, pnnsGroup2, termBrand, termStore, termIngredient,country);
     for (var element in listAPI) {
       if (kDebugMode) {
         print(element.name);

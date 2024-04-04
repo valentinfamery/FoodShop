@@ -4,6 +4,7 @@ import 'package:food_shop/features/shopping_list/data/data_sources/local/dao/pro
 import 'package:food_shop/features/shopping_list/data/data_sources/remote/open_food_fact_product.dart';
 import 'package:food_shop/features/shopping_list/data/models/product_floor.dart';
 import 'package:food_shop/features/shopping_list/domain/repository/ProductRepository.dart';
+import 'package:food_shop/features/shopping_list/presentation/widgets/button_country_settings.dart';
 import 'package:openfoodfacts/openfoodfacts.dart';
 
 class ProductRepositoryImpl implements ProductRepository {
@@ -15,9 +16,9 @@ class ProductRepositoryImpl implements ProductRepository {
 
   @override
   Future<List<ProductFoodShop>> searchProductByName(
-      String name, PnnsGroup2? pnnsGroup2,String termBrand , String termStore , String termIngredient) async {
+      String name, PnnsGroup2? pnnsGroup2,String termBrand , String termStore , String termIngredient,OpenFoodFactsCountry country) async {
     final listSearchApiProduct =
-        await apiOpenFoodFact.searchByName(name, pnnsGroup2,termBrand , termStore , termIngredient);
+        await apiOpenFoodFact.searchByName(name, pnnsGroup2,termBrand , termStore , termIngredient,country);
 
     List<ProductFoodShop> listSearchProductFinal = <ProductFoodShop>[];
 

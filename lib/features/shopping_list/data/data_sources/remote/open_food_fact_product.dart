@@ -1,8 +1,15 @@
+import 'package:food_shop/injection_container.dart';
 import 'package:openfoodfacts/openfoodfacts.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class OpenFoodFactProduct {
-  Future<List<Product?>?> searchByName(String name, PnnsGroup2? pnnsGroup2,
-      String termBrand, String termStore, String termIngredient) async {
+  Future<List<Product?>?> searchByName(
+      String name,
+      PnnsGroup2? pnnsGroup2,
+      String termBrand,
+      String termStore,
+      String termIngredient,
+      OpenFoodFactsCountry country) async {
     var parameterList = <Parameter>[];
 
     if (pnnsGroup2 != null) {
@@ -42,6 +49,7 @@ class OpenFoodFactProduct {
 
     ProductSearchQueryConfiguration configuration =
         ProductSearchQueryConfiguration(
+            country: country,
             language: OpenFoodFactsLanguage.FRENCH,
             version: ProductQueryVersion.v3,
             parametersList: parameterList);
