@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:food_shop/config/theme/app_theme.dart';
 import 'package:food_shop/features/shopping_list/presentation/widgets/accent_color_button.dart';
 
 class RowClickableSettingsButton extends ConsumerWidget {
@@ -15,17 +16,42 @@ class RowClickableSettingsButton extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    double size = 32;
+
+    final acProvider = ref.watch(accentColorProvider);
+
     return InkWell(
+      customBorder: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
+      ),
       onTap: () {
         showMyDialog(context);
       },
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(title),
-          Text(description),
-        ],
+      child: Container(
+        padding: const EdgeInsets.all(10),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              height: size,
+              width: size,
+              decoration: BoxDecoration(
+                color: acProvider,
+                borderRadius: BorderRadius.circular(size),
+              ),
+            ),
+            const SizedBox(width: 16),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(title),
+                Text(description),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
