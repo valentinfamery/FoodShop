@@ -119,14 +119,17 @@ class SearchScreen extends ConsumerWidget {
                         SizedBox(
                           height: width * 0.50,
                           width: width * 0.50,
-                          child: CachedNetworkImage(
-                            fit: BoxFit.fill,
-                            imageUrl: listSearchProduct[index].imageFrontUrl!,
-                            placeholder: (context, url) =>
-                                const CircularProgressIndicator(),
-                            errorWidget: (context, url, error) =>
-                                const Icon(Icons.error),
-                          ),
+                          child: listSearchProduct[index].imageFrontUrl != null
+                              ? CachedNetworkImage(
+                                  fit: BoxFit.fill,
+                                  imageUrl:
+                                      listSearchProduct[index].imageFrontUrl!,
+                                  placeholder: (context, url) =>
+                                      const CircularProgressIndicator(),
+                                  errorWidget: (context, url, error) =>
+                                      const Icon(Icons.error),
+                                )
+                              : const Text('Non disponible'),
                         ),
                       ],
                     ),
@@ -140,10 +143,16 @@ class SearchScreen extends ConsumerWidget {
     );
   }
 
-  void searchProductByName(String name, PnnsGroup2? pnnsGroup2, WidgetRef ref,
-      String termBrand, String termStore, String termIngredient, OpenFoodFactsCountry country) async {
+  void searchProductByName(
+      String name,
+      PnnsGroup2? pnnsGroup2,
+      WidgetRef ref,
+      String termBrand,
+      String termStore,
+      String termIngredient,
+      OpenFoodFactsCountry country) async {
     final listAPI = await productRepository.searchProductByName(
-        name, pnnsGroup2, termBrand, termStore, termIngredient,country);
+        name, pnnsGroup2, termBrand, termStore, termIngredient, country);
     for (var element in listAPI) {
       if (kDebugMode) {
         print(element.name);

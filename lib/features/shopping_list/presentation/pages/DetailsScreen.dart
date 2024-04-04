@@ -73,12 +73,12 @@ class _DetailsScreen extends State<DetailsScreen> {
           SizedBox(
             height: width * 0.80,
             width: width * 0.80,
-            child: CachedNetworkImage(
+            child: widget.productEntity!.imageFrontUrl!=null ? CachedNetworkImage(
               fit: BoxFit.fill,
               imageUrl: widget.productEntity!.imageFrontUrl!,
               placeholder: (context, url) => CircularProgressIndicator(),
               errorWidget: (context, url, error) => Icon(Icons.error),
-            ),
+            ): const Text('Non disponible'),
           ),
         ],
       ),

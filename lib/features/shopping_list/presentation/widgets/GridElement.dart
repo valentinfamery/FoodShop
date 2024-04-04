@@ -41,12 +41,15 @@ class _GridElement extends State<GridElement> {
             SizedBox(
               height: width * 0.30,
               width: width * 0.45,
-              child: CachedNetworkImage(
-                fit: BoxFit.fill,
-                imageUrl: widget.product.imageFrontUrl!,
-                placeholder: (context, url) => CircularProgressIndicator(),
-                errorWidget: (context, url, error) => Icon(Icons.error),
-              ),
+              child: widget.product.imageFrontUrl != null
+                  ? CachedNetworkImage(
+                      fit: BoxFit.fill,
+                      imageUrl: widget.product.imageFrontUrl!,
+                      placeholder: (context, url) =>
+                          CircularProgressIndicator(),
+                      errorWidget: (context, url, error) => Icon(Icons.error),
+                    )
+                  : const Text('Non disponible'),
             ),
             Checkbox(
               value: isBuy,
