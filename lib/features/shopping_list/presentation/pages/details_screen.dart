@@ -70,6 +70,9 @@ class _DetailsScreen extends State<DetailsScreen> {
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
 
+    final pastScreen =
+        GoRouter.of(context).routeInformationProvider.value.uri.toString();
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Details Screen'),
@@ -80,21 +83,82 @@ class _DetailsScreen extends State<DetailsScreen> {
             widget.productEntity!.name ?? '',
             style: Theme.of(context).textTheme.headlineMedium,
           ),
-          Text(widget.productEntity!.weight ?? ''),
+          Row(
+            children: [
+              pastScreen == '/list/details'
+                  ? InkWell(
+                      onTap: () {
+                        if (widget.productEntity!.quantity! > 1) {
+                          final quantityRemove =
+                              widget.productEntity!.quantity! - 1;
+
+                          final updateProduct = ProductFoodShop(
+                              widget.productEntity!.barcodeId,
+                              widget.productEntity!.name,
+                              widget.productEntity!.isSaved,
+                              widget.productEntity!.imageFrontUrl,
+                              widget.productEntity!.isBuy,
+                              widget.productEntity!.weight,
+                              quantityRemove);
+
+                          productRepository.updateProductFloor(updateProduct);
+                        }
+                      },
+                      child: const CircleAvatar(
+                        radius: 20,
+                        backgroundColor: Colors.blue,
+                        child: Icon(
+                          Icons.remove,
+                        ),
+                      ),
+                    )
+                  : const SizedBox(),
+              const Spacer(),
+              Text(
+                  '${widget.productEntity!.quantity} x ${widget.productEntity!.weight}'),
+              const Spacer(),
+              pastScreen == '/list/details'
+                  ? InkWell(
+                      onTap: () {
+                        final quantityAdd = widget.productEntity!.quantity! + 1;
+
+                        final updateProduct = ProductFoodShop(
+                            widget.productEntity!.barcodeId,
+                            widget.productEntity!.name,
+                            widget.productEntity!.isSaved,
+                            widget.productEntity!.imageFrontUrl,
+                            widget.productEntity!.isBuy,
+                            widget.productEntity!.weight,
+                            quantityAdd);
+
+                        productRepository.updateProductFloor(updateProduct);
+                      },
+                      child: const CircleAvatar(
+                        radius: 20,
+                        backgroundColor: Colors.blue,
+                        child: Icon(
+                          Icons.add,
+                        ),
+                      ),
+                    )
+                  : const SizedBox(),
+            ],
+          ),
           SizedBox(
             height: width * 0.80,
             width: width * 0.80,
             child: widget.productEntity!.imageFrontUrl != null
-                ? ClipRRect( 
-                  borderRadius: BorderRadius.circular(8.0),
-                  child : CachedNetworkImage(
-                    fit: BoxFit.cover,
-                    imageUrl: widget.productEntity!.imageFrontUrl!,
-                    placeholder: (context, url) =>
-                        const CircularProgressIndicator(),
-                    errorWidget: (context, url, error) =>
-                        const Icon(Icons.error),
-                  ),)
+                ? ClipRRect(
+                    borderRadius: BorderRadius.circular(8.0),
+                    child: CachedNetworkImage(
+                      fit: BoxFit.cover,
+                      imageUrl: widget.productEntity!.imageFrontUrl!,
+                      placeholder: (context, url) =>
+                          const CircularProgressIndicator(),
+                      errorWidget: (context, url, error) =>
+                          const Icon(Icons.error),
+                    ),
+                  )
                 : const Text('Non disponible'),
           ),
         ],

@@ -82,7 +82,7 @@ class GridElement extends ConsumerWidget {
                   width: width * 0.50,
                   height: height * 0.50,
                   child: Text(
-                    '1 x ${product.weight ?? ''}',
+                    '${product.quantity} x ${product.weight}',
                     style: TextStyle(
                       fontSize: height * 0.20,
                     ),
