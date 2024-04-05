@@ -16,9 +16,14 @@ class ProductRepositoryImpl implements ProductRepository {
 
   @override
   Future<List<ProductFoodShop>> searchProductByName(
-      String name, PnnsGroup2? pnnsGroup2,String termBrand , String termStore , String termIngredient,OpenFoodFactsCountry country) async {
-    final listSearchApiProduct =
-        await apiOpenFoodFact.searchByName(name, pnnsGroup2,termBrand , termStore , termIngredient,country);
+      String name,
+      PnnsGroup2? pnnsGroup2,
+      String termBrand,
+      String termStore,
+      String termIngredient,
+      OpenFoodFactsCountry country) async {
+    final listSearchApiProduct = await apiOpenFoodFact.searchByName(
+        name, pnnsGroup2, termBrand, termStore, termIngredient, country);
 
     List<ProductFoodShop> listSearchProductFinal = <ProductFoodShop>[];
 
@@ -26,10 +31,10 @@ class ProductRepositoryImpl implements ProductRepository {
       final barcode = element!.barcode;
       final name = element.productName;
       final imageFrontUrl = element.imageFrontUrl;
-      final quantity = element.quantity;
+      final weight = element.quantity;
 
       listSearchProductFinal.add(ProductFoodShop(
-          int.parse(barcode!), name, false, imageFrontUrl, false, quantity));
+          int.parse(barcode!), name, false, imageFrontUrl, false, weight, 1));
 
       print(element.barcode);
     }
@@ -44,7 +49,8 @@ class ProductRepositoryImpl implements ProductRepository {
         productEntity.name!,
         true,
         productEntity.imageFrontUrl,
-        productEntity.buy,
+        productEntity.isBuy,
+        productEntity.weight,
         productEntity.quantity);
     await productFloorDao.insertProductFloor(productFloor);
   }

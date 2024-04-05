@@ -14,10 +14,10 @@ class GridElement extends StatefulWidget {
 }
 
 class _GridElement extends State<GridElement> {
-  bool isBuy = false;
-
   @override
   Widget build(BuildContext context) {
+    bool isBuy = widget.product.isBuy!;
+
     final pastScreen =
         GoRouter.of(context).routerDelegate.currentConfiguration.fullPath;
 
@@ -76,7 +76,7 @@ class _GridElement extends State<GridElement> {
                   width: width * 0.50,
                   height: height * 0.50,
                   child: Text(
-                    '1'+'x ${widget.product.quantity ?? ''}',
+                    '1' + 'x ${widget.product.weight ?? ''}',
                     style: TextStyle(
                       fontSize: height * 0.20,
                     ),

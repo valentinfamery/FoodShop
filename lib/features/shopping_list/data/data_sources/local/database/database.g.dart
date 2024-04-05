@@ -85,7 +85,7 @@ class _$AppDatabase extends AppDatabase {
       },
       onCreate: (database, version) async {
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `Product` (`barcodeId` INTEGER, `name` TEXT, `isSaved` INTEGER, `imageFrontUrl` TEXT, `buy` INTEGER, `quantity` TEXT, PRIMARY KEY (`barcodeId`))');
+            'CREATE TABLE IF NOT EXISTS `ProductFoodShop` (`barcodeId` INTEGER, `name` TEXT, `isSaved` INTEGER, `imageFrontUrl` TEXT, `isBuy` INTEGER, `weight` TEXT, `quantity` INTEGER, PRIMARY KEY (`barcodeId`))');
 
         await callback?.onCreate?.call(database, version);
       },
@@ -105,22 +105,23 @@ class _$ProductFloorDao extends ProductFloorDao {
     this.database,
     this.changeListener,
   )   : _queryAdapter = QueryAdapter(database, changeListener),
-        _productInsertionAdapter = InsertionAdapter(
+        _productFoodShopInsertionAdapter = InsertionAdapter(
             database,
-            'Product',
+            'ProductFoodShop',
             (ProductFoodShop item) => <String, Object?>{
                   'barcodeId': item.barcodeId,
                   'name': item.name,
                   'isSaved':
                       item.isSaved == null ? null : (item.isSaved! ? 1 : 0),
                   'imageFrontUrl': item.imageFrontUrl,
-                  'buy': item.buy == null ? null : (item.buy! ? 1 : 0),
+                  'isBuy': item.isBuy == null ? null : (item.isBuy! ? 1 : 0),
+                  'weight': item.weight,
                   'quantity': item.quantity
                 },
             changeListener),
-        _productDeletionAdapter = DeletionAdapter(
+        _productFoodShopUpdateAdapter = UpdateAdapter(
             database,
-            'Product',
+            'ProductFoodShop',
             ['barcodeId'],
             (ProductFoodShop item) => <String, Object?>{
                   'barcodeId': item.barcodeId,
@@ -128,7 +129,23 @@ class _$ProductFloorDao extends ProductFloorDao {
                   'isSaved':
                       item.isSaved == null ? null : (item.isSaved! ? 1 : 0),
                   'imageFrontUrl': item.imageFrontUrl,
-                  'buy': item.buy == null ? null : (item.buy! ? 1 : 0),
+                  'isBuy': item.isBuy == null ? null : (item.isBuy! ? 1 : 0),
+                  'weight': item.weight,
+                  'quantity': item.quantity
+                },
+            changeListener),
+        _productFoodShopDeletionAdapter = DeletionAdapter(
+            database,
+            'ProductFoodShop',
+            ['barcodeId'],
+            (ProductFoodShop item) => <String, Object?>{
+                  'barcodeId': item.barcodeId,
+                  'name': item.name,
+                  'isSaved':
+                      item.isSaved == null ? null : (item.isSaved! ? 1 : 0),
+                  'imageFrontUrl': item.imageFrontUrl,
+                  'isBuy': item.isBuy == null ? null : (item.isBuy! ? 1 : 0),
+                  'weight': item.weight,
                   'quantity': item.quantity
                 },
             changeListener);
@@ -139,45 +156,56 @@ class _$ProductFloorDao extends ProductFloorDao {
 
   final QueryAdapter _queryAdapter;
 
-  final InsertionAdapter<ProductFoodShop> _productInsertionAdapter;
+  final InsertionAdapter<ProductFoodShop> _productFoodShopInsertionAdapter;
 
-  final DeletionAdapter<ProductFoodShop> _productDeletionAdapter;
+  final UpdateAdapter<ProductFoodShop> _productFoodShopUpdateAdapter;
+
+  final DeletionAdapter<ProductFoodShop> _productFoodShopDeletionAdapter;
 
   @override
   Stream<List<ProductFoodShop>> getAllProductFloor() {
-    return _queryAdapter.queryListStream('SELECT * FROM Product',
+    return _queryAdapter.queryListStream('SELECT * FROM ProductFoodShop',
         mapper: (Map<String, Object?> row) => ProductFoodShop(
             row['barcodeId'] as int?,
             row['name'] as String?,
             row['isSaved'] == null ? null : (row['isSaved'] as int) != 0,
             row['imageFrontUrl'] as String?,
-            row['buy'] == null ? null : (row['buy'] as int) != 0,
-            row['quantity'] as String?),
-        queryableName: 'Product',
+            row['isBuy'] == null ? null : (row['isBuy'] as int) != 0,
+            row['weight'] as String?,
+            row['quantity'] as int?),
+        queryableName: 'ProductFoodShop',
         isView: false);
   }
 
   @override
   Future<ProductFoodShop?> getProductFloorById(int barcodeId) async {
-    return _queryAdapter.query('SELECT * FROM Product WHERE barcodeId = ?1',
+    return _queryAdapter.query(
+        'SELECT * FROM ProductFoodShop WHERE barcodeId = ?1',
         mapper: (Map<String, Object?> row) => ProductFoodShop(
             row['barcodeId'] as int?,
             row['name'] as String?,
             row['isSaved'] == null ? null : (row['isSaved'] as int) != 0,
             row['imageFrontUrl'] as String?,
-            row['buy'] == null ? null : (row['buy'] as int) != 0,
-            row['quantity'] as String?),
+            row['isBuy'] == null ? null : (row['isBuy'] as int) != 0,
+            row['weight'] as String?,
+            row['quantity'] as int?),
         arguments: [barcodeId]);
   }
 
   @override
   Future<void> insertProductFloor(ProductFoodShop productFloor) async {
-    await _productInsertionAdapter.insert(
+    await _productFoodShopInsertionAdapter.insert(
         productFloor, OnConflictStrategy.abort);
   }
 
   @override
+  Future<void> updateProductFloor(ProductFoodShop productFloor) async {
+    await _productFoodShopUpdateAdapter.update(
+        productFloor, OnConflictStrategy.replace);
+  }
+
+  @override
   Future<void> deleteProductFloor(ProductFoodShop productFloor) async {
-    await _productDeletionAdapter.delete(productFloor);
+    await _productFoodShopDeletionAdapter.delete(productFloor);
   }
 }

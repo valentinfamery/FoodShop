@@ -69,16 +69,18 @@ class _DetailsScreen extends State<DetailsScreen> {
             widget.productEntity!.name ?? '',
             style: Theme.of(context).textTheme.headlineMedium,
           ),
-          Text(widget.productEntity!.quantity ?? ''),
+          Text(widget.productEntity!.weight ?? ''),
           SizedBox(
             height: width * 0.80,
             width: width * 0.80,
-            child: widget.productEntity!.imageFrontUrl!=null ? CachedNetworkImage(
-              fit: BoxFit.fill,
-              imageUrl: widget.productEntity!.imageFrontUrl!,
-              placeholder: (context, url) => CircularProgressIndicator(),
-              errorWidget: (context, url, error) => Icon(Icons.error),
-            ): const Text('Non disponible'),
+            child: widget.productEntity!.imageFrontUrl != null
+                ? CachedNetworkImage(
+                    fit: BoxFit.fill,
+                    imageUrl: widget.productEntity!.imageFrontUrl!,
+                    placeholder: (context, url) => CircularProgressIndicator(),
+                    errorWidget: (context, url, error) => Icon(Icons.error),
+                  )
+                : const Text('Non disponible'),
           ),
         ],
       ),
