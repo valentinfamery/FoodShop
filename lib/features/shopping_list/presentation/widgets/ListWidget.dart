@@ -20,6 +20,9 @@ class ListWidget extends StatelessWidget {
     final double height = sizeParent.height;
     final double width = sizeParent.width * 0.90;
 
+    final pastScreen =
+        GoRouter.of(context).routeInformationProvider.value.location.toString();
+
     if (products.isNotEmpty) {
       return Center(
         child: SizedBox(
@@ -42,9 +45,11 @@ class ListWidget extends StatelessWidget {
         ),
       );
     } else {
-      return const Center(
-        child: Text('La liste de Courses est Vide'),
-      );
+      return pastScreen == '/list'
+          ? const Center(
+              child: Text('La liste de Courses est Vide'),
+            )
+          : const SizedBox();
     }
 
     // Votre contenu de boîte ici

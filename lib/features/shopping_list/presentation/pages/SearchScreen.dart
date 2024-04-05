@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:food_shop/features/shopping_list/data/data_sources/local/dao/product_floor_dao.dart';
 import 'package:food_shop/features/shopping_list/presentation/widgets/ListTag.dart';
+import 'package:food_shop/features/shopping_list/presentation/widgets/ListWidget.dart';
 import 'package:food_shop/features/shopping_list/presentation/widgets/button_country_settings.dart';
 import 'package:go_router/go_router.dart';
 import 'package:food_shop/features/shopping_list/data/models/product_floor.dart';
@@ -93,50 +94,7 @@ class SearchScreen extends ConsumerWidget {
             child: Text(buttonTag),
           ),
           Expanded(
-            child: GridView.builder(
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-              ),
-              itemCount: listSearchProduct.length,
-              itemBuilder: (BuildContext contextItem, int index) {
-                return Card(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15.0),
-                  ),
-                  elevation: 10,
-                  child: InkWell(
-                    onTap: () {
-                      GoRouter.of(context).go('/search/details',
-                          extra: listSearchProduct[index]);
-                    },
-                    child: Column(
-                      children: <Widget>[
-                        Text(
-                          '${listSearchProduct[index].name}',
-                          style: TextStyle(fontSize: width * 0.07),
-                          textAlign: TextAlign.center,
-                        ),
-                        SizedBox(
-                          height: width * 0.50,
-                          width: width * 0.50,
-                          child: listSearchProduct[index].imageFrontUrl != null
-                              ? CachedNetworkImage(
-                                  fit: BoxFit.fill,
-                                  imageUrl:
-                                      listSearchProduct[index].imageFrontUrl!,
-                                  placeholder: (context, url) =>
-                                      const CircularProgressIndicator(),
-                                  errorWidget: (context, url, error) =>
-                                      const Icon(Icons.error),
-                                )
-                              : const Text('Non disponible'),
-                        ),
-                      ],
-                    ),
-                  ),
-                );
-              },
-            ),
+            child: ListWidget(products: listSearchProduct),
           ),
         ],
       ),

@@ -18,12 +18,19 @@ class _GridElement extends State<GridElement> {
 
   @override
   Widget build(BuildContext context) {
+    final pastScreen =
+        GoRouter.of(context).routeInformationProvider.value.location.toString();
+
     final height = MediaQuery.of(context).size.height * 0.10;
     final width = MediaQuery.of(context).size.width * 0.90;
 
     return InkWell(
       onTap: () {
-        GoRouter.of(context).go('/list/details', extra: widget.product);
+        if (pastScreen == '/list') {
+          GoRouter.of(context).go('/list/details', extra: widget.product);
+        } else if (pastScreen == '/search') {
+          GoRouter.of(context).go('/search/details', extra: widget.product);
+        }
       },
       child: Row(
         children: <Widget>[
@@ -57,21 +64,26 @@ class _GridElement extends State<GridElement> {
               textAlign: TextAlign.left,
             ),
           ),
-          SizedBox(
-            height: height,
-            width: width * 0.20,
-            child: Align(
-              alignment: Alignment.centerRight,
-              child: Checkbox(
-                value: isBuy,
-                onChanged: (bool? value) {
-                  setState(() {
-                    isBuy = value!;
-                  });
-                },
-              ),
-            ),
-          ),
+          pastScreen == '/list'
+              ? SizedBox(
+                  height: height,
+                  width: width * 0.20,
+                  child: Align(
+                    alignment: Alignment.centerRight,
+                    child: Checkbox(
+                      value: isBuy,
+                      onChanged: (bool? value) {
+                        setState(() {
+                          isBuy = value!;
+                        });
+                      },
+                    ),
+                  ),
+                )
+              : SizedBox(
+                  height: height,
+                  width: width * 0.20,
+                ),
         ],
       ),
     );
