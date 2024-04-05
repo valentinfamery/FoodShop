@@ -21,7 +21,9 @@ class ListWidget extends StatelessWidget {
     final double width = sizeParent.width * 0.90;
 
     final pastScreen =
-        GoRouter.of(context).routeInformationProvider.value.location.toString();
+        GoRouter.of(context).routerDelegate.currentConfiguration.fullPath;
+
+    print(pastScreen.toString());
 
     if (products.isNotEmpty) {
       return Center(

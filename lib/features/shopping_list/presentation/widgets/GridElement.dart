@@ -19,7 +19,7 @@ class _GridElement extends State<GridElement> {
   @override
   Widget build(BuildContext context) {
     final pastScreen =
-        GoRouter.of(context).routeInformationProvider.value.location.toString();
+        GoRouter.of(context).routerDelegate.currentConfiguration.fullPath;
 
     final height = MediaQuery.of(context).size.height * 0.10;
     final width = MediaQuery.of(context).size.width * 0.90;
