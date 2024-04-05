@@ -14,13 +14,16 @@ final listSearchProductProvider =
 
 final buttonTagProvider = StateProvider<String>((ref) => 'Categories');
 
+final textFieldNameProvider = StateProvider<TextEditingController>(
+    (ref) => TextEditingController(text: ''));
+final textFieldBrandProvider = StateProvider<TextEditingController>(
+    (ref) => TextEditingController(text: ''));
+final textFieldStoresProvider = StateProvider<TextEditingController>(
+    (ref) => TextEditingController(text: ''));
+final textFieldIngredientsProvider = StateProvider<TextEditingController>(
+    (ref) => TextEditingController(text: ''));
+
 class SearchScreen extends ConsumerWidget {
-  final myController = TextEditingController();
-
-  final textFieldBrand = TextEditingController();
-  final textFieldStores = TextEditingController();
-  final textFieldIngredients = TextEditingController();
-
   var productRepository = sl<ProductRepository>();
 
   SearchScreen({super.key});
@@ -29,11 +32,12 @@ class SearchScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     List<ProductFoodShop> listSearchProduct =
         ref.watch(listSearchProductProvider);
-
+    final textFieldName = ref.watch(textFieldNameProvider);
+    final textFieldBrand = ref.watch(textFieldBrandProvider);
+    final textFieldStores = ref.watch(textFieldStoresProvider);
+    final textFieldIngredients = ref.watch(textFieldIngredientsProvider);
     String buttonTag = ref.watch(buttonTagProvider);
-
     PnnsGroup2? pnnsGroup2 = ref.watch(selectedPnnsGroup2);
-
     final country = ref.watch(countryStateProvider);
 
     return Scaffold(
@@ -41,7 +45,7 @@ class SearchScreen extends ConsumerWidget {
       body: Column(
         children: <Widget>[
           TextField(
-            controller: myController,
+            controller: textFieldName,
             decoration: const InputDecoration(
               border: OutlineInputBorder(),
               hintText: 'Saisissez le Nom du Produit ',
@@ -71,7 +75,7 @@ class SearchScreen extends ConsumerWidget {
           ElevatedButton(
             onPressed: () {
               searchProductByName(
-                  myController.text,
+                  textFieldName.text,
                   pnnsGroup2,
                   ref,
                   textFieldBrand.text,
