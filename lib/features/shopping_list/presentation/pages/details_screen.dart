@@ -1,10 +1,18 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:food_shop/features/shopping_list/data/models/product_floor.dart';
 import 'package:food_shop/features/shopping_list/domain/repository/product_repository.dart';
 import 'package:food_shop/injection_container.dart';
 import 'package:go_router/go_router.dart';
+
+final productSavedWithIdProvider =
+    StreamProvider.autoDispose.family<ProductFoodShop?, int>((ref, id) {
+  var productRepository = sl<ProductRepository>();
+
+  return productRepository.getProductSavedWithId(id);
+});
 
 class DetailsScreen extends StatefulWidget {
   final ProductFoodShop? productEntity;
