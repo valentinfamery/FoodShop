@@ -1,5 +1,4 @@
 import 'package:floor/floor.dart';
-import 'package:flutter/material.dart';
 import 'package:food_shop/features/shopping_list/data/models/product_floor.dart';
 
 @dao
@@ -9,6 +8,9 @@ abstract class ProductFloorDao {
 
   @Query('SELECT * FROM ProductFoodShop WHERE barcodeId = :barcodeId')
   Future<ProductFoodShop?> getProductFloorById(int barcodeId);
+
+  @Query('SELECT * FROM ProductFoodShop WHERE barcodeId = :barcodeId')
+  Stream<ProductFoodShop?> getStreamProductFloorById(int barcodeId);
 
   @insert
   Future<void> insertProductFloor(ProductFoodShop productFloor);

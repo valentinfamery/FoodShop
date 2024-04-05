@@ -19,18 +19,17 @@ class AccentColorButton extends ConsumerWidget {
 
     final sharedPreferences = sl<SharedPreferences>();
 
-    Color _selectedColor = Color(00);
 
     // Key for SharedPreferences
     const String prefKey = 'selected_color';
 
-    _saveColor(Color color) async {
+    saveColor(Color color) async {
       await sharedPreferences.setInt(prefKey, color.value);
     }
 
     return InkWell(
       onTap: () {
-        _saveColor(color);
+        saveColor(color);
         ref.read(accentColorProvider.notifier).update((state) => color);
       },
       child: Container(

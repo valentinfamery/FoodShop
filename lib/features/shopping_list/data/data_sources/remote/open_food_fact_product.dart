@@ -1,6 +1,4 @@
-import 'package:food_shop/injection_container.dart';
 import 'package:openfoodfacts/openfoodfacts.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class OpenFoodFactProduct {
   Future<List<Product?>?> searchByName(

@@ -20,7 +20,7 @@ class ButtonCountrySettings extends ConsumerWidget {
   final String title;
   final String description;
 
-  ButtonCountrySettings({
+  const ButtonCountrySettings({
     super.key,
     required this.title,
     required this.description,
@@ -30,7 +30,6 @@ class ButtonCountrySettings extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final country = ref.watch(countryStateProvider);
 
-    double size = 32;
 
     return InkWell(
       customBorder: RoundedRectangleBorder(
@@ -66,7 +65,7 @@ class ButtonCountrySettings extends ConsumerWidget {
       context: context,
       barrierDismissible: false, // user must tap button!
       builder: (BuildContext context) {
-        return CountryDialog();
+        return const CountryDialog();
       },
     );
   }

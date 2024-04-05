@@ -1,16 +1,15 @@
-import 'dart:math';
-
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:food_shop/features/shopping_list/data/models/product_floor.dart';
-import 'package:food_shop/features/shopping_list/domain/repository/ProductRepository.dart';
+import 'package:food_shop/features/shopping_list/domain/repository/product_repository.dart';
 import 'package:food_shop/injection_container.dart';
 import 'package:go_router/go_router.dart';
 
 class DetailsScreen extends StatefulWidget {
   final ProductFoodShop? productEntity;
 
-  DetailsScreen({
+  const DetailsScreen({
     this.productEntity,
     super.key,
   });
@@ -36,7 +35,9 @@ class _DetailsScreen extends State<DetailsScreen> {
     final pastScreen =
         GoRouter.of(context).routeInformationProvider.value.location.toString();
 
-    print(pastScreen.toString());
+    if (kDebugMode) {
+      print(pastScreen.toString());
+    }
 
     if (pastScreen == '/list/details') {
       isSaved = widget.productEntity!.isSaved;
@@ -48,7 +49,9 @@ class _DetailsScreen extends State<DetailsScreen> {
   void isSavedFutureVoid() async {
     final isSavedFuture = await productRepository
         .isProductSaved(widget.productEntity!.barcodeId!);
-    print(isSavedFuture.toString());
+    if (kDebugMode) {
+      print(isSavedFuture.toString());
+    }
 
     setState(() {
       isSaved = isSavedFuture;
@@ -77,8 +80,10 @@ class _DetailsScreen extends State<DetailsScreen> {
                 ? CachedNetworkImage(
                     fit: BoxFit.fill,
                     imageUrl: widget.productEntity!.imageFrontUrl!,
-                    placeholder: (context, url) => CircularProgressIndicator(),
-                    errorWidget: (context, url, error) => Icon(Icons.error),
+                    placeholder: (context, url) =>
+                        const CircularProgressIndicator(),
+                    errorWidget: (context, url, error) =>
+                        const Icon(Icons.error),
                   )
                 : const Text('Non disponible'),
           ),
@@ -87,8 +92,6 @@ class _DetailsScreen extends State<DetailsScreen> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           if (isSaved == false) {
-            var random = Random();
-            var randomNumber = random.nextInt(900000) + 100000;
             productRepository.insertProductInFloor(widget.productEntity!);
 
             setState(() {
@@ -102,7 +105,7 @@ class _DetailsScreen extends State<DetailsScreen> {
             productRepository.deleteProductFloor(widget.productEntity!);
           }
         },
-        child: isSaved == true ? Icon(Icons.done) : Icon(Icons.add),
+        child: isSaved == true ? const Icon(Icons.done) : const Icon(Icons.add),
       ),
     );
   }

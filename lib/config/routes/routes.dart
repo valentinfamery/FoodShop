@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:food_shop/features/shopping_list/domain/repository/ProductRepository.dart';
-import 'package:food_shop/injection_container.dart';
 import 'package:go_router/go_router.dart';
 import 'package:food_shop/features/shopping_list/data/models/product_floor.dart';
 
-import 'package:food_shop/features/shopping_list/presentation/pages/DetailsScreen.dart';
-import 'package:food_shop/features/shopping_list/presentation/pages/ListScreen.dart';
-import 'package:food_shop/features/shopping_list/presentation/pages/SearchScreen.dart';
-import 'package:food_shop/features/shopping_list/presentation/pages/SettingsScren.dart';
-import 'package:food_shop/features/shopping_list/presentation/widgets/ScaffoldWithNavBar.dart';
+import 'package:food_shop/features/shopping_list/presentation/pages/details_screen.dart';
+import 'package:food_shop/features/shopping_list/presentation/pages/list_screen.dart';
+import 'package:food_shop/features/shopping_list/presentation/pages/search_screen.dart';
+import 'package:food_shop/features/shopping_list/presentation/pages/settings_screen.dart';
+import 'package:food_shop/features/shopping_list/presentation/widgets/scaffold_with_nav_bar.dart';
 
 final GlobalKey<NavigatorState> _rootNavigatorKey =
     GlobalKey<NavigatorState>(debugLabel: 'root');
@@ -66,7 +64,6 @@ class Routes {
                 path: 'details',
                 parentNavigatorKey: _rootNavigatorKey,
                 builder: (BuildContext context, GoRouterState state) {
-                  var productRepository = sl<ProductRepository>();
 
                   final ProductFoodShop extraProductEntity =
                       GoRouterState.of(context).extra! as ProductFoodShop;
@@ -82,7 +79,7 @@ class Routes {
           GoRoute(
             path: '/settings',
             builder: (BuildContext context, GoRouterState state) {
-              return SettingsScreen();
+              return const SettingsScreen();
             },
           ),
         ],

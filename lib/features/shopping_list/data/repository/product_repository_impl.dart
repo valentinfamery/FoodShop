@@ -1,10 +1,10 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:food_shop/features/shopping_list/data/data_sources/local/dao/product_floor_dao.dart';
 import 'package:food_shop/features/shopping_list/data/data_sources/remote/open_food_fact_product.dart';
 import 'package:food_shop/features/shopping_list/data/models/product_floor.dart';
-import 'package:food_shop/features/shopping_list/domain/repository/ProductRepository.dart';
-import 'package:food_shop/features/shopping_list/presentation/widgets/button_country_settings.dart';
+import 'package:food_shop/features/shopping_list/domain/repository/product_repository.dart';
 import 'package:openfoodfacts/openfoodfacts.dart';
 
 class ProductRepositoryImpl implements ProductRepository {
@@ -36,7 +36,9 @@ class ProductRepositoryImpl implements ProductRepository {
       listSearchProductFinal.add(ProductFoodShop(
           int.parse(barcode!), name, false, imageFrontUrl, false, weight, 1));
 
-      print(element.barcode);
+      if (kDebugMode) {
+        print(element.barcode);
+      }
     }
 
     return listSearchProductFinal;
@@ -74,5 +76,15 @@ class ProductRepositoryImpl implements ProductRepository {
     } else {
       return false;
     }
+  }
+
+  @override
+  void updateProductFloor(ProductFoodShop product) async {
+    await productFloorDao.updateProductFloor(product);
+  }
+
+  @override
+  Stream<ProductFoodShop?> getProductSavedWithId(int barcodeId) {
+    return productFloorDao.getStreamProductFloorById(barcodeId);
   }
 }

@@ -1,15 +1,11 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:food_shop/features/shopping_list/data/data_sources/local/dao/product_floor_dao.dart';
-import 'package:food_shop/features/shopping_list/presentation/widgets/ListTag.dart';
-import 'package:food_shop/features/shopping_list/presentation/widgets/ListWidget.dart';
+import 'package:food_shop/features/shopping_list/presentation/widgets/list_tag.dart';
+import 'package:food_shop/features/shopping_list/presentation/widgets/list.dart';
 import 'package:food_shop/features/shopping_list/presentation/widgets/button_country_settings.dart';
-import 'package:go_router/go_router.dart';
 import 'package:food_shop/features/shopping_list/data/models/product_floor.dart';
-import 'package:food_shop/features/shopping_list/data/repository/ProductRepositoryImpl.dart';
-import 'package:food_shop/features/shopping_list/domain/repository/ProductRepository.dart';
+import 'package:food_shop/features/shopping_list/domain/repository/product_repository.dart';
 import 'package:food_shop/injection_container.dart';
 import 'package:openfoodfacts/openfoodfacts.dart';
 
@@ -39,8 +35,6 @@ class SearchScreen extends ConsumerWidget {
     PnnsGroup2? pnnsGroup2 = ref.watch(selectedPnnsGroup2);
 
     final country = ref.watch(countryStateProvider);
-
-    final width = MediaQuery.of(context).size.width / 2;
 
     return Scaffold(
       appBar: AppBar(),
@@ -124,7 +118,7 @@ class SearchScreen extends ConsumerWidget {
       context: context,
       barrierDismissible: false, // user must tap button!
       builder: (BuildContext context) {
-        return ListTag();
+        return const ListTag();
       },
     );
   }

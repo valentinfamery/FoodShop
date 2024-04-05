@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:food_shop/config/theme/app_theme.dart';
 import 'package:food_shop/features/shopping_list/presentation/widgets/accent_color_button.dart';
@@ -8,7 +7,7 @@ class RowClickableSettingsButton extends ConsumerWidget {
   final String title;
   final String description;
 
-  RowClickableSettingsButton({
+  const RowClickableSettingsButton({
     super.key,
     required this.title,
     required this.description,

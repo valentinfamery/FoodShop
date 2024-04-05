@@ -1,22 +1,28 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:food_shop/features/shopping_list/domain/repository/product_repository.dart';
+import 'package:food_shop/injection_container.dart';
 import 'package:go_router/go_router.dart';
 import 'package:food_shop/features/shopping_list/data/models/product_floor.dart';
 
-class GridElement extends StatefulWidget {
+final productSavedWithIdProvider =
+    StreamProvider.autoDispose.family<ProductFoodShop?, int>((ref, id) {
+  var productRepository = sl<ProductRepository>();
+
+  return productRepository.getProductSavedWithId(id);
+});
+
+class GridElement extends ConsumerWidget {
   final ProductFoodShop product;
 
   const GridElement({required this.product, super.key});
 
   @override
-  State<GridElement> createState() => _GridElement();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    //final productFollowUpdate = ref.watch(productSavedWithIdProvider(product.barcodeId!));
 
-class _GridElement extends State<GridElement> {
-  @override
-  Widget build(BuildContext context) {
-    bool isBuy = widget.product.isBuy!;
+    var productRepository = sl<ProductRepository>();
 
     final pastScreen =
         GoRouter.of(context).routerDelegate.currentConfiguration.fullPath;
@@ -27,9 +33,9 @@ class _GridElement extends State<GridElement> {
     return InkWell(
       onTap: () {
         if (pastScreen == '/list') {
-          GoRouter.of(context).go('/list/details', extra: widget.product);
+          GoRouter.of(context).go('/list/details', extra: product);
         } else if (pastScreen == '/search') {
-          GoRouter.of(context).go('/search/details', extra: widget.product);
+          GoRouter.of(context).go('/search/details', extra: product);
         }
       },
       child: Row(
@@ -37,12 +43,12 @@ class _GridElement extends State<GridElement> {
           SizedBox(
             height: height,
             width: height,
-            child: widget.product.imageFrontUrl != null
+            child: product.imageFrontUrl != null
                 ? ClipRRect(
                     borderRadius: BorderRadius.circular(15),
                     child: CachedNetworkImage(
                       fit: BoxFit.cover,
-                      imageUrl: widget.product.imageFrontUrl!,
+                      imageUrl: product.imageFrontUrl!,
                       placeholder: (context, url) =>
                           const CircularProgressIndicator(),
                       errorWidget: (context, url, error) =>
@@ -63,10 +69,10 @@ class _GridElement extends State<GridElement> {
                   width: width * 0.50,
                   height: height * 0.50,
                   child: Text(
-                    '${widget.product.name}',
+                    '${product.name}',
                     style: TextStyle(
                         fontSize: height * 0.20,
-                        decoration: isBuy
+                        decoration: product.isBuy!
                             ? TextDecoration.lineThrough
                             : TextDecoration.none),
                     textAlign: TextAlign.left,
@@ -76,7 +82,7 @@ class _GridElement extends State<GridElement> {
                   width: width * 0.50,
                   height: height * 0.50,
                   child: Text(
-                    '1' + 'x ${widget.product.weight ?? ''}',
+                    '1 x ${product.weight ?? ''}',
                     style: TextStyle(
                       fontSize: height * 0.20,
                     ),
@@ -93,11 +99,20 @@ class _GridElement extends State<GridElement> {
                   child: Align(
                     alignment: Alignment.centerRight,
                     child: Checkbox(
-                      value: isBuy,
+                      value: product.isBuy!,
                       onChanged: (bool? value) {
-                        setState(() {
-                          isBuy = value!;
-                        });
+                        //ref.read(checkboxStateProvider.notifier).update((state) => value!);
+
+                        final updateProduct = ProductFoodShop(
+                            product.barcodeId,
+                            product.name,
+                            product.isSaved,
+                            product.imageFrontUrl,
+                            value!,
+                            product.weight,
+                            product.quantity);
+
+                        productRepository.updateProductFloor(updateProduct);
                       },
                     ),
                   ),

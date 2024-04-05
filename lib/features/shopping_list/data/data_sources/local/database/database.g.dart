@@ -193,6 +193,23 @@ class _$ProductFloorDao extends ProductFloorDao {
   }
 
   @override
+  Stream<ProductFoodShop?> getStreamProductFloorById(int barcodeId) {
+    return _queryAdapter.queryStream(
+        'SELECT * FROM ProductFoodShop WHERE barcodeId = ?1',
+        mapper: (Map<String, Object?> row) => ProductFoodShop(
+            row['barcodeId'] as int?,
+            row['name'] as String?,
+            row['isSaved'] == null ? null : (row['isSaved'] as int) != 0,
+            row['imageFrontUrl'] as String?,
+            row['isBuy'] == null ? null : (row['isBuy'] as int) != 0,
+            row['weight'] as String?,
+            row['quantity'] as int?),
+        arguments: [barcodeId],
+        queryableName: 'ProductFoodShop',
+        isView: false);
+  }
+
+  @override
   Future<void> insertProductFloor(ProductFoodShop productFloor) async {
     await _productFoodShopInsertionAdapter.insert(
         productFloor, OnConflictStrategy.abort);

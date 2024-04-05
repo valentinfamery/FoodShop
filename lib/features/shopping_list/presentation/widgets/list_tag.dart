@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:food_shop/features/shopping_list/presentation/pages/SearchScreen.dart';
+import 'package:food_shop/features/shopping_list/presentation/pages/search_screen.dart';
 import 'package:openfoodfacts/openfoodfacts.dart';
 
 final selectedPnnsGroup2 = StateProvider<PnnsGroup2?>((ref) => null);
 
 class ListTag extends ConsumerWidget {
-  ListTag({super.key});
+  const ListTag({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

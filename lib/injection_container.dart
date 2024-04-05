@@ -1,8 +1,7 @@
 import 'package:get_it/get_it.dart';
-import 'package:food_shop/features/shopping_list/data/data_sources/local/dao/product_floor_dao.dart';
 import 'package:food_shop/features/shopping_list/data/data_sources/local/database/database.dart';
-import 'package:food_shop/features/shopping_list/data/repository/ProductRepositoryImpl.dart';
-import 'package:food_shop/features/shopping_list/domain/repository/ProductRepository.dart';
+import 'package:food_shop/features/shopping_list/data/repository/product_repository_impl.dart';
+import 'package:food_shop/features/shopping_list/domain/repository/product_repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 final sl = GetIt.instance;
