@@ -18,6 +18,7 @@ dependencies:
   flutter_riverpod: ^2.3.6
   flutter_material_color_picker: ^1.2.0
   shared_preferences: ^2.2.2
+  flutter_constraintlayout: ^1.7.0-stable
   
 
 dev_dependencies:

@@ -15,17 +15,31 @@ class ListWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var sizeParent = MediaQuery.of(context).size;
+
+    final double height = sizeParent.height;
+    final double width = sizeParent.width * 0.90;
+
     if (products.isNotEmpty) {
-      return GridView.builder(
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
+      return Center(
+        child: SizedBox(
+          height: height,
+          width: width,
+          child: ListView.separated(
+            separatorBuilder: (context, index) {
+              return const Divider(
+                color: Colors.grey,
+                thickness: 1,
+              );
+            },
+            itemCount: products.length,
+            itemBuilder: (BuildContext contextItem, int index) {
+              return GridElement(
+                product: products[index],
+              );
+            },
+          ),
         ),
-        itemCount: products.length,
-        itemBuilder: (BuildContext contextItem, int index) {
-          return GridElement(
-            product: products[index],
-          );
-        },
       );
     } else {
       return const Center(

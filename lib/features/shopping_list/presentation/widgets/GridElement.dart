@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
 import 'package:food_shop/features/shopping_list/data/models/product_floor.dart';
 
@@ -17,50 +18,61 @@ class _GridElement extends State<GridElement> {
 
   @override
   Widget build(BuildContext context) {
-    final width = MediaQuery.of(context).size.width / 2;
+    final height = MediaQuery.of(context).size.height * 0.10;
+    final width = MediaQuery.of(context).size.width * 0.90;
 
-    return Card(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(15.0),
-      ),
-      elevation: 10,
-      child: InkWell(
-        onTap: () {
-          GoRouter.of(context).go('/list/details', extra: widget.product);
-        },
-        child: Column(
-          children: <Widget>[
-            Text(
-              '${widget.product.name}',
-              style: TextStyle(
-                  fontSize: 20,
-                  decoration:
-                      isBuy ? TextDecoration.lineThrough : TextDecoration.none),
-              textAlign: TextAlign.center,
-            ),
-            SizedBox(
-              height: width * 0.30,
-              width: width * 0.45,
-              child: widget.product.imageFrontUrl != null
-                  ? CachedNetworkImage(
-                      fit: BoxFit.fill,
+    return InkWell(
+      onTap: () {
+        GoRouter.of(context).go('/list/details', extra: widget.product);
+      },
+      child: Row(
+        children: <Widget>[
+          SizedBox(
+            height: height,
+            width: height,
+            child: widget.product.imageFrontUrl != null
+                ? ClipRRect(
+                    borderRadius: BorderRadius.circular(15),
+                    child: CachedNetworkImage(
+                      fit: BoxFit.cover,
                       imageUrl: widget.product.imageFrontUrl!,
                       placeholder: (context, url) =>
-                          CircularProgressIndicator(),
-                      errorWidget: (context, url, error) => Icon(Icons.error),
-                    )
-                  : const Text('Non disponible'),
+                          const CircularProgressIndicator(),
+                      errorWidget: (context, url, error) =>
+                          const Icon(Icons.error),
+                    ),
+                  )
+                : const Center(child: Text('Non disponible')),
+          ),
+          const Spacer(),
+          SizedBox(
+            width: width * 0.50,
+            height: height,
+            child: Text(
+              '${widget.product.name}',
+              style: TextStyle(
+                  fontSize: 15,
+                  decoration:
+                      isBuy ? TextDecoration.lineThrough : TextDecoration.none),
+              textAlign: TextAlign.left,
             ),
-            Checkbox(
-              value: isBuy,
-              onChanged: (bool? value) {
-                setState(() {
-                  isBuy = value!;
-                });
-              },
+          ),
+          SizedBox(
+            height: height,
+            width: width * 0.20,
+            child: Align(
+              alignment: Alignment.centerRight,
+              child: Checkbox(
+                value: isBuy,
+                onChanged: (bool? value) {
+                  setState(() {
+                    isBuy = value!;
+                  });
+                },
+              ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
