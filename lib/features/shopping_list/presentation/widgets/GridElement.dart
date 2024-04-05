@@ -76,7 +76,7 @@ class _GridElement extends State<GridElement> {
                   width: width * 0.50,
                   height: height * 0.50,
                   child: Text(
-                    '1 x ${widget.product.quantity}',
+                    '1'+'x ${widget.product.quantity ?? ''}',
                     style: TextStyle(
                       fontSize: height * 0.20,
                     ),

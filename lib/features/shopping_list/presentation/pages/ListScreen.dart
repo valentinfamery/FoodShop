@@ -28,7 +28,7 @@ class ListScreen extends ConsumerWidget {
     final list = ref.watch(getProductsSaved);
 
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(title: const Center(child:  Text('Ma Liste de Courses'),),),
       body: list.when(
         data: (products) => ListWidget(products: products!),
         loading: () => const Center(child: CircularProgressIndicator()),

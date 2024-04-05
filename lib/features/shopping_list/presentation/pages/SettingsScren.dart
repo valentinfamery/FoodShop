@@ -14,7 +14,7 @@ class SettingsScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     // TODO: implement build
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(title: const Center(child:  Text('Mes Paramètres'),),),
       body: Container(
         padding: const EdgeInsets.all(25.0),
         child: Column(
