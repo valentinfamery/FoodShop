@@ -58,7 +58,7 @@ class _GridElement extends State<GridElement> {
             child: Text(
               '${widget.product.name}',
               style: TextStyle(
-                  fontSize: 15,
+                  fontSize: height * 0.20,
                   decoration:
                       isBuy ? TextDecoration.lineThrough : TextDecoration.none),
               textAlign: TextAlign.left,
