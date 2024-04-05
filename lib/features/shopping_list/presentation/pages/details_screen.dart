@@ -33,7 +33,7 @@ class _DetailsScreen extends State<DetailsScreen> {
     super.initState();
 
     final pastScreen =
-        GoRouter.of(context).routeInformationProvider.value.location.toString();
+        GoRouter.of(context).routeInformationProvider.value.uri.toString();
 
     if (kDebugMode) {
       print(pastScreen.toString());
@@ -77,14 +77,16 @@ class _DetailsScreen extends State<DetailsScreen> {
             height: width * 0.80,
             width: width * 0.80,
             child: widget.productEntity!.imageFrontUrl != null
-                ? CachedNetworkImage(
-                    fit: BoxFit.fill,
+                ? ClipRRect( 
+                  borderRadius: BorderRadius.circular(8.0),
+                  child : CachedNetworkImage(
+                    fit: BoxFit.cover,
                     imageUrl: widget.productEntity!.imageFrontUrl!,
                     placeholder: (context, url) =>
                         const CircularProgressIndicator(),
                     errorWidget: (context, url, error) =>
                         const Icon(Icons.error),
-                  )
+                  ),)
                 : const Text('Non disponible'),
           ),
         ],
