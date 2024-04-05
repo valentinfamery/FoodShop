@@ -55,13 +55,35 @@ class _GridElement extends State<GridElement> {
           SizedBox(
             width: width * 0.50,
             height: height,
-            child: Text(
-              '${widget.product.name}',
-              style: TextStyle(
-                  fontSize: height * 0.20,
-                  decoration:
-                      isBuy ? TextDecoration.lineThrough : TextDecoration.none),
-              textAlign: TextAlign.left,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  width: width * 0.50,
+                  height: height * 0.50,
+                  child: Text(
+                    '${widget.product.name}',
+                    style: TextStyle(
+                        fontSize: height * 0.20,
+                        decoration: isBuy
+                            ? TextDecoration.lineThrough
+                            : TextDecoration.none),
+                    textAlign: TextAlign.left,
+                  ),
+                ),
+                SizedBox(
+                  width: width * 0.50,
+                  height: height * 0.50,
+                  child: Text(
+                    '1 x ${widget.product.quantity}',
+                    style: TextStyle(
+                      fontSize: height * 0.20,
+                    ),
+                    textAlign: TextAlign.left,
+                  ),
+                ),
+              ],
             ),
           ),
           pastScreen == '/list'
