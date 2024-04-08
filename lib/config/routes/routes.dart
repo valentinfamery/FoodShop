@@ -64,7 +64,6 @@ class Routes {
                 path: 'details',
                 parentNavigatorKey: _rootNavigatorKey,
                 builder: (BuildContext context, GoRouterState state) {
-
                   final ProductFoodShop extraProductEntity =
                       GoRouterState.of(context).extra! as ProductFoodShop;
 

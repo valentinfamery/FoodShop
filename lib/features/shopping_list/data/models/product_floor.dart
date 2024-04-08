@@ -8,7 +8,7 @@ class ProductFoodShop {
   @primaryKey
   final int? barcodeId;
 
-  final bool? isSaved;
+  
   final String? imageFrontUrl;
   final bool? isBuy;
   final String? weight;
@@ -16,6 +16,6 @@ class ProductFoodShop {
 
   final Map<OpenFoodFactsLanguage, String>? nameLanguages;
 
-  const ProductFoodShop(this.barcodeId, this.nameLanguages, this.isSaved,
+  const ProductFoodShop(this.barcodeId, this.nameLanguages,
       this.imageFrontUrl, this.isBuy, this.weight, this.quantity);
 }

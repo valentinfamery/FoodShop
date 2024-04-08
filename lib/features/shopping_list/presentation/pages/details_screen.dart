@@ -1,7 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:food_shop/config/utils/languages.dart';
 import 'package:food_shop/features/shopping_list/data/models/product_floor.dart';
 import 'package:food_shop/features/shopping_list/domain/repository/product_repository.dart';
 import 'package:food_shop/features/shopping_list/presentation/widgets/change_quantity.dart';
@@ -16,31 +18,24 @@ final productSavedWithIdProvider =
   return productRepository.getProductSavedWithId(id);
 });
 
-class DetailsScreen extends StatefulWidget {
+/// The details screen for either the A, B or C screen.
+class DetailsScreen extends ConsumerWidget {
   final ProductFoodShop? productEntity;
 
-  const DetailsScreen({
+  DetailsScreen({
     this.productEntity,
     super.key,
   });
 
-  @override
-  State<DetailsScreen> createState() => _DetailsScreen();
-}
-
-/// The details screen for either the A, B or C screen.
-class _DetailsScreen extends State<DetailsScreen> {
   /// The label to display in the center of the screen.
 
   /// Constructs a [DetailsScreen].
 
   var productRepository = sl<ProductRepository>();
 
-  bool? isSaved = false;
-
   @override
-  void initState() {
-    super.initState();
+  Widget build(BuildContext context, WidgetRef ref) {
+    final width = MediaQuery.of(context).size.width;
 
     final pastScreen =
         GoRouter.of(context).routeInformationProvider.value.uri.toString();
@@ -49,82 +44,59 @@ class _DetailsScreen extends State<DetailsScreen> {
       print(pastScreen.toString());
     }
 
-    if (pastScreen == '/list/details') {
-      isSaved = widget.productEntity!.isSaved;
-    } else if (pastScreen == '/search/details') {
-      isSavedFutureVoid();
-    }
-  }
+    final product =
+        ref.watch(productSavedWithIdProvider(productEntity!.barcodeId!));
 
-  void isSavedFutureVoid() async {
-    final isSavedFuture = await productRepository
-        .isProductSaved(widget.productEntity!.barcodeId!);
-    if (kDebugMode) {
-      print(isSavedFuture.toString());
-    }
+    final selectedLanguage = ref.watch(selectedLanguageProvider);
 
-    setState(() {
-      isSaved = isSavedFuture;
+    return product.when(data: (data) {
+      return Scaffold(
+        appBar: AppBar(
+          title: const Text('Details Screen'),
+        ),
+        body: Column(
+          children: [
+            Text(
+              productEntity?.nameLanguages?[selectedLanguage] ?? '',
+              style: Theme.of(context).textTheme.headlineMedium,
+            ),
+            ChangeQuantity(productIdBarcode: productEntity!.barcodeId!),
+            SizedBox(
+              height: width * 0.80,
+              width: width * 0.80,
+              child: productEntity?.imageFrontUrl != null
+                  ? ClipRRect(
+                      borderRadius: BorderRadius.circular(8.0),
+                      child: CachedNetworkImage(
+                        fit: BoxFit.cover,
+                        imageUrl: productEntity!.imageFrontUrl!,
+                        placeholder: (context, url) =>
+                            const CircularProgressIndicator(),
+                        errorWidget: (context, url, error) =>
+                            const Icon(Icons.error),
+                      ),
+                    )
+                  : const Text('Non disponible'),
+            ),
+          ],
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            if (data == null) {
+              productRepository.insertProductInFloor(productEntity!);
+            } else {
+              productRepository.deleteProductFloor(productEntity!);
+            }
+          },
+          child: data != null ? const Icon(Icons.done) : const Icon(Icons.add),
+        ),
+      );
+    }, loading: () {
+      return const Center(
+        child: CircularProgressIndicator(),
+      );
+    }, error: (error, staktrace) {
+      return Text(error.toString());
     });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final width = MediaQuery.of(context).size.width;
-
-    final pastScreen =
-        GoRouter.of(context).routeInformationProvider.value.uri.toString();
-
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Details Screen'),
-      ),
-      body: Column(
-        children: [
-          Text(
-            widget.productEntity!
-                    .nameLanguages![OpenFoodFactsLanguage.ENGLISH] ??
-                '',
-            style: Theme.of(context).textTheme.headlineMedium,
-          ),
-          ChangeQuantity(productIdBarcode: widget.productEntity!.barcodeId!),
-          SizedBox(
-            height: width * 0.80,
-            width: width * 0.80,
-            child: widget.productEntity!.imageFrontUrl != null
-                ? ClipRRect(
-                    borderRadius: BorderRadius.circular(8.0),
-                    child: CachedNetworkImage(
-                      fit: BoxFit.cover,
-                      imageUrl: widget.productEntity!.imageFrontUrl!,
-                      placeholder: (context, url) =>
-                          const CircularProgressIndicator(),
-                      errorWidget: (context, url, error) =>
-                          const Icon(Icons.error),
-                    ),
-                  )
-                : const Text('Non disponible'),
-          ),
-        ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          if (isSaved == false) {
-            productRepository.insertProductInFloor(widget.productEntity!);
-
-            setState(() {
-              isSaved = true;
-            });
-          } else {
-            setState(() {
-              isSaved = false;
-            });
-
-            productRepository.deleteProductFloor(widget.productEntity!);
-          }
-        },
-        child: isSaved == true ? const Icon(Icons.done) : const Icon(Icons.add),
-      ),
-    );
   }
 }

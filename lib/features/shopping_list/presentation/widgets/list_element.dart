@@ -110,7 +110,6 @@ class GridElement extends ConsumerWidget {
                         final updateProduct = ProductFoodShop(
                             product.barcodeId,
                             product.nameLanguages,
-                            product.isSaved,
                             product.imageFrontUrl,
                             value!,
                             product.weight,

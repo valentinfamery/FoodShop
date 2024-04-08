@@ -85,7 +85,7 @@ class _$AppDatabase extends AppDatabase {
       },
       onCreate: (database, version) async {
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `ProductFoodShop` (`barcodeId` INTEGER, `isSaved` INTEGER, `imageFrontUrl` TEXT, `isBuy` INTEGER, `weight` TEXT, `quantity` INTEGER, `nameLanguages` TEXT, PRIMARY KEY (`barcodeId`))');
+            'CREATE TABLE IF NOT EXISTS `ProductFoodShop` (`barcodeId` INTEGER, `imageFrontUrl` TEXT, `isBuy` INTEGER, `weight` TEXT, `quantity` INTEGER, `nameLanguages` TEXT, PRIMARY KEY (`barcodeId`))');
 
         await callback?.onCreate?.call(database, version);
       },
@@ -110,8 +110,6 @@ class _$ProductFloorDao extends ProductFloorDao {
             'ProductFoodShop',
             (ProductFoodShop item) => <String, Object?>{
                   'barcodeId': item.barcodeId,
-                  'isSaved':
-                      item.isSaved == null ? null : (item.isSaved! ? 1 : 0),
                   'imageFrontUrl': item.imageFrontUrl,
                   'isBuy': item.isBuy == null ? null : (item.isBuy! ? 1 : 0),
                   'weight': item.weight,
@@ -125,8 +123,6 @@ class _$ProductFloorDao extends ProductFloorDao {
             ['barcodeId'],
             (ProductFoodShop item) => <String, Object?>{
                   'barcodeId': item.barcodeId,
-                  'isSaved':
-                      item.isSaved == null ? null : (item.isSaved! ? 1 : 0),
                   'imageFrontUrl': item.imageFrontUrl,
                   'isBuy': item.isBuy == null ? null : (item.isBuy! ? 1 : 0),
                   'weight': item.weight,
@@ -140,8 +136,6 @@ class _$ProductFloorDao extends ProductFloorDao {
             ['barcodeId'],
             (ProductFoodShop item) => <String, Object?>{
                   'barcodeId': item.barcodeId,
-                  'isSaved':
-                      item.isSaved == null ? null : (item.isSaved! ? 1 : 0),
                   'imageFrontUrl': item.imageFrontUrl,
                   'isBuy': item.isBuy == null ? null : (item.isBuy! ? 1 : 0),
                   'weight': item.weight,
@@ -167,8 +161,7 @@ class _$ProductFloorDao extends ProductFloorDao {
     return _queryAdapter.queryListStream('SELECT * FROM ProductFoodShop',
         mapper: (Map<String, Object?> row) => ProductFoodShop(
             row['barcodeId'] as int?,
-            _mapConverter.decode(row['nameLanguages'] as String),
-            row['isSaved'] == null ? null : (row['isSaved'] as int) != 0,
+            _mapConverter.decode(row['nameLanguages'] as String?),
             row['imageFrontUrl'] as String?,
             row['isBuy'] == null ? null : (row['isBuy'] as int) != 0,
             row['weight'] as String?,
@@ -183,8 +176,7 @@ class _$ProductFloorDao extends ProductFloorDao {
         'SELECT * FROM ProductFoodShop WHERE barcodeId = ?1',
         mapper: (Map<String, Object?> row) => ProductFoodShop(
             row['barcodeId'] as int?,
-            _mapConverter.decode(row['nameLanguages'] as String),
-            row['isSaved'] == null ? null : (row['isSaved'] as int) != 0,
+            _mapConverter.decode(row['nameLanguages'] as String?),
             row['imageFrontUrl'] as String?,
             row['isBuy'] == null ? null : (row['isBuy'] as int) != 0,
             row['weight'] as String?,
@@ -198,8 +190,7 @@ class _$ProductFloorDao extends ProductFloorDao {
         'SELECT * FROM ProductFoodShop WHERE barcodeId = ?1',
         mapper: (Map<String, Object?> row) => ProductFoodShop(
             row['barcodeId'] as int?,
-            _mapConverter.decode(row['nameLanguages'] as String),
-            row['isSaved'] == null ? null : (row['isSaved'] as int) != 0,
+            _mapConverter.decode(row['nameLanguages'] as String?),
             row['imageFrontUrl'] as String?,
             row['isBuy'] == null ? null : (row['isBuy'] as int) != 0,
             row['weight'] as String?,

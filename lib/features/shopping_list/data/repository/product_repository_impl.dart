@@ -56,7 +56,7 @@ class ProductRepositoryImpl implements ProductRepository {
       }
 
       listSearchProductFinal.add(ProductFoodShop(int.parse(barcode!),
-          nameLanguages, false, imageFrontUrl, false, weight, 1));
+          nameLanguages, imageFrontUrl, false, weight, 1));
 
       if (kDebugMode) {
         print(element.barcode);
@@ -68,13 +68,9 @@ class ProductRepositoryImpl implements ProductRepository {
 
   @override
   void insertProductInFloor(ProductFoodShop productEntity) async {
-
-
-
     final productFloor = ProductFoodShop(
         productEntity.barcodeId!,
         productEntity.nameLanguages,
-        true,
         productEntity.imageFrontUrl,
         productEntity.isBuy,
         productEntity.weight,
@@ -92,16 +88,7 @@ class ProductRepositoryImpl implements ProductRepository {
     await productFloorDao.deleteProductFloor(product);
   }
 
-  @override
-  Future<bool> isProductSaved(int barcodeId) async {
-    final product = await productFloorDao.getProductFloorById(barcodeId);
-
-    if (product != null) {
-      return true;
-    } else {
-      return false;
-    }
-  }
+  
 
   @override
   void updateProductFloor(ProductFoodShop product) async {

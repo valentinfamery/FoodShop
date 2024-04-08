@@ -20,5 +20,4 @@ abstract class ProductRepository {
 
   void deleteProductFloor(ProductFoodShop product);
 
-  Future<bool> isProductSaved(int barcodeId);
 }
