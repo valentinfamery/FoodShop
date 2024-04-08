@@ -57,12 +57,14 @@ class ChangeQuantity extends ConsumerWidget {
                 )
               : const SizedBox(),
           const Spacer(),
-          Text('${product!.quantity} x ${product!.weight}'),
+          pastScreen == '/list/details'
+              ? Text('${product!.quantity} x ${product!.weight}')
+              : const SizedBox(),
           const Spacer(),
           pastScreen == '/list/details'
               ? InkWell(
                   onTap: () {
-                    final quantityAdd = product.quantity! + 1;
+                    final quantityAdd = product!.quantity! + 1;
 
                     final updateProduct = ProductFoodShop(
                         product.barcodeId,
