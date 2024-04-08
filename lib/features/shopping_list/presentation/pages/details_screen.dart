@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:food_shop/features/shopping_list/data/models/product_floor.dart';
 import 'package:food_shop/features/shopping_list/domain/repository/product_repository.dart';
+import 'package:food_shop/features/shopping_list/presentation/widgets/change_quantity.dart';
 import 'package:food_shop/injection_container.dart';
 import 'package:go_router/go_router.dart';
 
@@ -83,67 +84,7 @@ class _DetailsScreen extends State<DetailsScreen> {
             widget.productEntity!.name ?? '',
             style: Theme.of(context).textTheme.headlineMedium,
           ),
-          Row(
-            children: [
-              pastScreen == '/list/details'
-                  ? InkWell(
-                      onTap: () {
-                        if (widget.productEntity!.quantity! > 1) {
-                          final quantityRemove =
-                              widget.productEntity!.quantity! - 1;
-
-                          final updateProduct = ProductFoodShop(
-                              widget.productEntity!.barcodeId,
-                              widget.productEntity!.name,
-                              widget.productEntity!.isSaved,
-                              widget.productEntity!.imageFrontUrl,
-                              widget.productEntity!.isBuy,
-                              widget.productEntity!.weight,
-                              quantityRemove);
-
-                          productRepository.updateProductFloor(updateProduct);
-                        }
-                      },
-                      child: const CircleAvatar(
-                        radius: 20,
-                        backgroundColor: Colors.blue,
-                        child: Icon(
-                          Icons.remove,
-                        ),
-                      ),
-                    )
-                  : const SizedBox(),
-              const Spacer(),
-              Text(
-                  '${widget.productEntity!.quantity} x ${widget.productEntity!.weight}'),
-              const Spacer(),
-              pastScreen == '/list/details'
-                  ? InkWell(
-                      onTap: () {
-                        final quantityAdd = widget.productEntity!.quantity! + 1;
-
-                        final updateProduct = ProductFoodShop(
-                            widget.productEntity!.barcodeId,
-                            widget.productEntity!.name,
-                            widget.productEntity!.isSaved,
-                            widget.productEntity!.imageFrontUrl,
-                            widget.productEntity!.isBuy,
-                            widget.productEntity!.weight,
-                            quantityAdd);
-
-                        productRepository.updateProductFloor(updateProduct);
-                      },
-                      child: const CircleAvatar(
-                        radius: 20,
-                        backgroundColor: Colors.blue,
-                        child: Icon(
-                          Icons.add,
-                        ),
-                      ),
-                    )
-                  : const SizedBox(),
-            ],
-          ),
+          ChangeQuantity(productIdBarcode: widget.productEntity!.barcodeId!),
           SizedBox(
             height: width * 0.80,
             width: width * 0.80,
