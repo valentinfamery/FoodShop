@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 import 'package:food_shop/features/shopping_list/data/data_sources/local/dao/product_floor_dao.dart';
@@ -6,6 +7,7 @@ import 'package:food_shop/features/shopping_list/data/data_sources/remote/open_f
 import 'package:food_shop/features/shopping_list/data/models/product_floor.dart';
 import 'package:food_shop/features/shopping_list/domain/repository/product_repository.dart';
 import 'package:openfoodfacts/openfoodfacts.dart';
+import 'package:http/http.dart' as http;
 
 class ProductRepositoryImpl implements ProductRepository {
   final ProductFloorDao productFloorDao;
@@ -32,6 +34,25 @@ class ProductRepositoryImpl implements ProductRepository {
       final name = element.productName;
       final imageFrontUrl = element.imageFrontUrl;
       final weight = element.quantity;
+
+      var client = http.Client();
+
+      final url = Uri.parse(
+          'https://prices.openfoodfacts.org/api/v1/prices?product_code=$barcode&page=1&size=50');
+
+      final response =
+          await http.get(url, headers: {'accept': 'application/json'});
+
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        if (kDebugMode) {
+          print(data);
+        }
+      } else {
+        if (kDebugMode) {
+          print('Erreur lors de la requête : ${response.statusCode}');
+        }
+      }
 
       listSearchProductFinal.add(ProductFoodShop(
           int.parse(barcode!), name, false, imageFrontUrl, false, weight, 1));
