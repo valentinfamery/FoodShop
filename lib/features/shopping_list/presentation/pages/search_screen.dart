@@ -111,7 +111,7 @@ class SearchScreen extends ConsumerWidget {
         name, pnnsGroup2, termBrand, termStore, termIngredient, country);
     for (var element in listAPI) {
       if (kDebugMode) {
-        print(element.name);
+        print(element.nameLanguages![OpenFoodFactsLanguage.ENGLISH]);
       }
     }
     ref.read(listSearchProductProvider.notifier).update((state) => listAPI);

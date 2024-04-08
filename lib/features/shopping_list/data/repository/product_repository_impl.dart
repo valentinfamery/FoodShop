@@ -34,6 +34,7 @@ class ProductRepositoryImpl implements ProductRepository {
       final name = element.productName;
       final imageFrontUrl = element.imageFrontUrl;
       final weight = element.quantity;
+      final nameLanguages = element.productNameInLanguages;
 
       var client = http.Client();
 
@@ -54,8 +55,8 @@ class ProductRepositoryImpl implements ProductRepository {
         }
       }
 
-      listSearchProductFinal.add(ProductFoodShop(
-          int.parse(barcode!), name, false, imageFrontUrl, false, weight, 1));
+      listSearchProductFinal.add(ProductFoodShop(int.parse(barcode!),
+          nameLanguages, false, imageFrontUrl, false, weight, 1));
 
       if (kDebugMode) {
         print(element.barcode);
@@ -67,9 +68,12 @@ class ProductRepositoryImpl implements ProductRepository {
 
   @override
   void insertProductInFloor(ProductFoodShop productEntity) async {
+
+
+
     final productFloor = ProductFoodShop(
         productEntity.barcodeId!,
-        productEntity.name!,
+        productEntity.nameLanguages,
         true,
         productEntity.imageFrontUrl,
         productEntity.isBuy,

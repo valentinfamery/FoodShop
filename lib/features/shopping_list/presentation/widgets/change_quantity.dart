@@ -4,6 +4,7 @@ import 'package:food_shop/features/shopping_list/data/models/product_floor.dart'
 import 'package:food_shop/features/shopping_list/domain/repository/product_repository.dart';
 import 'package:food_shop/injection_container.dart';
 import 'package:go_router/go_router.dart';
+import 'package:openfoodfacts/openfoodfacts.dart';
 
 final productSavedWithIdProvider =
     StreamProvider.autoDispose.family<ProductFoodShop?, int>((ref, id) {
@@ -37,7 +38,8 @@ class ChangeQuantity extends ConsumerWidget {
 
                       final updateProduct = ProductFoodShop(
                           product.barcodeId,
-                          product.name,
+                          product.nameLanguages![OpenFoodFactsLanguage.ENGLISH]!
+                              as Map<OpenFoodFactsLanguage, String>?,
                           product.isSaved,
                           product.imageFrontUrl,
                           product.isBuy,
@@ -68,7 +70,8 @@ class ChangeQuantity extends ConsumerWidget {
 
                     final updateProduct = ProductFoodShop(
                         product.barcodeId,
-                        product.name,
+                        product.nameLanguages![OpenFoodFactsLanguage.ENGLISH]!
+                            as Map<OpenFoodFactsLanguage, String>?,
                         product.isSaved,
                         product.imageFrontUrl,
                         product.isBuy,

@@ -7,6 +7,7 @@ import 'package:food_shop/features/shopping_list/domain/repository/product_repos
 import 'package:food_shop/features/shopping_list/presentation/widgets/change_quantity.dart';
 import 'package:food_shop/injection_container.dart';
 import 'package:go_router/go_router.dart';
+import 'package:openfoodfacts/openfoodfacts.dart';
 
 final productSavedWithIdProvider =
     StreamProvider.autoDispose.family<ProductFoodShop?, int>((ref, id) {
@@ -81,7 +82,9 @@ class _DetailsScreen extends State<DetailsScreen> {
       body: Column(
         children: [
           Text(
-            widget.productEntity!.name ?? '',
+            widget.productEntity!
+                    .nameLanguages![OpenFoodFactsLanguage.ENGLISH] ??
+                '',
             style: Theme.of(context).textTheme.headlineMedium,
           ),
           ChangeQuantity(productIdBarcode: widget.productEntity!.barcodeId!),

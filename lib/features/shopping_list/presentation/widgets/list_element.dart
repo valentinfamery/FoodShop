@@ -5,6 +5,7 @@ import 'package:food_shop/features/shopping_list/domain/repository/product_repos
 import 'package:food_shop/injection_container.dart';
 import 'package:go_router/go_router.dart';
 import 'package:food_shop/features/shopping_list/data/models/product_floor.dart';
+import 'package:openfoodfacts/openfoodfacts.dart';
 
 final productSavedWithIdProvider =
     StreamProvider.autoDispose.family<ProductFoodShop?, int>((ref, id) {
@@ -69,7 +70,7 @@ class GridElement extends ConsumerWidget {
                   width: width * 0.50,
                   height: height * 0.50,
                   child: Text(
-                    '${product.name}',
+                    product.nameLanguages![OpenFoodFactsLanguage.FRENCH] ?? '',
                     style: TextStyle(
                         fontSize: height * 0.20,
                         decoration: product.isBuy!
@@ -105,7 +106,9 @@ class GridElement extends ConsumerWidget {
 
                         final updateProduct = ProductFoodShop(
                             product.barcodeId,
-                            product.name,
+                            product.nameLanguages![
+                                    OpenFoodFactsLanguage.ENGLISH]
+                                as Map<OpenFoodFactsLanguage, String>?,
                             product.isSaved,
                             product.imageFrontUrl,
                             value!,

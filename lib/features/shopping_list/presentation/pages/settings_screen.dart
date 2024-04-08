@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:food_shop/features/shopping_list/presentation/widgets/button_country_settings.dart';
+import 'package:food_shop/features/shopping_list/presentation/widgets/button_language_settings.dart';
 import 'package:food_shop/features/shopping_list/presentation/widgets/row_clickable_settings_button.dart';
 
 class SettingsScreen extends ConsumerWidget {
@@ -25,6 +26,10 @@ class SettingsScreen extends ConsumerWidget {
             ButtonCountrySettings(
               title: "Pays de Recherche",
               description: "Change le pays",
+            ),
+            ButtonLanguageSettings(
+              title: "Langue",
+              description: "Change le langage de l'application",
             ),
           ],
         ),

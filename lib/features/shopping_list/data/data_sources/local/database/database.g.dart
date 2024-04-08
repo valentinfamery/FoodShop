@@ -85,7 +85,7 @@ class _$AppDatabase extends AppDatabase {
       },
       onCreate: (database, version) async {
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `ProductFoodShop` (`barcodeId` INTEGER, `name` TEXT, `isSaved` INTEGER, `imageFrontUrl` TEXT, `isBuy` INTEGER, `weight` TEXT, `quantity` INTEGER, PRIMARY KEY (`barcodeId`))');
+            'CREATE TABLE IF NOT EXISTS `ProductFoodShop` (`barcodeId` INTEGER, `isSaved` INTEGER, `imageFrontUrl` TEXT, `isBuy` INTEGER, `weight` TEXT, `quantity` INTEGER, `nameLanguages` TEXT, PRIMARY KEY (`barcodeId`))');
 
         await callback?.onCreate?.call(database, version);
       },
@@ -110,13 +110,13 @@ class _$ProductFloorDao extends ProductFloorDao {
             'ProductFoodShop',
             (ProductFoodShop item) => <String, Object?>{
                   'barcodeId': item.barcodeId,
-                  'name': item.name,
                   'isSaved':
                       item.isSaved == null ? null : (item.isSaved! ? 1 : 0),
                   'imageFrontUrl': item.imageFrontUrl,
                   'isBuy': item.isBuy == null ? null : (item.isBuy! ? 1 : 0),
                   'weight': item.weight,
-                  'quantity': item.quantity
+                  'quantity': item.quantity,
+                  'nameLanguages': _mapConverter.encode(item.nameLanguages)
                 },
             changeListener),
         _productFoodShopUpdateAdapter = UpdateAdapter(
@@ -125,13 +125,13 @@ class _$ProductFloorDao extends ProductFloorDao {
             ['barcodeId'],
             (ProductFoodShop item) => <String, Object?>{
                   'barcodeId': item.barcodeId,
-                  'name': item.name,
                   'isSaved':
                       item.isSaved == null ? null : (item.isSaved! ? 1 : 0),
                   'imageFrontUrl': item.imageFrontUrl,
                   'isBuy': item.isBuy == null ? null : (item.isBuy! ? 1 : 0),
                   'weight': item.weight,
-                  'quantity': item.quantity
+                  'quantity': item.quantity,
+                  'nameLanguages': _mapConverter.encode(item.nameLanguages)
                 },
             changeListener),
         _productFoodShopDeletionAdapter = DeletionAdapter(
@@ -140,13 +140,13 @@ class _$ProductFloorDao extends ProductFloorDao {
             ['barcodeId'],
             (ProductFoodShop item) => <String, Object?>{
                   'barcodeId': item.barcodeId,
-                  'name': item.name,
                   'isSaved':
                       item.isSaved == null ? null : (item.isSaved! ? 1 : 0),
                   'imageFrontUrl': item.imageFrontUrl,
                   'isBuy': item.isBuy == null ? null : (item.isBuy! ? 1 : 0),
                   'weight': item.weight,
-                  'quantity': item.quantity
+                  'quantity': item.quantity,
+                  'nameLanguages': _mapConverter.encode(item.nameLanguages)
                 },
             changeListener);
 
@@ -167,7 +167,7 @@ class _$ProductFloorDao extends ProductFloorDao {
     return _queryAdapter.queryListStream('SELECT * FROM ProductFoodShop',
         mapper: (Map<String, Object?> row) => ProductFoodShop(
             row['barcodeId'] as int?,
-            row['name'] as String?,
+            _mapConverter.decode(row['nameLanguages'] as String),
             row['isSaved'] == null ? null : (row['isSaved'] as int) != 0,
             row['imageFrontUrl'] as String?,
             row['isBuy'] == null ? null : (row['isBuy'] as int) != 0,
@@ -183,7 +183,7 @@ class _$ProductFloorDao extends ProductFloorDao {
         'SELECT * FROM ProductFoodShop WHERE barcodeId = ?1',
         mapper: (Map<String, Object?> row) => ProductFoodShop(
             row['barcodeId'] as int?,
-            row['name'] as String?,
+            _mapConverter.decode(row['nameLanguages'] as String),
             row['isSaved'] == null ? null : (row['isSaved'] as int) != 0,
             row['imageFrontUrl'] as String?,
             row['isBuy'] == null ? null : (row['isBuy'] as int) != 0,
@@ -198,7 +198,7 @@ class _$ProductFloorDao extends ProductFloorDao {
         'SELECT * FROM ProductFoodShop WHERE barcodeId = ?1',
         mapper: (Map<String, Object?> row) => ProductFoodShop(
             row['barcodeId'] as int?,
-            row['name'] as String?,
+            _mapConverter.decode(row['nameLanguages'] as String),
             row['isSaved'] == null ? null : (row['isSaved'] as int) != 0,
             row['imageFrontUrl'] as String?,
             row['isBuy'] == null ? null : (row['isBuy'] as int) != 0,
@@ -226,3 +226,6 @@ class _$ProductFloorDao extends ProductFloorDao {
     await _productFoodShopDeletionAdapter.delete(productFloor);
   }
 }
+
+// ignore_for_file: unused_element
+final _mapConverter = MapConverter();
