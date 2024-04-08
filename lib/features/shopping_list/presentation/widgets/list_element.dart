@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:food_shop/config/utils/languages.dart';
 import 'package:food_shop/features/shopping_list/domain/repository/product_repository.dart';
 import 'package:food_shop/injection_container.dart';
 import 'package:go_router/go_router.dart';
@@ -30,6 +31,8 @@ class GridElement extends ConsumerWidget {
 
     final height = MediaQuery.of(context).size.height * 0.10;
     final width = MediaQuery.of(context).size.width * 0.90;
+
+    final selectedLanguage = ref.watch(selectedLanguageProvider);
 
     return InkWell(
       onTap: () {
@@ -70,7 +73,7 @@ class GridElement extends ConsumerWidget {
                   width: width * 0.50,
                   height: height * 0.50,
                   child: Text(
-                    product.nameLanguages![OpenFoodFactsLanguage.FRENCH] ?? '',
+                    product.nameLanguages![selectedLanguage] ?? '',
                     style: TextStyle(
                         fontSize: height * 0.20,
                         decoration: product.isBuy!
@@ -106,9 +109,7 @@ class GridElement extends ConsumerWidget {
 
                         final updateProduct = ProductFoodShop(
                             product.barcodeId,
-                            product.nameLanguages![
-                                    OpenFoodFactsLanguage.ENGLISH]
-                                as Map<OpenFoodFactsLanguage, String>?,
+                            product.nameLanguages,
                             product.isSaved,
                             product.imageFrontUrl,
                             value!,

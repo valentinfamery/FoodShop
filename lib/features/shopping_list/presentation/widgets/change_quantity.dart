@@ -38,8 +38,7 @@ class ChangeQuantity extends ConsumerWidget {
 
                       final updateProduct = ProductFoodShop(
                           product.barcodeId,
-                          product.nameLanguages![OpenFoodFactsLanguage.ENGLISH]!
-                              as Map<OpenFoodFactsLanguage, String>?,
+                          product.nameLanguages,
                           product.isSaved,
                           product.imageFrontUrl,
                           product.isBuy,
@@ -70,8 +69,7 @@ class ChangeQuantity extends ConsumerWidget {
 
                     final updateProduct = ProductFoodShop(
                         product.barcodeId,
-                        product.nameLanguages![OpenFoodFactsLanguage.ENGLISH]!
-                            as Map<OpenFoodFactsLanguage, String>?,
+                        product.nameLanguages,
                         product.isSaved,
                         product.imageFrontUrl,
                         product.isBuy,
