@@ -10,7 +10,7 @@ import 'package:food_shop/injection_container.dart';
 import 'package:openfoodfacts/openfoodfacts.dart';
 
 final listSearchProductProvider =
-    StateProvider<List<ProductFoodShop>>((ref) => []);
+    StateProvider<SearchState>((ref) => SearchState.empty());
 
 final buttonTagProvider = StateProvider<String>((ref) => 'Categories');
 
@@ -23,6 +23,28 @@ final textFieldStoresProvider = StateProvider<TextEditingController>(
 final textFieldIngredientsProvider = StateProvider<TextEditingController>(
     (ref) => TextEditingController(text: ''));
 
+enum SearchStateType { empty, loading, success }
+
+class SearchState<T> {
+  final SearchStateType type;
+  final List<ProductFoodShop>? data;
+  final Object? error;
+
+  SearchState.empty()
+      : type = SearchStateType.empty,
+        data = [],
+        error = null;
+
+  SearchState.loading()
+      : type = SearchStateType.loading,
+        data = null,
+        error = null;
+
+  SearchState.success(this.data)
+      : type = SearchStateType.success,
+        error = null;
+}
+
 class SearchScreen extends ConsumerWidget {
   var productRepository = sl<ProductRepository>();
 
@@ -30,8 +52,7 @@ class SearchScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    List<ProductFoodShop> listSearchProduct =
-        ref.watch(listSearchProductProvider);
+    SearchState listSearchProduct = ref.watch(listSearchProductProvider);
     final textFieldName = ref.watch(textFieldNameProvider);
     final textFieldBrand = ref.watch(textFieldBrandProvider);
     final textFieldStores = ref.watch(textFieldStoresProvider);
@@ -46,7 +67,7 @@ class SearchScreen extends ConsumerWidget {
       appBar: AppBar(),
       body: Center(
         child: SizedBox(
-          width: width * 0.8,
+          width: width * 0.9,
           child: Column(
             children: <Widget>[
               TextField(
@@ -97,7 +118,9 @@ class SearchScreen extends ConsumerWidget {
                 child: Text(buttonTag),
               ),
               Expanded(
-                child: ListWidget(products: listSearchProduct),
+                child: listSearchProduct.type == SearchStateType.loading
+                    ? const Center(child: CircularProgressIndicator())
+                    : ListWidget(products: listSearchProduct.data!),
               ),
             ],
           ),
@@ -114,6 +137,10 @@ class SearchScreen extends ConsumerWidget {
       String termStore,
       String termIngredient,
       OpenFoodFactsCountry country) async {
+    ref
+        .read(listSearchProductProvider.notifier)
+        .update((state) => SearchState.loading());
+
     final listAPI = await productRepository.searchProductByName(
         name, pnnsGroup2, termBrand, termStore, termIngredient, country);
     for (var element in listAPI) {
@@ -121,7 +148,9 @@ class SearchScreen extends ConsumerWidget {
         print(element.nameLanguages![OpenFoodFactsLanguage.ENGLISH]);
       }
     }
-    ref.read(listSearchProductProvider.notifier).update((state) => listAPI);
+    ref
+        .read(listSearchProductProvider.notifier)
+        .update((state) => SearchState.success(listAPI));
   }
 
   Future<void> showMyDialog(BuildContext context) async {
