@@ -41,7 +41,8 @@ class ChangeQuantity extends ConsumerWidget {
                           product.imageFrontUrl,
                           product.isBuy,
                           product.weight,
-                          quantityRemove);
+                          quantityRemove,
+                          product.stores);
 
                       productRepository.updateProductFloor(updateProduct);
                     }
@@ -71,7 +72,8 @@ class ChangeQuantity extends ConsumerWidget {
                         product.imageFrontUrl,
                         product.isBuy,
                         product.weight,
-                        quantityAdd);
+                        quantityAdd,
+                        product.stores);
 
                     productRepository.updateProductFloor(updateProduct);
                   },

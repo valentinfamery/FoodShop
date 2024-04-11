@@ -85,7 +85,7 @@ class _$AppDatabase extends AppDatabase {
       },
       onCreate: (database, version) async {
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `ProductFoodShop` (`barcodeId` INTEGER, `imageFrontUrl` TEXT, `isBuy` INTEGER, `weight` TEXT, `quantity` INTEGER, `nameLanguages` TEXT, PRIMARY KEY (`barcodeId`))');
+            'CREATE TABLE IF NOT EXISTS `ProductFoodShop` (`barcodeId` INTEGER, `imageFrontUrl` TEXT, `isBuy` INTEGER, `weight` TEXT, `quantity` INTEGER, `stores` TEXT, `nameLanguages` TEXT, PRIMARY KEY (`barcodeId`))');
 
         await callback?.onCreate?.call(database, version);
       },
@@ -114,6 +114,7 @@ class _$ProductFloorDao extends ProductFloorDao {
                   'isBuy': item.isBuy == null ? null : (item.isBuy! ? 1 : 0),
                   'weight': item.weight,
                   'quantity': item.quantity,
+                  'stores': item.stores,
                   'nameLanguages': _mapConverter.encode(item.nameLanguages)
                 },
             changeListener),
@@ -127,6 +128,7 @@ class _$ProductFloorDao extends ProductFloorDao {
                   'isBuy': item.isBuy == null ? null : (item.isBuy! ? 1 : 0),
                   'weight': item.weight,
                   'quantity': item.quantity,
+                  'stores': item.stores,
                   'nameLanguages': _mapConverter.encode(item.nameLanguages)
                 },
             changeListener),
@@ -140,6 +142,7 @@ class _$ProductFloorDao extends ProductFloorDao {
                   'isBuy': item.isBuy == null ? null : (item.isBuy! ? 1 : 0),
                   'weight': item.weight,
                   'quantity': item.quantity,
+                  'stores': item.stores,
                   'nameLanguages': _mapConverter.encode(item.nameLanguages)
                 },
             changeListener);
@@ -165,7 +168,8 @@ class _$ProductFloorDao extends ProductFloorDao {
             row['imageFrontUrl'] as String?,
             row['isBuy'] == null ? null : (row['isBuy'] as int) != 0,
             row['weight'] as String?,
-            row['quantity'] as int?),
+            row['quantity'] as int?,
+            row['stores'] as String?),
         queryableName: 'ProductFoodShop',
         isView: false);
   }
@@ -180,7 +184,8 @@ class _$ProductFloorDao extends ProductFloorDao {
             row['imageFrontUrl'] as String?,
             row['isBuy'] == null ? null : (row['isBuy'] as int) != 0,
             row['weight'] as String?,
-            row['quantity'] as int?),
+            row['quantity'] as int?,
+            row['stores'] as String?),
         arguments: [barcodeId]);
   }
 
@@ -194,7 +199,8 @@ class _$ProductFloorDao extends ProductFloorDao {
             row['imageFrontUrl'] as String?,
             row['isBuy'] == null ? null : (row['isBuy'] as int) != 0,
             row['weight'] as String?,
-            row['quantity'] as int?),
+            row['quantity'] as int?,
+            row['stores'] as String?),
         arguments: [barcodeId],
         queryableName: 'ProductFoodShop',
         isView: false);

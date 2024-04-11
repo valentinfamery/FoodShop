@@ -54,31 +54,37 @@ class DetailsScreen extends ConsumerWidget {
         appBar: AppBar(
           title: const Text('Details Screen'),
         ),
-        body: Column(
-          children: [
-            Text(
-              productEntity?.nameLanguages?[selectedLanguage] ?? '',
-              style: Theme.of(context).textTheme.headlineMedium,
+        body: Center(
+          child: SizedBox(
+            width: width * 0.80,
+            child: Column(
+              children: [
+                Text(
+                  productEntity?.nameLanguages?[selectedLanguage] ?? '',
+                  style: Theme.of(context).textTheme.headlineMedium,
+                ),
+                Text(productEntity?.stores ?? ''),
+                ChangeQuantity(productIdBarcode: productEntity!.barcodeId!),
+                SizedBox(
+                  height: width * 0.80,
+                  width: width * 0.80,
+                  child: productEntity?.imageFrontUrl != null
+                      ? ClipRRect(
+                          borderRadius: BorderRadius.circular(8.0),
+                          child: CachedNetworkImage(
+                            fit: BoxFit.cover,
+                            imageUrl: productEntity!.imageFrontUrl!,
+                            placeholder: (context, url) =>
+                                const CircularProgressIndicator(),
+                            errorWidget: (context, url, error) =>
+                                const Icon(Icons.error),
+                          ),
+                        )
+                      : const Text('Non disponible'),
+                ),
+              ],
             ),
-            ChangeQuantity(productIdBarcode: productEntity!.barcodeId!),
-            SizedBox(
-              height: width * 0.80,
-              width: width * 0.80,
-              child: productEntity?.imageFrontUrl != null
-                  ? ClipRRect(
-                      borderRadius: BorderRadius.circular(8.0),
-                      child: CachedNetworkImage(
-                        fit: BoxFit.cover,
-                        imageUrl: productEntity!.imageFrontUrl!,
-                        placeholder: (context, url) =>
-                            const CircularProgressIndicator(),
-                        errorWidget: (context, url, error) =>
-                            const Icon(Icons.error),
-                      ),
-                    )
-                  : const Text('Non disponible'),
-            ),
-          ],
+          ),
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {

@@ -113,7 +113,7 @@ class GridElement extends ConsumerWidget {
                             product.imageFrontUrl,
                             value!,
                             product.weight,
-                            product.quantity);
+                            product.quantity,product.stores);
 
                         productRepository.updateProductFloor(updateProduct);
                       },

@@ -40,61 +40,68 @@ class SearchScreen extends ConsumerWidget {
     PnnsGroup2? pnnsGroup2 = ref.watch(selectedPnnsGroup2);
     final country = ref.watch(countryStateProvider);
 
+    final width = MediaQuery.of(context).size.width;
+
     return Scaffold(
       appBar: AppBar(),
-      body: Column(
-        children: <Widget>[
-          TextField(
-            controller: textFieldName,
-            decoration: const InputDecoration(
-              border: OutlineInputBorder(),
-              hintText: 'Saisissez le Nom du Produit ',
-            ),
+      body: Center(
+        child: SizedBox(
+          width: width * 0.8,
+          child: Column(
+            children: <Widget>[
+              TextField(
+                controller: textFieldName,
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(),
+                  hintText: 'Saisissez le Nom du Produit ',
+                ),
+              ),
+              TextField(
+                controller: textFieldBrand,
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(),
+                  hintText: 'Saisissez la Marque du Produit',
+                ),
+              ),
+              TextField(
+                controller: textFieldStores,
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(),
+                  hintText: 'Saisissez le Magasin du Produit',
+                ),
+              ),
+              TextField(
+                controller: textFieldIngredients,
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(),
+                  hintText: 'Saisissez un des ingredients du Produit',
+                ),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  searchProductByName(
+                      textFieldName.text,
+                      pnnsGroup2,
+                      ref,
+                      textFieldBrand.text,
+                      textFieldStores.text,
+                      textFieldIngredients.text,
+                      country);
+                },
+                child: const Text('Search'),
+              ),
+              FilledButton(
+                onPressed: () {
+                  showMyDialog(context);
+                },
+                child: Text(buttonTag),
+              ),
+              Expanded(
+                child: ListWidget(products: listSearchProduct),
+              ),
+            ],
           ),
-          TextField(
-            controller: textFieldBrand,
-            decoration: const InputDecoration(
-              border: OutlineInputBorder(),
-              hintText: 'Saisissez la Marque du Produit',
-            ),
-          ),
-          TextField(
-            controller: textFieldStores,
-            decoration: const InputDecoration(
-              border: OutlineInputBorder(),
-              hintText: 'Saisissez le Magasin du Produit',
-            ),
-          ),
-          TextField(
-            controller: textFieldIngredients,
-            decoration: const InputDecoration(
-              border: OutlineInputBorder(),
-              hintText: 'Saisissez un des ingredients du Produit',
-            ),
-          ),
-          ElevatedButton(
-            onPressed: () {
-              searchProductByName(
-                  textFieldName.text,
-                  pnnsGroup2,
-                  ref,
-                  textFieldBrand.text,
-                  textFieldStores.text,
-                  textFieldIngredients.text,
-                  country);
-            },
-            child: const Text('Search'),
-          ),
-          FilledButton(
-            onPressed: () {
-              showMyDialog(context);
-            },
-            child: Text(buttonTag),
-          ),
-          Expanded(
-            child: ListWidget(products: listSearchProduct),
-          ),
-        ],
+        ),
       ),
     );
   }

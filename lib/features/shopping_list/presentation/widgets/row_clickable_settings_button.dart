@@ -28,9 +28,9 @@ class RowClickableSettingsButton extends ConsumerWidget {
       },
       child: Container(
         padding: const EdgeInsets.all(10),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
+        child: Wrap(
+          alignment: WrapAlignment.start,
+          crossAxisAlignment: WrapCrossAlignment.start,
           children: [
             Container(
               height: size,

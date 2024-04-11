@@ -26,10 +26,9 @@ class ButtonLanguageSettings extends ConsumerWidget {
       },
       child: Container(
         padding: const EdgeInsets.all(10),
-        child: Row(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
+        child: Wrap(
+          alignment: WrapAlignment.start,
+          crossAxisAlignment: WrapCrossAlignment.start,
           children: [
             Column(
               mainAxisSize: MainAxisSize.max,
