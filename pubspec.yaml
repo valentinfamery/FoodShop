@@ -21,6 +21,7 @@ dependencies:
   flutter_constraintlayout: ^1.7.0-stable
   http: ^1.2.1
   equatable: ^2.0.5
+  url_launcher: ^6.2.6
   
 
 dev_dependencies:

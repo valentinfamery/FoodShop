@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:food_shop/features/shopping_list/presentation/widgets/button_country_settings.dart';
 import 'package:food_shop/features/shopping_list/presentation/widgets/button_language_settings.dart';
 import 'package:food_shop/features/shopping_list/presentation/widgets/row_clickable_settings_button.dart';
+import 'package:food_shop/features/shopping_list/presentation/widgets/support_me_button.dart';
 
 class SettingsScreen extends ConsumerWidget {
   const SettingsScreen({super.key});
@@ -30,6 +31,10 @@ class SettingsScreen extends ConsumerWidget {
             ButtonLanguageSettings(
               title: "Langue",
               description: "Change le langage de l'application",
+            ),
+            SupportMeButton(
+              title: 'Dons',
+              description: 'Si vous souhaitez me soutenir cliquez ici',
             ),
           ],
         ),
