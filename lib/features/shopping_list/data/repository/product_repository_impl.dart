@@ -99,4 +99,9 @@ class ProductRepositoryImpl implements ProductRepository {
   Stream<ProductFoodShop?> getProductSavedWithId(int barcodeId) {
     return productFloorDao.getStreamProductFloorById(barcodeId);
   }
+
+  @override
+  void deleteProducts() {
+    productFloorDao.deleteProducts();
+  }
 }

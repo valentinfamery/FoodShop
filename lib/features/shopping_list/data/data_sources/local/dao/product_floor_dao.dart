@@ -20,4 +20,7 @@ abstract class ProductFloorDao {
 
   @delete
   Future<void> deleteProductFloor(ProductFoodShop productFloor);
+
+  @Query('DELETE FROM ProductFoodShop')
+  Future<void> deleteProducts();
 }

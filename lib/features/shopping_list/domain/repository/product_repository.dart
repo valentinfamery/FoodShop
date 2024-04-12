@@ -20,4 +20,5 @@ abstract class ProductRepository {
 
   void deleteProductFloor(ProductFoodShop product);
 
+  void deleteProducts();
 }

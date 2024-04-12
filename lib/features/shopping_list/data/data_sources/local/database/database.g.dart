@@ -207,6 +207,11 @@ class _$ProductFloorDao extends ProductFloorDao {
   }
 
   @override
+  Future<void> deleteProducts() async {
+    await _queryAdapter.queryNoReturn('DELETE FROM ProductFoodShop');
+  }
+
+  @override
   Future<void> insertProductFloor(ProductFoodShop productFloor) async {
     await _productFoodShopInsertionAdapter.insert(
         productFloor, OnConflictStrategy.abort);
