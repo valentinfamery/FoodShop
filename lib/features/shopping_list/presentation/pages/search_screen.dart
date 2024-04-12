@@ -109,7 +109,7 @@ class SearchScreen extends ConsumerWidget {
                       textFieldIngredients.text,
                       country);
                 },
-                child: const Text('Search'),
+                child: const Text('Rechercher'),
               ),
               FilledButton(
                 onPressed: () {

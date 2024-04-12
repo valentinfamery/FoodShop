@@ -34,15 +34,15 @@ class _ScaffoldWithNavBarState extends State<ScaffoldWithNavBar> {
         destinations: const <Widget>[
           NavigationDestination(
             icon: Icon(Icons.list),
-            label: 'List',
+            label: 'Liste',
           ),
           NavigationDestination(
             icon: Icon(Icons.search),
-            label: 'Search',
+            label: 'Rechercher',
           ),
           NavigationDestination(
             icon: Icon(Icons.settings_applications_rounded),
-            label: 'Settings',
+            label: 'Paramètres',
           ),
         ],
         selectedIndex: _calculateSelectedIndex(context),
