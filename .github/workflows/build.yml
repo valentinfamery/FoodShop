@@ -48,3 +48,12 @@ jobs:
         keyStorePassword: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}             
         
         keyPassword: ${{ secrets.ANDROID_SIGNING_KEY_PASSWORD }}
+
+     - name: Upload to Play Store
+       uses: r0adkll/upload-google-play@v1.0.18  
+       with:
+        serviceAccountJsonPlainText: ${{ secrets.ANDROID_SERVICE_ACCOUNT_JSON }} 
+        packageName: com.testgroup.flutter_github_actions_android        
+        releaseFiles: ${{steps.sign_app.outputs.signedReleaseFile}}        
+        mappingFile: ./build/app/outputs/mapping/release/mapping.txt
+        track: production
