@@ -1,5 +1,4 @@
 import 'package:floor/floor.dart';
-import 'package:food_shop/config/utils/map_string_type_converter.dart';
 
 import 'package:openfoodfacts/openfoodfacts.dart';
 

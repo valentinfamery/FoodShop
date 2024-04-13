@@ -3,16 +3,13 @@ name: Build
 
  # Controls what will trigger the workflow.
  # Change it to your needs.
- on:
+on:
  # A new push to the "main" branch. 
   push:
    branches: [ "production" ]
  # A new pull request to the "main" branch.
   pull_request:
    branches: [ "production" ]
- 
- # Allows to trigger the workflow from GitHub interfaces.
-   workflow_dispatch:
  
 # A single workflow can have multiple jobs.
 jobs: 

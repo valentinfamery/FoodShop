@@ -1,5 +1,4 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -9,7 +8,6 @@ import 'package:food_shop/features/shopping_list/domain/repository/product_repos
 import 'package:food_shop/features/shopping_list/presentation/widgets/change_quantity.dart';
 import 'package:food_shop/injection_container.dart';
 import 'package:go_router/go_router.dart';
-import 'package:openfoodfacts/openfoodfacts.dart';
 
 final productSavedWithIdProvider =
     StreamProvider.autoDispose.family<ProductFoodShop?, int>((ref, id) {
