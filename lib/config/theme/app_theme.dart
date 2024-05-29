@@ -9,5 +9,5 @@ final sharedPrefs = sl<SharedPreferences>();
 
 int? color = sharedPrefs.getInt(prefKey);
 
-final accentColorProvider =
-    StateProvider<Color>((ref) => color != null ? Color(color!) : Colors.blue);
+final accentColorProvider = StateProvider<Color>(
+    (ref) => color != null ? Color(color!) : const Color(0xFF4C88EF));
