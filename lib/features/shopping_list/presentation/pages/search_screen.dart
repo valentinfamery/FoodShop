@@ -62,67 +62,89 @@ class SearchScreen extends ConsumerWidget {
     final country = ref.watch(countryStateProvider);
 
     final width = MediaQuery.of(context).size.width;
+    final height = MediaQuery.of(context).size.height;
 
     return Scaffold(
       appBar: AppBar(),
-      body: Center(
-        child: SizedBox(
-          width: width * 0.9,
-          child: Column(
-            children: <Widget>[
-              TextField(
-                controller: textFieldName,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  hintText: 'Saisissez le Nom du Produit ',
+      body: SingleChildScrollView(
+        child: Center(
+          child: SizedBox(
+            width: width * 0.9,
+            height: height,
+            child: Column(
+              children: <Widget>[
+                TextField(
+                  controller: textFieldName,
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    hintText: 'Saisissez le Nom du Produit ',
+                  ),
                 ),
-              ),
-              TextField(
-                controller: textFieldBrand,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  hintText: 'Saisissez la Marque du Produit',
+                SizedBox(
+                  height: height * 0.025,
                 ),
-              ),
-              TextField(
-                controller: textFieldStores,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  hintText: 'Saisissez le Magasin du Produit',
+                TextField(
+                  controller: textFieldBrand,
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    hintText: 'Saisissez la Marque du Produit',
+                  ),
                 ),
-              ),
-              TextField(
-                controller: textFieldIngredients,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  hintText: 'Saisissez un des ingredients du Produit',
+                SizedBox(
+                  height: height * 0.025,
                 ),
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  searchProductByName(
-                      textFieldName.text,
-                      pnnsGroup2,
-                      ref,
-                      textFieldBrand.text,
-                      textFieldStores.text,
-                      textFieldIngredients.text,
-                      country);
-                },
-                child: const Text('Rechercher'),
-              ),
-              FilledButton(
-                onPressed: () {
-                  showMyDialog(context);
-                },
-                child: Text(buttonTag),
-              ),
-              Expanded(
-                child: listSearchProduct.type == SearchStateType.loading
-                    ? const Center(child: CircularProgressIndicator())
-                    : ListWidget(products: listSearchProduct.data!),
-              ),
-            ],
+                TextField(
+                  controller: textFieldStores,
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    hintText: 'Saisissez le Magasin du Produit',
+                  ),
+                ),
+                SizedBox(
+                  height: height * 0.025,
+                ),
+                TextField(
+                  controller: textFieldIngredients,
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    hintText: 'Saisissez un des ingredients du Produit',
+                  ),
+                ),
+                SizedBox(
+                  height: height * 0.025,
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    searchProductByName(
+                        textFieldName.text,
+                        pnnsGroup2,
+                        ref,
+                        textFieldBrand.text,
+                        textFieldStores.text,
+                        textFieldIngredients.text,
+                        country);
+                  },
+                  child: const Text('Rechercher'),
+                ),
+                SizedBox(
+                  height: height * 0.025,
+                ),
+                FilledButton(
+                  onPressed: () {
+                    showMyDialog(context);
+                  },
+                  child: Text(buttonTag),
+                ),
+                SizedBox(
+                  height: height * 0.025,
+                ),
+                Expanded(
+                  child: listSearchProduct.type == SearchStateType.loading
+                      ? const Center(child: CircularProgressIndicator())
+                      : ListWidget(products: listSearchProduct.data!),
+                ),
+              ],
+            ),
           ),
         ),
       ),

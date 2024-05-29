@@ -25,24 +25,45 @@ class ListScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final list = ref.watch(getProductsSaved);
 
+    final width = MediaQuery.of(context).size.width;
+    final height = MediaQuery.of(context).size.height;
+
     return Scaffold(
       appBar: AppBar(
-        actions: [
-          FilledButton(
-            onPressed: () {
-              openDeleteDialog(context);
-            },
-            child: const Text('Supprimer'),
-          ),
-        ],
         title: const Center(
           child: Text('Ma Liste de Courses'),
         ),
       ),
-      body: list.when(
-        data: (products) => ListWidget(products: products!),
-        loading: () => const Center(child: CircularProgressIndicator()),
-        error: (err, stack) => Text('Error: $err'),
+      body: SingleChildScrollView(
+        child: SizedBox(
+          height: height * 0.8,
+          child: Column(
+            children: [
+              SizedBox(
+                width: width,
+                height: height * 0.7,
+                child: list.when(
+                  data: (products) => ListWidget(products: products!),
+                  loading: () =>
+                      const Center(child: CircularProgressIndicator()),
+                  error: (err, stack) => Text('Error: $err'),
+                ),
+              ),
+              SizedBox(
+                width: width,
+                height: height * 0.1,
+                child: Center(
+                  child: FilledButton(
+                    onPressed: () {
+                      openDeleteDialog(context);
+                    },
+                    child: const Text('Supprimer'),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }

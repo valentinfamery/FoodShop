@@ -13,13 +13,14 @@ class SettingsScreen extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Center(
-          child: Text('Mes Paramètres'),
+          child: Text('Paramètres'),
         ),
       ),
       body: Container(
-        padding: const EdgeInsets.all(25.0),
+        padding: const EdgeInsets.only(left: 25, right: 25),
         child: const Column(
           mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             RowClickableSettingsButton(
                 title: "Couleur d'accentuation",

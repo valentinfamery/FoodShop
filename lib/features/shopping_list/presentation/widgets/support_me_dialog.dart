@@ -15,10 +15,10 @@ class SupportMeDialog extends StatelessWidget {
           children: [
             InkWell(
               onTap: () {
-                launchURL('https://www.buymeacoffee.com/valentinf');
+                launchURL('http://revolut.me/neoazubal');
               },
               child: const Text(
-                'https://www.buymeacoffee.com/valentinf',
+                'http://revolut.me/neoazubal',
                 style: TextStyle(
                   decoration: TextDecoration.underline,
                 ),
