@@ -13,13 +13,13 @@ final productSavedWithIdProvider =
 });
 
 class ChangeQuantity extends ConsumerWidget {
-  int productIdBarcode;
+  final int productIdBarcode;
 
-  ChangeQuantity({super.key, required this.productIdBarcode});
+  const ChangeQuantity({super.key, required this.productIdBarcode});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    var productRepository = sl<ProductRepository>();
+    final productRepository = sl<ProductRepository>();
 
     final pastScreen =
         GoRouter.of(context).routeInformationProvider.value.uri.toString();
@@ -42,14 +42,19 @@ class ChangeQuantity extends ConsumerWidget {
                           product.isBuy,
                           product.weight,
                           quantityRemove,
-                          product.stores);
+                          product.stores,
+                          product.countryOfSale,
+                          product.ingredients,
+                          product.origins,
+                          product.nutrimentDataPer,
+                          product.nutrimentEnergyUnit,
+                          product.imageNutritionUrl);
 
                       productRepository.updateProductFloor(updateProduct);
                     }
                   },
                   child: const CircleAvatar(
                     radius: 20,
-                    backgroundColor: Colors.blue,
                     child: Icon(
                       Icons.remove,
                     ),
@@ -73,13 +78,18 @@ class ChangeQuantity extends ConsumerWidget {
                         product.isBuy,
                         product.weight,
                         quantityAdd,
-                        product.stores);
+                        product.stores,
+                        product.countryOfSale,
+                        product.ingredients,
+                        product.origins,
+                        product.nutrimentDataPer,
+                        product.nutrimentEnergyUnit,
+                        product.imageNutritionUrl);
 
                     productRepository.updateProductFloor(updateProduct);
                   },
                   child: const CircleAvatar(
                     radius: 20,
-                    backgroundColor: Colors.blue,
                     child: Icon(
                       Icons.add,
                     ),

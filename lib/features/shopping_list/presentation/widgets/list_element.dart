@@ -6,7 +6,6 @@ import 'package:food_shop/features/shopping_list/domain/repository/product_repos
 import 'package:food_shop/injection_container.dart';
 import 'package:go_router/go_router.dart';
 import 'package:food_shop/features/shopping_list/data/models/product_floor.dart';
-import 'package:openfoodfacts/openfoodfacts.dart';
 
 final productSavedWithIdProvider =
     StreamProvider.autoDispose.family<ProductFoodShop?, int>((ref, id) {
@@ -113,7 +112,14 @@ class GridElement extends ConsumerWidget {
                             product.imageFrontUrl,
                             value!,
                             product.weight,
-                            product.quantity,product.stores);
+                            product.quantity,
+                            product.stores,
+                            product.countryOfSale,
+                            product.ingredients,
+                            product.origins,
+                            product.nutrimentDataPer,
+                            product.nutrimentEnergyUnit,
+                            product.imageNutritionUrl);
 
                         productRepository.updateProductFloor(updateProduct);
                       },

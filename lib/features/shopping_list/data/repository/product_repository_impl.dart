@@ -31,13 +31,19 @@ class ProductRepositoryImpl implements ProductRepository {
 
     for (var element in listSearchApiProduct!) {
       final barcode = element!.barcode;
-      final name = element.productName;
       final imageFrontUrl = element.imageFrontUrl;
       final weight = element.quantity;
       final nameLanguages = element.productNameInLanguages;
       final stores = element.stores;
 
-      var client = http.Client();
+      final countryOfSale = element.countries;
+      final ingredients = element.ingredientsText;
+      final origins = element.origins;
+      final nutrimentDataPer = element.nutrimentDataPer;
+      final nutrimentEnergyUnit = element.nutrimentEnergyUnit;
+      final imageNutritionUrl = element.imageNutritionUrl;
+
+      http.Client();
 
       final url = Uri.parse(
           'https://prices.openfoodfacts.org/api/v1/prices?product_code=$barcode&page=1&size=50');
@@ -56,8 +62,20 @@ class ProductRepositoryImpl implements ProductRepository {
         }
       }
 
-      listSearchProductFinal.add(ProductFoodShop(int.parse(barcode!),
-          nameLanguages, imageFrontUrl, false, weight, 1, stores));
+      listSearchProductFinal.add(ProductFoodShop(
+          int.parse(barcode!),
+          nameLanguages,
+          imageFrontUrl,
+          false,
+          weight,
+          1,
+          stores,
+          countryOfSale,
+          ingredients,
+          origins,
+          nutrimentDataPer,
+          nutrimentEnergyUnit,
+          imageNutritionUrl));
 
       if (kDebugMode) {
         print(element.barcode);
@@ -76,7 +94,13 @@ class ProductRepositoryImpl implements ProductRepository {
         productEntity.isBuy,
         productEntity.weight,
         productEntity.quantity,
-        productEntity.stores);
+        productEntity.stores,
+        productEntity.countryOfSale,
+        productEntity.ingredients,
+        productEntity.origins,
+        productEntity.nutrimentDataPer,
+        productEntity.nutrimentEnergyUnit,
+        productEntity.imageNutritionUrl);
     await productFloorDao.insertProductFloor(productFloor);
   }
 

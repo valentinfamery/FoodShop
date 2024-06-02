@@ -5,7 +5,7 @@ import 'package:food_shop/injection_container.dart';
 class DeleteDialog extends StatelessWidget {
   DeleteDialog({super.key});
 
-  var productRepository = sl<ProductRepository>();
+  final productRepository = sl<ProductRepository>();
 
   @override
   Widget build(BuildContext context) {

@@ -46,7 +46,7 @@ class SearchState<T> {
 }
 
 class SearchScreen extends ConsumerWidget {
-  var productRepository = sl<ProductRepository>();
+  final productRepository = sl<ProductRepository>();
 
   SearchScreen({super.key});
 

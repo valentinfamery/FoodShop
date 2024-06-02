@@ -30,7 +30,6 @@ class ButtonCountrySettings extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final country = ref.watch(countryStateProvider);
 
-
     return InkWell(
       customBorder: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),

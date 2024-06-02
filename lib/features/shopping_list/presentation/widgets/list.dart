@@ -11,7 +11,7 @@ class ListWidget extends StatelessWidget {
 
   ListWidget({required this.products, super.key});
 
-  var productRepository = sl<ProductRepository>();
+  final productRepository = sl<ProductRepository>();
 
   @override
   Widget build(BuildContext context) {
