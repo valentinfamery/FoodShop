@@ -57,23 +57,13 @@ class DetailsScreen extends ConsumerWidget {
           child: Center(
             child: SizedBox(
               width: width * 0.8,
-              height: height * 0.8,
+              height: height,
               child: Column(
                 children: [
                   Text(
                     productEntity?.nameLanguages?[selectedLanguage] ?? '',
                     style: Theme.of(context).textTheme.headlineMedium,
                   ),
-                  const Spacer(),
-                  Card(
-                    child: Container(
-                      margin: const EdgeInsets.all(25),
-                      child: Text(productEntity?.stores ?? ''),
-                    ),
-                  ),
-                  const Spacer(),
-                  ChangeQuantity(productIdBarcode: productEntity!.barcodeId!),
-                  const Spacer(),
                   SizedBox(
                     height: width * 0.80,
                     width: width * 0.80,
@@ -91,7 +81,32 @@ class DetailsScreen extends ConsumerWidget {
                           )
                         : const Text('Non disponible'),
                   ),
-                  const Spacer(),
+                  Text(productEntity?.stores ?? ''),
+                  Text(productEntity?.countryOfSale ?? ''),
+                  Text(productEntity?.ingredients ?? ''),
+                  Text(productEntity?.origins ?? ''),
+                  ChangeQuantity(productIdBarcode: productEntity!.barcodeId!),
+                  Expanded(
+                    child: SizedBox(
+                      height: width * 0.80,
+                      width: width * 0.80,
+                      child: Center(
+                        child: productEntity?.imageNutritionUrl != null
+                            ? ClipRRect(
+                                borderRadius: BorderRadius.circular(25),
+                                child: CachedNetworkImage(
+                                  fit: BoxFit.cover,
+                                  imageUrl: productEntity!.imageNutritionUrl!,
+                                  placeholder: (context, url) =>
+                                      const CircularProgressIndicator(),
+                                  errorWidget: (context, url, error) =>
+                                      const Icon(Icons.error),
+                                ),
+                              )
+                            : const Text('Non disponible'),
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),

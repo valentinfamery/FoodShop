@@ -12,4 +12,4 @@ int? selectedLanguage = sharedPrefs.getInt(prefKey);
 final selectedLanguageProvider = StateProvider<OpenFoodFactsLanguage>((ref) =>
     selectedLanguage != null
         ? OpenFoodFactsLanguage.values[selectedLanguage!]
-        : OpenFoodFactsLanguage.ENGLISH);
+        : OpenFoodFactsLanguage.FRENCH);
