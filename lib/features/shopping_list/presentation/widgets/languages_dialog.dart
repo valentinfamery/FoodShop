@@ -12,7 +12,7 @@ class LanguageDialog extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     const languages = OpenFoodFactsLanguage.values;
 
-    final language = ref.watch(selectedLanguageProvider);
+    final language = ref.watch(languageProvider);
 
     const String prefKey = 'selected_language';
 
@@ -36,7 +36,7 @@ class LanguageDialog extends ConsumerWidget {
                   groupValue: language,
                   onChanged: (OpenFoodFactsLanguage? value) {
                     ref
-                        .read(selectedLanguageProvider.notifier)
+                        .read(languageProvider.notifier)
                         .update((state) => languages[index]);
 
                     saveCountry(index);

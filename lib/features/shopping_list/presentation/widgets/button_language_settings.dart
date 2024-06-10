@@ -15,7 +15,7 @@ class ButtonLanguageSettings extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final language = ref.watch(selectedLanguageProvider);
+    final language = ref.watch(languageProvider);
 
     return InkWell(
       customBorder: RoundedRectangleBorder(
@@ -36,7 +36,7 @@ class ButtonLanguageSettings extends ConsumerWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(title),
-                Text("$description. Actuellement ${language.name}"),
+                Text("$description. Actuellement ${language?.name}"),
               ],
             ),
           ],

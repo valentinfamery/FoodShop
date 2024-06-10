@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:food_shop/config/routes/routes.dart';
 import 'package:food_shop/config/theme/app_theme.dart';
+import 'package:food_shop/config/utils/languages.dart';
+import 'package:food_shop/features/shopping_list/presentation/widgets/button_country_settings.dart';
 import 'package:food_shop/injection_container.dart';
 import 'package:openfoodfacts/openfoodfacts.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -16,7 +19,6 @@ Future<void> main() async {
   OpenFoodAPIConfiguration.userAgent = UserAgent(
     name: 'meal_maven',
   );
-
 }
 
 class MainApp extends ConsumerWidget {
@@ -24,11 +26,6 @@ class MainApp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-
-    
-
-    
-
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',

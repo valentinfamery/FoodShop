@@ -11,10 +11,8 @@ final sharedPrefs = sl<SharedPreferences>();
 
 int? country = sharedPrefs.getInt(prefKey);
 
-final countryStateProvider = StateProvider<OpenFoodFactsCountry>((ref) =>
-    country != null
-        ? OpenFoodFactsCountry.values[country!]
-        : OpenFoodFactsCountry.FRANCE);
+final countryStateProvider = StateProvider<OpenFoodFactsCountry?>(
+    (ref) => country != null ? OpenFoodFactsCountry.values[country!] : null);
 
 class ButtonCountrySettings extends ConsumerWidget {
   final String title;
@@ -48,7 +46,7 @@ class ButtonCountrySettings extends ConsumerWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(title),
-                Text("$description. Actuellement ${country.name}"),
+                Text("$description. Actuellement ${country?.name}"),
               ],
             ),
           ],

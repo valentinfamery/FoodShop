@@ -9,7 +9,7 @@ final sharedPrefs = sl<SharedPreferences>();
 
 int? selectedLanguage = sharedPrefs.getInt(prefKey);
 
-final selectedLanguageProvider = StateProvider<OpenFoodFactsLanguage>((ref) =>
+final languageProvider = StateProvider<OpenFoodFactsLanguage?>((ref) =>
     selectedLanguage != null
         ? OpenFoodFactsLanguage.values[selectedLanguage!]
-        : OpenFoodFactsLanguage.FRENCH);
+        : null);

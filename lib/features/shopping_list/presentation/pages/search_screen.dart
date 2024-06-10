@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:food_shop/features/shopping_list/presentation/widgets/list_tag.dart';
 import 'package:food_shop/features/shopping_list/presentation/widgets/list.dart';
@@ -8,6 +9,7 @@ import 'package:food_shop/features/shopping_list/data/models/product_floor.dart'
 import 'package:food_shop/features/shopping_list/domain/repository/product_repository.dart';
 import 'package:food_shop/injection_container.dart';
 import 'package:openfoodfacts/openfoodfacts.dart';
+import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 
 final listSearchProductProvider =
     StateProvider<SearchState>((ref) => SearchState.empty());
@@ -22,6 +24,8 @@ final textFieldStoresProvider = StateProvider<TextEditingController>(
     (ref) => TextEditingController(text: ''));
 final textFieldIngredientsProvider = StateProvider<TextEditingController>(
     (ref) => TextEditingController(text: ''));
+
+final scanBarcodeProvider = StateProvider<String>((ref) => '');
 
 enum SearchStateType { empty, loading, success }
 
@@ -60,6 +64,7 @@ class SearchScreen extends ConsumerWidget {
     String buttonTag = ref.watch(buttonTagProvider);
     PnnsGroup2? pnnsGroup2 = ref.watch(selectedPnnsGroup2);
     final country = ref.watch(countryStateProvider);
+    final barcode = ref.watch(scanBarcodeProvider);
 
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
@@ -82,6 +87,13 @@ class SearchScreen extends ConsumerWidget {
                 ),
                 SizedBox(
                   height: height * 0.025,
+                ),
+                TextField(
+                  controller: TextEditingController(text: barcode),
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    hintText: 'Saisissez le Nom du Produit ',
+                  ),
                 ),
                 TextField(
                   controller: textFieldBrand,
@@ -122,7 +134,7 @@ class SearchScreen extends ConsumerWidget {
                         textFieldBrand.text,
                         textFieldStores.text,
                         textFieldIngredients.text,
-                        country);
+                        country!);
                   },
                   child: const Text('Rechercher'),
                 ),
@@ -135,6 +147,9 @@ class SearchScreen extends ConsumerWidget {
                   },
                   child: Text(buttonTag),
                 ),
+                ElevatedButton(
+                    onPressed: () => scanBarcodeNormal(ref),
+                    child: const Text('Start barcode scan')),
                 SizedBox(
                   height: height * 0.025,
                 ),
@@ -183,5 +198,21 @@ class SearchScreen extends ConsumerWidget {
         return const ListTag();
       },
     );
+  }
+
+  Future<void> scanBarcodeNormal(WidgetRef ref) async {
+    String barcodeScanRes;
+    // Platform messages may fail, so we use a try/catch PlatformException.
+    try {
+      barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
+          '#ff6666', 'Cancel', true, ScanMode.BARCODE);
+      if (kDebugMode) {
+        print(barcodeScanRes);
+      }
+    } on PlatformException {
+      barcodeScanRes = 'Failed to get platform version.';
+    }
+
+    ref.read(scanBarcodeProvider.notifier).update((state) => barcodeScanRes);
   }
 }

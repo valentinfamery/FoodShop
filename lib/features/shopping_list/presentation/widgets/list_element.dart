@@ -31,7 +31,7 @@ class GridElement extends ConsumerWidget {
     final height = MediaQuery.of(context).size.height * 0.10;
     final width = MediaQuery.of(context).size.width * 0.90;
 
-    final selectedLanguage = ref.watch(selectedLanguageProvider);
+    final selectedLanguage = ref.watch(languageProvider);
 
     return InkWell(
       onTap: () {

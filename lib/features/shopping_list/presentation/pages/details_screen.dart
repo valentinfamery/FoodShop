@@ -46,7 +46,7 @@ class DetailsScreen extends ConsumerWidget {
     final product =
         ref.watch(productSavedWithIdProvider(productEntity!.barcodeId!));
 
-    final selectedLanguage = ref.watch(selectedLanguageProvider);
+    final selectedLanguage = ref.watch(languageProvider);
 
     return product.when(data: (data) {
       return Scaffold(
