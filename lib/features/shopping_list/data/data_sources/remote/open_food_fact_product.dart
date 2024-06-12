@@ -7,6 +7,7 @@ class OpenFoodFactProduct {
       String termBrand,
       String termStore,
       String termIngredient,
+      String barcode,
       OpenFoodFactsCountry country) async {
     var parameterList = <Parameter>[];
 
@@ -25,6 +26,7 @@ class OpenFoodFactProduct {
           tagFilterType: TagFilterType.INGREDIENTS,
           tagName: termIngredient,
         ),
+        BarcodeParameter(barcode),
         PnnsGroup2Filter(pnnsGroup2: pnnsGroup2),
       ];
     } else {
@@ -42,6 +44,7 @@ class OpenFoodFactProduct {
           tagFilterType: TagFilterType.INGREDIENTS,
           tagName: termIngredient,
         ),
+        BarcodeParameter(barcode),
       ];
     }
 

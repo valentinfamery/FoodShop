@@ -48,7 +48,7 @@ class ChangeQuantity extends ConsumerWidget {
                           product.origins,
                           product.nutrimentDataPer,
                           product.nutrimentEnergyUnit,
-                          product.imageNutritionUrl);
+                          product.imageNutritionUrl,product.category);
 
                       productRepository.updateProductFloor(updateProduct);
                     }
@@ -84,7 +84,7 @@ class ChangeQuantity extends ConsumerWidget {
                         product.origins,
                         product.nutrimentDataPer,
                         product.nutrimentEnergyUnit,
-                        product.imageNutritionUrl);
+                        product.imageNutritionUrl,product.category);
 
                     productRepository.updateProductFloor(updateProduct);
                   },

@@ -10,14 +10,12 @@ part of 'database.dart';
 class $FloorAppDatabase {
   /// Creates a database builder for a persistent database.
   /// Once a database is built, you should keep a reference to it and re-use it.
-  // ignore: library_private_types_in_public_api
   static _$AppDatabaseBuilder databaseBuilder(String name) =>
       _$AppDatabaseBuilder(name);
 
   /// Creates a database builder for an in memory database.
   /// Information stored in an in memory database disappears when the process is killed.
   /// Once a database is built, you should keep a reference to it and re-use it.
-  // ignore: library_private_types_in_public_api
   static _$AppDatabaseBuilder inMemoryDatabaseBuilder() =>
       _$AppDatabaseBuilder(null);
 }
@@ -87,7 +85,7 @@ class _$AppDatabase extends AppDatabase {
       },
       onCreate: (database, version) async {
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `ProductFoodShop` (`barcodeId` INTEGER, `imageFrontUrl` TEXT, `isBuy` INTEGER, `weight` TEXT, `quantity` INTEGER, `stores` TEXT, `countryOfSale` TEXT, `origins` TEXT, `nutrimentDataPer` TEXT, `nutrimentEnergyUnit` TEXT, `imageNutritionUrl` TEXT, `ingredients` TEXT, `nameLanguages` TEXT, PRIMARY KEY (`barcodeId`))');
+            'CREATE TABLE IF NOT EXISTS `ProductFoodShop` (`barcodeId` INTEGER, `imageFrontUrl` TEXT, `isBuy` INTEGER, `weight` TEXT, `quantity` INTEGER, `stores` TEXT, `countryOfSale` TEXT, `origins` TEXT, `nutrimentDataPer` TEXT, `nutrimentEnergyUnit` TEXT, `imageNutritionUrl` TEXT, `ingredients` TEXT, `category` TEXT NOT NULL, `nameLanguages` TEXT, PRIMARY KEY (`barcodeId`))');
 
         await callback?.onCreate?.call(database, version);
       },
@@ -123,6 +121,7 @@ class _$ProductFloorDao extends ProductFloorDao {
                   'nutrimentEnergyUnit': item.nutrimentEnergyUnit,
                   'imageNutritionUrl': item.imageNutritionUrl,
                   'ingredients': item.ingredients,
+                  'category': item.category,
                   'nameLanguages': _mapConverter.encode(item.nameLanguages)
                 },
             changeListener),
@@ -143,6 +142,7 @@ class _$ProductFloorDao extends ProductFloorDao {
                   'nutrimentEnergyUnit': item.nutrimentEnergyUnit,
                   'imageNutritionUrl': item.imageNutritionUrl,
                   'ingredients': item.ingredients,
+                  'category': item.category,
                   'nameLanguages': _mapConverter.encode(item.nameLanguages)
                 },
             changeListener),
@@ -163,6 +163,7 @@ class _$ProductFloorDao extends ProductFloorDao {
                   'nutrimentEnergyUnit': item.nutrimentEnergyUnit,
                   'imageNutritionUrl': item.imageNutritionUrl,
                   'ingredients': item.ingredients,
+                  'category': item.category,
                   'nameLanguages': _mapConverter.encode(item.nameLanguages)
                 },
             changeListener);
@@ -195,7 +196,8 @@ class _$ProductFloorDao extends ProductFloorDao {
             row['origins'] as String?,
             row['nutrimentDataPer'] as String?,
             row['nutrimentEnergyUnit'] as String?,
-            row['imageNutritionUrl'] as String?),
+            row['imageNutritionUrl'] as String?,
+            row['category'] as String),
         queryableName: 'ProductFoodShop',
         isView: false);
   }
@@ -217,7 +219,8 @@ class _$ProductFloorDao extends ProductFloorDao {
             row['origins'] as String?,
             row['nutrimentDataPer'] as String?,
             row['nutrimentEnergyUnit'] as String?,
-            row['imageNutritionUrl'] as String?),
+            row['imageNutritionUrl'] as String?,
+            row['category'] as String),
         arguments: [barcodeId]);
   }
 
@@ -238,7 +241,8 @@ class _$ProductFloorDao extends ProductFloorDao {
             row['origins'] as String?,
             row['nutrimentDataPer'] as String?,
             row['nutrimentEnergyUnit'] as String?,
-            row['imageNutritionUrl'] as String?),
+            row['imageNutritionUrl'] as String?,
+            row['category'] as String),
         arguments: [barcodeId],
         queryableName: 'ProductFoodShop',
         isView: false);

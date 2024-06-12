@@ -8,7 +8,8 @@ abstract class ProductRepository {
       String termBrand,
       String termStore,
       String termIngredient,
-      OpenFoodFactsCountry country);
+      String barcode,
+      OpenFoodFactsCountry country, OpenFoodFactsLanguage language);
 
   void insertProductInFloor(ProductFoodShop product);
 

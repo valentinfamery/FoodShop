@@ -19,6 +19,8 @@ class ProductFoodShop {
   final String? imageNutritionUrl;
   final String? ingredients;
 
+  final String category;
+
   final Map<OpenFoodFactsLanguage, String>? nameLanguages;
 
   const ProductFoodShop(
@@ -34,5 +36,6 @@ class ProductFoodShop {
       this.origins,
       this.nutrimentDataPer,
       this.nutrimentEnergyUnit,
-      this.imageNutritionUrl);
+      this.imageNutritionUrl,
+      this.category);
 }

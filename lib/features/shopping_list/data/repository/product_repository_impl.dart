@@ -23,9 +23,11 @@ class ProductRepositoryImpl implements ProductRepository {
       String termBrand,
       String termStore,
       String termIngredient,
-      OpenFoodFactsCountry country) async {
-    final listSearchApiProduct = await apiOpenFoodFact.searchByName(
-        name, pnnsGroup2, termBrand, termStore, termIngredient, country);
+      String barcode,
+      OpenFoodFactsCountry country,
+      OpenFoodFactsLanguage language) async {
+    final listSearchApiProduct = await apiOpenFoodFact.searchByName(name,
+        pnnsGroup2, termBrand, termStore, termIngredient, barcode, country);
 
     List<ProductFoodShop> listSearchProductFinal = <ProductFoodShop>[];
 
@@ -54,11 +56,11 @@ class ProductRepositoryImpl implements ProductRepository {
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
         if (kDebugMode) {
-          print(data);
+          //print(data);
         }
       } else {
         if (kDebugMode) {
-          print('Erreur lors de la requête : ${response.statusCode}');
+          //print('Erreur lors de la requête : ${response.statusCode}');
         }
       }
 
@@ -75,10 +77,11 @@ class ProductRepositoryImpl implements ProductRepository {
           origins,
           nutrimentDataPer,
           nutrimentEnergyUnit,
-          imageNutritionUrl));
+          imageNutritionUrl,
+          ''));
 
       if (kDebugMode) {
-        print(element.barcode);
+        //print(element.barcode);
       }
     }
 
@@ -100,7 +103,8 @@ class ProductRepositoryImpl implements ProductRepository {
         productEntity.origins,
         productEntity.nutrimentDataPer,
         productEntity.nutrimentEnergyUnit,
-        productEntity.imageNutritionUrl);
+        productEntity.imageNutritionUrl,
+        '');
     await productFloorDao.insertProductFloor(productFloor);
   }
 

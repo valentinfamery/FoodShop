@@ -2,6 +2,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:food_shop/config/routes/routes.dart';
+import 'package:food_shop/config/utils/languages.dart';
 import 'package:food_shop/features/shopping_list/presentation/widgets/list_tag.dart';
 import 'package:food_shop/features/shopping_list/presentation/widgets/list.dart';
 import 'package:food_shop/features/shopping_list/presentation/widgets/button_country_settings.dart';
@@ -64,6 +66,7 @@ class SearchScreen extends ConsumerWidget {
     String buttonTag = ref.watch(buttonTagProvider);
     PnnsGroup2? pnnsGroup2 = ref.watch(selectedPnnsGroup2);
     final country = ref.watch(countryStateProvider);
+    final language = ref.watch(languageProvider);
     final barcode = ref.watch(scanBarcodeProvider);
 
     final width = MediaQuery.of(context).size.width;
@@ -92,8 +95,11 @@ class SearchScreen extends ConsumerWidget {
                   controller: TextEditingController(text: barcode),
                   decoration: const InputDecoration(
                     border: OutlineInputBorder(),
-                    hintText: 'Saisissez le Nom du Produit ',
+                    hintText: 'Saisissez le code-barres',
                   ),
+                ),
+                SizedBox(
+                  height: height * 0.025,
                 ),
                 TextField(
                   controller: textFieldBrand,
@@ -128,13 +134,16 @@ class SearchScreen extends ConsumerWidget {
                 ElevatedButton(
                   onPressed: () {
                     searchProductByName(
-                        textFieldName.text,
-                        pnnsGroup2,
-                        ref,
-                        textFieldBrand.text,
-                        textFieldStores.text,
-                        textFieldIngredients.text,
-                        country!);
+                      textFieldName.text,
+                      pnnsGroup2,
+                      ref,
+                      textFieldBrand.text,
+                      textFieldStores.text,
+                      textFieldIngredients.text,
+                      barcode,
+                      country!,
+                      language!,
+                    );
                   },
                   child: const Text('Rechercher'),
                 ),
@@ -173,13 +182,15 @@ class SearchScreen extends ConsumerWidget {
       String termBrand,
       String termStore,
       String termIngredient,
-      OpenFoodFactsCountry country) async {
+      String barcode,
+      OpenFoodFactsCountry country,
+      OpenFoodFactsLanguage language) async {
     ref
         .read(listSearchProductProvider.notifier)
         .update((state) => SearchState.loading());
 
-    final listAPI = await productRepository.searchProductByName(
-        name, pnnsGroup2, termBrand, termStore, termIngredient, country);
+    final listAPI = await productRepository.searchProductByName(name,
+        pnnsGroup2, termBrand, termStore, termIngredient,barcode, country, language);
     for (var element in listAPI) {
       if (kDebugMode) {
         print(element.nameLanguages![OpenFoodFactsLanguage.ENGLISH]);
