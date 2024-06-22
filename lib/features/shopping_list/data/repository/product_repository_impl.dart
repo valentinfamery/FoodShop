@@ -27,7 +27,7 @@ class ProductRepositoryImpl implements ProductRepository {
       OpenFoodFactsCountry country,
       OpenFoodFactsLanguage language) async {
     final listSearchApiProduct = await apiOpenFoodFact.searchByName(name,
-        pnnsGroup2, termBrand, termStore, termIngredient, barcode, country);
+        pnnsGroup2, termBrand, termStore, termIngredient, barcode, country,language);
 
     List<ProductFoodShop> listSearchProductFinal = <ProductFoodShop>[];
 

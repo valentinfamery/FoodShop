@@ -29,6 +29,8 @@ final textFieldIngredientsProvider = StateProvider<TextEditingController>(
 
 final scanBarcodeProvider = StateProvider<String>((ref) => '');
 
+final searchTypeProvider = StateProvider((ref) => SearchType.food);
+
 enum SearchStateType { empty, loading, success }
 
 class SearchState<T> {
@@ -51,6 +53,8 @@ class SearchState<T> {
         error = null;
 }
 
+enum SearchType { food, petfood, beauty }
+
 class SearchScreen extends ConsumerWidget {
   final productRepository = sl<ProductRepository>();
 
@@ -68,6 +72,8 @@ class SearchScreen extends ConsumerWidget {
     final country = ref.watch(countryStateProvider);
     final language = ref.watch(languageProvider);
     final barcode = ref.watch(scanBarcodeProvider);
+
+    final searchType = ref.watch(searchTypeProvider);
 
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
@@ -88,45 +94,78 @@ class SearchScreen extends ConsumerWidget {
                     hintText: 'Saisissez le Nom du Produit ',
                   ),
                 ),
-                SizedBox(
-                  height: height * 0.025,
-                ),
-                TextField(
-                  controller: TextEditingController(text: barcode),
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
-                    hintText: 'Saisissez le code-barres',
-                  ),
-                ),
-                SizedBox(
-                  height: height * 0.025,
-                ),
-                TextField(
-                  controller: textFieldBrand,
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
-                    hintText: 'Saisissez la Marque du Produit',
-                  ),
-                ),
-                SizedBox(
-                  height: height * 0.025,
-                ),
-                TextField(
-                  controller: textFieldStores,
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
-                    hintText: 'Saisissez le Magasin du Produit',
-                  ),
-                ),
-                SizedBox(
-                  height: height * 0.025,
-                ),
-                TextField(
-                  controller: textFieldIngredients,
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
-                    hintText: 'Saisissez un des ingredients du Produit',
-                  ),
+                ExpansionTile(
+                  initiallyExpanded: true,
+                  title: const Text('Autre criteres'),
+                  children: [
+                    TextField(
+                      controller: TextEditingController(text: barcode),
+                      decoration: const InputDecoration(
+                        border: OutlineInputBorder(),
+                        hintText: 'Saisissez le code-barres',
+                      ),
+                    ),
+                    SizedBox(
+                      height: height * 0.025,
+                    ),
+                    TextField(
+                      controller: textFieldBrand,
+                      decoration: const InputDecoration(
+                        border: OutlineInputBorder(),
+                        hintText: 'Saisissez la Marque du Produit',
+                      ),
+                    ),
+                    SizedBox(
+                      height: height * 0.025,
+                    ),
+                    TextField(
+                      controller: textFieldStores,
+                      decoration: const InputDecoration(
+                        border: OutlineInputBorder(),
+                        hintText: 'Saisissez le Magasin du Produit',
+                      ),
+                    ),
+                    SizedBox(
+                      height: height * 0.025,
+                    ),
+                    TextField(
+                      controller: textFieldIngredients,
+                      decoration: const InputDecoration(
+                        border: OutlineInputBorder(),
+                        hintText: 'Saisissez un des ingredients du Produit',
+                      ),
+                    ),
+                    RadioListTile<SearchType>(
+                      title: const Text('Food'),
+                      value: SearchType.food,
+                      groupValue: searchType,
+                      onChanged: (SearchType? value) {
+                        ref
+                            .read(searchTypeProvider.notifier)
+                            .update((state) => value!);
+                      },
+                    ),
+                    RadioListTile<SearchType>(
+                      title: const Text('Pet Food'),
+                      value: SearchType.petfood,
+                      groupValue: searchType,
+                      onChanged: (SearchType? value) {
+                        ref
+                            .read(searchTypeProvider.notifier)
+                            .update((state) => value!);
+                      },
+                    ),
+                    RadioListTile<SearchType>(
+                      title: const Text('Beauty'),
+                      value: SearchType.beauty,
+                      groupValue: searchType,
+                      onChanged: (SearchType? value) {
+                        ref
+                            .read(searchTypeProvider.notifier)
+                            .update((state) => value!);
+                      },
+                    ),
+                  ],
                 ),
                 SizedBox(
                   height: height * 0.025,
@@ -134,6 +173,7 @@ class SearchScreen extends ConsumerWidget {
                 ElevatedButton(
                   onPressed: () {
                     searchProductByName(
+                      searchType,
                       textFieldName.text,
                       pnnsGroup2,
                       ref,
@@ -176,6 +216,7 @@ class SearchScreen extends ConsumerWidget {
   }
 
   void searchProductByName(
+      SearchType searchType,
       String name,
       PnnsGroup2? pnnsGroup2,
       WidgetRef ref,
@@ -189,8 +230,15 @@ class SearchScreen extends ConsumerWidget {
         .read(listSearchProductProvider.notifier)
         .update((state) => SearchState.loading());
 
-    final listAPI = await productRepository.searchProductByName(name,
-        pnnsGroup2, termBrand, termStore, termIngredient,barcode, country, language);
+    final listAPI = await productRepository.searchProductByName(
+        name,
+        pnnsGroup2,
+        termBrand,
+        termStore,
+        termIngredient,
+        barcode,
+        country,
+        language);
     for (var element in listAPI) {
       if (kDebugMode) {
         print(element.nameLanguages![OpenFoodFactsLanguage.ENGLISH]);

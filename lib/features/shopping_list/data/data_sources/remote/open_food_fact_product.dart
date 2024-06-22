@@ -8,50 +8,47 @@ class OpenFoodFactProduct {
       String termStore,
       String termIngredient,
       String barcode,
-      OpenFoodFactsCountry country) async {
+      OpenFoodFactsCountry country,
+      OpenFoodFactsLanguage language) async {
     var parameterList = <Parameter>[];
 
+    if (name != '') {
+      parameterList.add(SearchTerms(terms: [name]));
+    }
+
+    if (barcode != '') {
+      parameterList.add(BarcodeParameter(barcode));
+    }
+
+    if (termBrand != '') {
+      parameterList.add(TagFilter.fromType(
+        tagFilterType: TagFilterType.BRANDS,
+        tagName: termBrand,
+      ));
+    }
+
+    if (termStore != '') {
+      parameterList.add(TagFilter.fromType(
+        tagFilterType: TagFilterType.STORES,
+        tagName: termStore,
+      ));
+    }
+
+    if (termIngredient != '') {
+      parameterList.add(TagFilter.fromType(
+        tagFilterType: TagFilterType.INGREDIENTS,
+        tagName: termIngredient,
+      ));
+    }
+
     if (pnnsGroup2 != null) {
-      parameterList = <Parameter>[
-        SearchTerms(terms: [name]),
-        TagFilter.fromType(
-          tagFilterType: TagFilterType.BRANDS,
-          tagName: termBrand,
-        ),
-        TagFilter.fromType(
-          tagFilterType: TagFilterType.STORES,
-          tagName: termStore,
-        ),
-        TagFilter.fromType(
-          tagFilterType: TagFilterType.INGREDIENTS,
-          tagName: termIngredient,
-        ),
-        BarcodeParameter(barcode),
-        PnnsGroup2Filter(pnnsGroup2: pnnsGroup2),
-      ];
-    } else {
-      parameterList = <Parameter>[
-        SearchTerms(terms: [name]),
-        TagFilter.fromType(
-          tagFilterType: TagFilterType.BRANDS,
-          tagName: termBrand,
-        ),
-        TagFilter.fromType(
-          tagFilterType: TagFilterType.STORES,
-          tagName: termStore,
-        ),
-        TagFilter.fromType(
-          tagFilterType: TagFilterType.INGREDIENTS,
-          tagName: termIngredient,
-        ),
-        BarcodeParameter(barcode),
-      ];
+      parameterList.add(PnnsGroup2Filter(pnnsGroup2: pnnsGroup2));
     }
 
     ProductSearchQueryConfiguration configuration =
         ProductSearchQueryConfiguration(
             country: country,
-            language: OpenFoodFactsLanguage.FRENCH,
+            language: language,
             version: ProductQueryVersion.v3,
             parametersList: parameterList);
 
