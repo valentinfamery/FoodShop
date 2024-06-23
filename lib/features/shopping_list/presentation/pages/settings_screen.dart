@@ -10,34 +10,38 @@ class SettingsScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final height =
+        MediaQuery.of(context).size.height - kBottomNavigationBarHeight;
+
     return Scaffold(
-      appBar: AppBar(
-        title: const Center(
-          child: Text('Paramètres'),
-        ),
-      ),
       body: Container(
+        height: height,
         padding: const EdgeInsets.only(left: 25, right: 25),
-        child: const Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            RowClickableSettingsButton(
-                title: "Couleur d'accentuation",
-                description: "Change la couleur d'accentuation."),
-            ButtonCountrySettings(
-              title: "Pays de Recherche",
-              description: "Change le pays",
-            ),
-            ButtonLanguageSettings(
-              title: "Langue",
-              description: "Change le langage de l'application",
-            ),
-            SupportMeButton(
-              title: 'Dons',
-              description: 'Si vous souhaitez me soutenir cliquez ici',
-            ),
-          ],
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(
+                height: height * 0.075,
+              ),
+              const RowClickableSettingsButton(
+                  title: "Couleur d'accentuation",
+                  description: "Change la couleur d'accentuation."),
+              const ButtonCountrySettings(
+                title: "Pays de Recherche",
+                description: "Change le pays",
+              ),
+              const ButtonLanguageSettings(
+                title: "Langue",
+                description: "Change le langage de l'application",
+              ),
+              const SupportMeButton(
+                title: 'Dons',
+                description: 'Si vous souhaitez me soutenir cliquez ici',
+              ),
+            ],
+          ),
         ),
       ),
     );

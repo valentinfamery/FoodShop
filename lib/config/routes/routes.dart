@@ -10,8 +10,6 @@ import 'package:food_shop/features/shopping_list/presentation/pages/list_screen.
 import 'package:food_shop/features/shopping_list/presentation/pages/search_screen.dart';
 import 'package:food_shop/features/shopping_list/presentation/pages/settings_screen.dart';
 import 'package:food_shop/features/shopping_list/presentation/widgets/scaffold_with_nav_bar.dart';
-import 'package:openfoodfacts/src/utils/country_helper.dart';
-import 'package:openfoodfacts/src/utils/language_helper.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 final GlobalKey<NavigatorState> _rootNavigatorKey =

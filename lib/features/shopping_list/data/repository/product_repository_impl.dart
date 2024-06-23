@@ -17,7 +17,7 @@ class ProductRepositoryImpl implements ProductRepository {
   final apiOpenFoodFact = OpenFoodFactProduct();
 
   @override
-  Future<List<ProductFoodShop>> searchProductByName(
+  Future<List<ProductFoodShop>> searchProductFood(
       String name,
       PnnsGroup2? pnnsGroup2,
       String termBrand,
@@ -26,8 +26,15 @@ class ProductRepositoryImpl implements ProductRepository {
       String barcode,
       OpenFoodFactsCountry country,
       OpenFoodFactsLanguage language) async {
-    final listSearchApiProduct = await apiOpenFoodFact.searchByName(name,
-        pnnsGroup2, termBrand, termStore, termIngredient, barcode, country,language);
+    final listSearchApiProduct = await apiOpenFoodFact.searchByName(
+        name,
+        pnnsGroup2,
+        termBrand,
+        termStore,
+        termIngredient,
+        barcode,
+        country,
+        language);
 
     List<ProductFoodShop> listSearchProductFinal = <ProductFoodShop>[];
 

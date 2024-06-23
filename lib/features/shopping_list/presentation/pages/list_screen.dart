@@ -26,22 +26,22 @@ class ListScreen extends ConsumerWidget {
     final list = ref.watch(getProductsSaved);
 
     final width = MediaQuery.of(context).size.width;
-    final height = MediaQuery.of(context).size.height;
+    final height =
+        MediaQuery.of(context).size.height - kBottomNavigationBarHeight;
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Center(
-          child: Text('Ma Liste de Courses'),
-        ),
-      ),
       body: SingleChildScrollView(
         child: SizedBox(
-          height: height * 0.8,
+          height: height,
+          width: width,
           child: Column(
             children: [
               SizedBox(
+                height: height * 0.05,
+              ),
+              SizedBox(
                 width: width,
-                height: height * 0.7,
+                height: height * 0.8,
                 child: list.when(
                   data: (products) => ListWidget(products: products!),
                   loading: () =>
@@ -50,8 +50,11 @@ class ListScreen extends ConsumerWidget {
                 ),
               ),
               SizedBox(
+                height: height * 0.025,
+              ),
+              SizedBox(
                 width: width,
-                height: height * 0.1,
+                height: height * 0.05,
                 child: Center(
                   child: FilledButton(
                     onPressed: () {

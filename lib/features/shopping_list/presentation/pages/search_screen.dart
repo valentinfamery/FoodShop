@@ -1,8 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:food_shop/config/routes/routes.dart';
 import 'package:food_shop/config/utils/languages.dart';
 import 'package:food_shop/features/shopping_list/presentation/widgets/list_tag.dart';
 import 'package:food_shop/features/shopping_list/presentation/widgets/list.dart';
@@ -76,138 +76,153 @@ class SearchScreen extends ConsumerWidget {
     final searchType = ref.watch(searchTypeProvider);
 
     final width = MediaQuery.of(context).size.width;
-    final height = MediaQuery.of(context).size.height;
+    final height =
+        MediaQuery.of(context).size.height - kBottomNavigationBarHeight;
 
     return Scaffold(
-      appBar: AppBar(),
-      body: SingleChildScrollView(
-        child: Center(
-          child: SizedBox(
-            width: width * 0.9,
-            height: height,
-            child: Column(
-              children: <Widget>[
-                TextField(
-                  controller: textFieldName,
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
-                    hintText: 'Saisissez le Nom du Produit ',
+      //appBar: AppBar(),
+      body: SizedBox(
+        width: width,
+        height: height,
+        child: SingleChildScrollView(
+          child: Align(
+            alignment: Alignment.center,
+            child: SizedBox(
+              width: width * 0.9,
+              child: Column(
+                children: <Widget>[
+                  SizedBox(
+                    height: height * 0.075,
                   ),
-                ),
-                ExpansionTile(
-                  initiallyExpanded: true,
-                  title: const Text('Autre criteres'),
-                  children: [
-                    TextField(
-                      controller: TextEditingController(text: barcode),
-                      decoration: const InputDecoration(
-                        border: OutlineInputBorder(),
-                        hintText: 'Saisissez le code-barres',
+                  TextField(
+                    controller: textFieldName,
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                      hintText: 'Saisissez le Nom du Produit ',
+                    ),
+                  ),
+                  ExpansionTile(
+                    title: const Text('Autres critères'),
+                    children: [
+                      TextField(
+                        controller: TextEditingController(text: barcode),
+                        decoration: const InputDecoration(
+                          border: OutlineInputBorder(),
+                          hintText: 'Saisissez le code-barres',
+                        ),
                       ),
-                    ),
-                    SizedBox(
-                      height: height * 0.025,
-                    ),
-                    TextField(
-                      controller: textFieldBrand,
-                      decoration: const InputDecoration(
-                        border: OutlineInputBorder(),
-                        hintText: 'Saisissez la Marque du Produit',
+                      SizedBox(
+                        height: height * 0.025,
                       ),
-                    ),
-                    SizedBox(
-                      height: height * 0.025,
-                    ),
-                    TextField(
-                      controller: textFieldStores,
-                      decoration: const InputDecoration(
-                        border: OutlineInputBorder(),
-                        hintText: 'Saisissez le Magasin du Produit',
+                      TextField(
+                        controller: textFieldBrand,
+                        decoration: const InputDecoration(
+                          border: OutlineInputBorder(),
+                          hintText: 'Saisissez la Marque du Produit',
+                        ),
                       ),
-                    ),
-                    SizedBox(
-                      height: height * 0.025,
-                    ),
-                    TextField(
-                      controller: textFieldIngredients,
-                      decoration: const InputDecoration(
-                        border: OutlineInputBorder(),
-                        hintText: 'Saisissez un des ingredients du Produit',
+                      SizedBox(
+                        height: height * 0.025,
                       ),
-                    ),
-                    RadioListTile<SearchType>(
-                      title: const Text('Food'),
-                      value: SearchType.food,
-                      groupValue: searchType,
-                      onChanged: (SearchType? value) {
-                        ref
-                            .read(searchTypeProvider.notifier)
-                            .update((state) => value!);
-                      },
-                    ),
-                    RadioListTile<SearchType>(
-                      title: const Text('Pet Food'),
-                      value: SearchType.petfood,
-                      groupValue: searchType,
-                      onChanged: (SearchType? value) {
-                        ref
-                            .read(searchTypeProvider.notifier)
-                            .update((state) => value!);
-                      },
-                    ),
-                    RadioListTile<SearchType>(
-                      title: const Text('Beauty'),
-                      value: SearchType.beauty,
-                      groupValue: searchType,
-                      onChanged: (SearchType? value) {
-                        ref
-                            .read(searchTypeProvider.notifier)
-                            .update((state) => value!);
-                      },
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: height * 0.025,
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    searchProductByName(
-                      searchType,
-                      textFieldName.text,
-                      pnnsGroup2,
-                      ref,
-                      textFieldBrand.text,
-                      textFieldStores.text,
-                      textFieldIngredients.text,
-                      barcode,
-                      country!,
-                      language!,
-                    );
-                  },
-                  child: const Text('Rechercher'),
-                ),
-                SizedBox(
-                  height: height * 0.025,
-                ),
-                FilledButton(
-                  onPressed: () {
-                    showMyDialog(context);
-                  },
-                  child: Text(buttonTag),
-                ),
-                ElevatedButton(
-                    onPressed: () => scanBarcodeNormal(ref),
-                    child: const Text('Start barcode scan')),
-                SizedBox(
-                  height: height * 0.025,
-                ),
-                Expanded(
-                  child: listSearchProduct.type == SearchStateType.loading
-                      ? const Center(child: CircularProgressIndicator())
-                      : ListWidget(products: listSearchProduct.data!),
-                ),
-              ],
+                      TextField(
+                        controller: textFieldStores,
+                        decoration: const InputDecoration(
+                          border: OutlineInputBorder(),
+                          hintText: 'Saisissez le Magasin du Produit',
+                        ),
+                      ),
+                      SizedBox(
+                        height: height * 0.025,
+                      ),
+                      TextField(
+                        controller: textFieldIngredients,
+                        decoration: const InputDecoration(
+                          border: OutlineInputBorder(),
+                          hintText: 'Saisissez un des ingredients du Produit',
+                        ),
+                      ),
+                      RadioListTile<SearchType>(
+                        title: const Text('Food'),
+                        value: SearchType.food,
+                        groupValue: searchType,
+                        onChanged: (SearchType? value) {
+                          ref
+                              .read(searchTypeProvider.notifier)
+                              .update((state) => value!);
+                        },
+                      ),
+                      RadioListTile<SearchType>(
+                        title: const Text('Pet Food'),
+                        value: SearchType.petfood,
+                        groupValue: searchType,
+                        onChanged: (SearchType? value) {
+                          ref
+                              .read(searchTypeProvider.notifier)
+                              .update((state) => value!);
+                        },
+                      ),
+                      RadioListTile<SearchType>(
+                        title: const Text('Beauty'),
+                        value: SearchType.beauty,
+                        groupValue: searchType,
+                        onChanged: (SearchType? value) {
+                          ref
+                              .read(searchTypeProvider.notifier)
+                              .update((state) => value!);
+                        },
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: height * 0.025,
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      searchProductByName(
+                        searchType,
+                        textFieldName.text,
+                        pnnsGroup2,
+                        ref,
+                        textFieldBrand.text,
+                        textFieldStores.text,
+                        textFieldIngredients.text,
+                        barcode,
+                        country!,
+                        language!,
+                      );
+                    },
+                    child: const Text('Rechercher'),
+                  ),
+                  SizedBox(
+                    height: height * 0.025,
+                  ),
+                  FilledButton(
+                    onPressed: () {
+                      showMyDialog(context);
+                    },
+                    child: Text(buttonTag),
+                  ),
+                  SizedBox(
+                    height: height * 0.025,
+                  ),
+                  ElevatedButton(
+                      onPressed: () => scanBarcodeNormal(ref),
+                      child: const Text('Scanner un code-barre')),
+                  SizedBox(
+                    height: height * 0.025,
+                  ),
+                  SizedBox(
+                    height: height * 0.5,
+                    width: width,
+                    child: listSearchProduct.type == SearchStateType.loading
+                        ? const Center(child: CircularProgressIndicator())
+                        : ListWidget(products: listSearchProduct.data!),
+                  ),
+                  SizedBox(
+                    height: height * 0.025,
+                  ),
+                ],
+              ),
             ),
           ),
         ),
@@ -230,23 +245,25 @@ class SearchScreen extends ConsumerWidget {
         .read(listSearchProductProvider.notifier)
         .update((state) => SearchState.loading());
 
-    final listAPI = await productRepository.searchProductByName(
-        name,
-        pnnsGroup2,
-        termBrand,
-        termStore,
-        termIngredient,
-        barcode,
-        country,
-        language);
-    for (var element in listAPI) {
-      if (kDebugMode) {
-        print(element.nameLanguages![OpenFoodFactsLanguage.ENGLISH]);
+    if (searchType == SearchType.food) {
+      final listAPI = await productRepository.searchProductFood(
+          name,
+          pnnsGroup2,
+          termBrand,
+          termStore,
+          termIngredient,
+          barcode,
+          country,
+          language);
+      for (var element in listAPI) {
+        if (kDebugMode) {
+          print(element.nameLanguages![OpenFoodFactsLanguage.ENGLISH]);
+        }
       }
+      ref
+          .read(listSearchProductProvider.notifier)
+          .update((state) => SearchState.success(listAPI));
     }
-    ref
-        .read(listSearchProductProvider.notifier)
-        .update((state) => SearchState.success(listAPI));
   }
 
   Future<void> showMyDialog(BuildContext context) async {
